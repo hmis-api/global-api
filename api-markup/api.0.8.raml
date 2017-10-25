@@ -6,7 +6,6 @@ resourceTypes:
   - collection:
       description: "Operations performed on the set of all HMIS <<resourcePathName>> within the system, and for adding a new <<resourcePathName|!singularize>> to the set of <<resourcePathName>> "
       get:
-        #securedBy: [oauth_2_0: { scopes: [ user ] } ]
         description: Searches for <<resourcePathName|!singularize>>.  Returns a list of <<resourcePathName|!singularize>> ids, based on the query parameters sent.  The query parameters are cumulative, so each additional query parameter narrows the search down further.
         queryParameters:
           CreatedAfter:
