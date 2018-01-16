@@ -1,6 +1,6 @@
 #%RAML 1.0
 title: Global Human Services
-version: 1.1.0
+version: 1.1.1
 mediaType: application/json
 protocols:
   - HTTPS
@@ -143,3 +143,403 @@ resourceTypes:
 /search:
   '/{searchentity}':
     type: member
+/global-projects:
+  post:
+    description: Create a global project
+    body:
+        application/json:
+          example:
+                      {
+                       "globalProject":{
+                          "globalProjectName":"Homeless People Project",
+                          "globalProjectCommonName":"Homeless People Project",
+                          "globalProjectType":2
+                       }
+                      }
+    responses:
+      200:
+        body:
+          application/json:
+            example::
+                    {
+                     "globalProject": {
+                        "globalProjectId":"3d65a9bc-af57-4e3e-bc4d-29d661767ac9",
+                        "globalProjectName":"ProjectName",
+                        "globalProjectCommonName":"ProjectCommonName",
+                        "globalProjectType":2
+                     }
+                    }
+  get:
+    description: Get all global projects
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+                  {
+                     "globalProjects":{
+                        "pagination":{
+                           "from":0,
+                           "returned":1,
+                           "total":1,
+                           "maximum":30,
+                           "sort":{
+
+                           }
+                        },
+                        "globalProjects":[
+                           {
+                              "globalProjectId":"0dda7333-0592-4fa7-ba79-1fe2dfaaff4e",
+                              "globalprojectName":"Homeless People Project",
+                              "globalprojectCommonName":"Homeless People Project",
+                              "globalprojectType":1,
+                              "dateCreated":"03-15-2016",
+                              "projects": [ {
+                                               "projectId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
+                                                "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a",
+                                                "link":"www.hmislynk.com/client-api/rest/v2014/projects/d12a5b43-9411-4fe3-8cd3-0778459d0911"
+                                              }
+                              ]
+                           }
+                        ]
+                     }
+                  }
+/global-projects/{global-projectId}:
+  put:
+    description: Update selected global project
+    body:
+        application/json:
+          example:
+                      {
+                       "globalProject":{
+                          "globalProjectName":"Homeless People Project",
+                          "globalProjectCommonName":"Homeless People Project",
+                          "globalProjectType":2
+                       }
+                      }
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+                  {
+                   "globalProject": {
+                      "globalProjectId":"3d65a9bc-af57-4e3e-bc4d-29d661767ac9",
+                      "globalProjectName":"Homeless People Project",
+                      "globalProjectCommonName":"Homeless People Project",
+                      "globalProjectType":2
+                   }
+                  }
+
+  get:
+    description: Get selected global project
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+                  {
+                   "globalProject": {
+                      "globalProjectId":"3d65a9bc-af57-4e3e-bc4d-29d661767ac9",
+                      "globalProjectName":"Homeless People Project",
+                      "globalProjectCommonName":"Homeless People Project",
+                      "globalProjectType":2,
+                      "projects": [ {
+                                       "projectId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
+                                        "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a",
+                                        "link":"www.hmislynk.com/client-api/rest/v2014/projects/d12a5b43-9411-4fe3-8cd3-0778459d0911"
+                                      }
+                      ]
+
+                   }
+                  }
+  delete:
+    description: Delete selected global project
+/global-projects/{global-projectId}/projects:
+  put:
+    description: Add projects to selected global project
+    body:
+      application/json:
+        example:
+              {
+                 "projects":{
+                    "project":[
+                       {
+                          "projectId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
+                          "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a"
+                       }
+                    ]
+                 }
+              }
+    responses:
+      200:
+        body:
+          application/json:
+/global-projects/{global-projectId}/projects/{projectId}:
+  delete:
+    description: Remove project from selected global project
+    responses:
+      200:
+        body:
+          application/json:
+
+/global-enrollments:
+  post:
+    description: Create a global enrollment
+    body:
+        application/json:
+          example:
+                      {
+                       "globalEnrollment":{
+                              "continuouslyhomelessoneyear":1,
+                               "disablingcondition":0,
+                               "housingstatus":3,
+                               "monthshomelesspastthreeyears":7,
+                               "monthshomelessthistime":1,
+                               "otherresidenceprior":"1",
+                               "relationshiptohoh":2,
+                               "residenceprior":2,
+                               "residencepriorlengthofstay":4,
+                               "statusdocumented":1,
+                               "timeshomelesspastthreeyears":1,
+                               "yearshomeless":2,
+                               "entryfromstreetessh":2,
+                               "datetostreetessh":1
+                       }
+                      }
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+               "globalEnrollment":{
+                      "globalEnrollment":"5bf2063e-0e37-4604-886b-6d95dc98bede",
+                      "continuouslyhomelessoneyear":1,
+                       "disablingcondition":0,
+                       "housingstatus":3,
+                       "monthshomelesspastthreeyears":7,
+                       "monthshomelessthistime":1,
+                       "otherresidenceprior":"1",
+                       "relationshiptohoh":2,
+                       "residenceprior":2,
+                       "residencepriorlengthofstay":4,
+                       "statusdocumented":1,
+                       "timeshomelesspastthreeyears":1,
+                       "yearshomeless":2,
+                       "entryfromstreetessh":2,
+                       "datetostreetessh":1
+               }
+              }
+  get:
+    description: Get all global enrollment
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+                  {
+                     "globalEnrollments":{
+                        "pagination":{
+                           "from":0,
+                           "returned":1,
+                           "total":1,
+                           "maximum":30,
+                           "sort":{
+
+                           }
+                        },
+                        "globalEnrollments":[
+                           {
+                           "globalEnrollment":"5bf2063e-0e37-4604-886b-6d95dc98bede",
+                           "continuouslyhomelessoneyear":1,
+                            "disablingcondition":0,
+                            "housingstatus":3,
+                            "monthshomelesspastthreeyears":7,
+                            "monthshomelessthistime":1,
+                            "otherresidenceprior":"1",
+                            "relationshiptohoh":2,
+                            "residenceprior":2,
+                            "residencepriorlengthofstay":4,
+                            "statusdocumented":1,
+                            "timeshomelesspastthreeyears":1,
+                            "yearshomeless":2,
+                            "entryfromstreetessh":2,
+                            "datetostreetessh":1,
+                              "enrollments": [ {
+                                               "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
+                                                "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a",
+                                                "link":"www.hmislynk.com/client-api/rest/v2014/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0911"
+                                              }
+                              ]
+                           }
+                        ]
+                     }
+                  }
+/global-enrollments/{global-enrollmentId}:
+  put:
+    description: Update selected global enrollment
+    body:
+        application/json:
+          example:
+            {
+             "globalEnrollment":{
+                    "continuouslyhomelessoneyear":1,
+                     "disablingcondition":0,
+                     "housingstatus":3,
+                     "monthshomelesspastthreeyears":7,
+                     "monthshomelessthistime":1,
+                     "otherresidenceprior":"1",
+                     "relationshiptohoh":2,
+                     "residenceprior":2,
+                     "residencepriorlengthofstay":4,
+                     "statusdocumented":1,
+                     "timeshomelesspastthreeyears":1,
+                     "yearshomeless":2,
+                     "entryfromstreetessh":2,
+                     "datetostreetessh":1
+             }
+            }
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+               "globalEnrollment":{
+                      "globalEnrollment":"5bf2063e-0e37-4604-886b-6d95dc98bede",
+                      "continuouslyhomelessoneyear":1,
+                       "disablingcondition":0,
+                       "housingstatus":3,
+                       "monthshomelesspastthreeyears":7,
+                       "monthshomelessthistime":1,
+                       "otherresidenceprior":"1",
+                       "relationshiptohoh":2,
+                       "residenceprior":2,
+                       "residencepriorlengthofstay":4,
+                       "statusdocumented":1,
+                       "timeshomelesspastthreeyears":1,
+                       "yearshomeless":2,
+                       "entryfromstreetessh":2,
+                       "datetostreetessh":1
+               }
+              }
+
+  get:
+    description: Get selected global enrollment
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+                  {
+                   "globalEnrollment": {
+                     "globalEnrollmentId":"5bf2063e-0e37-4604-886b-6d95dc98bede",
+                     "continuouslyhomelessoneyear":1,
+                      "disablingcondition":0,
+                      "housingstatus":3,
+                      "monthshomelesspastthreeyears":7,
+                      "monthshomelessthistime":1,
+                      "otherresidenceprior":"1",
+                      "relationshiptohoh":2,
+                      "residenceprior":2,
+                      "residencepriorlengthofstay":4,
+                      "statusdocumented":1,
+                      "timeshomelesspastthreeyears":1,
+                      "yearshomeless":2,
+                      "entryfromstreetessh":2,
+                      "datetostreetessh":1,
+                      "enrollments": [ {
+                                       "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
+                                        "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a",
+                                        "link":"www.hmislynk.com/client-api/rest/v2014/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0911"
+                                      }
+                      ]
+                   }
+                  }
+  delete:
+    description: Delete selected global enrollment
+/global-enrollments/{global-enrollmentId}/enrollments:
+  put:
+    description: Add enrollment to selected global project
+    body:
+      application/json:
+        example:
+              {
+                 "enrollments":{
+                    "enrollment":[
+                       {
+                          "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
+                          "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a"
+                       }
+                    ]
+                 }
+              }
+    responses:
+      200:
+        body:
+          application/json:
+/global-enrollments/{global-enrollmentId}/enrollments/{enrollmentId}:
+  delete:
+    description: Remove enrollment from selected global project
+    responses:
+      200:
+        body:
+          application/json:
+
+/projectSources:
+  get:
+    description: Get project sources
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                 "projectSources":{
+                    "pagination":{
+                       "from":0,
+                       "returned":1,
+                       "total":1,
+                       "maximum":30,
+                       "sort":{
+
+                       }
+                    },
+                    "projectSources":[
+                      {
+                        "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a",
+                        "sourcedesc":"Client API 2014",
+                        "providerURL":"www.hmislynk.com/client-api/rest/v2014/projects"
+                      }
+                    ]
+                  }
+                }
+/enrollmentSources:
+  get:
+    description: Get enrollment sources
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                 "projectSources":{
+                    "pagination":{
+                       "from":0,
+                       "returned":1,
+                       "total":1,
+                       "maximum":30,
+                       "sort":{
+
+                       }
+                    },
+                    "projectSources":[
+                      {
+                        "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a",
+                        "sourcedesc":"Client API 2014",
+                        "providerURL":"www.hmislynk.com/client-api/rest/v2014/enrollments"
+                      }
+                    ]
+                  }
+                }
