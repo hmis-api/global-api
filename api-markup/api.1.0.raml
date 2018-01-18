@@ -196,7 +196,7 @@ resourceTypes:
                               "dateCreated":"03-15-2016",
                               "projects": [ {
                                                "projectId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
-                                                "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a",
+                                                "schema":"2014",
                                                 "link":"www.hmislynk.com/client-api/rest/v2014/projects/d12a5b43-9411-4fe3-8cd3-0778459d0911"
                                               }
                               ]
@@ -246,7 +246,7 @@ resourceTypes:
                      "description":"Sample Project description",
                       "projects": [ {
                                        "projectId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
-                                        "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a",
+                                        "schema":"2014",
                                         "link":"www.hmislynk.com/client-api/rest/v2014/projects/d12a5b43-9411-4fe3-8cd3-0778459d0911"
                                       }
                       ]
@@ -266,7 +266,7 @@ resourceTypes:
                     "project":[
                        {
                           "projectId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
-                          "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a"
+                          "schema":"2014"
                        }
                     ]
                  }
@@ -320,12 +320,12 @@ resourceTypes:
                               "globalEnrollmentId":"5bf2063e-0e37-4604-886b-6d95dc98bede",
                               "enrollments": [ {
                                                "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
-                                                "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a",
+                                                "schema":"2014",
                                                 "link":"www.hmislynk.com/client-api/rest/v2014/clients/5bf2063e-0e37-4604-886b-6d95dc98bede/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0911"
                                               },
                                               {
                                                 "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0085",
-                                                 "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a",
+                                                 "schema":"humanservices",
                                                  "link":"www.hmislynk.com/humanservices-api/rest/clients/5bf2063e-0e37-4604-886b-6d95dc98bede/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085"
                                                }
                               ]
@@ -346,12 +346,12 @@ resourceTypes:
                       "globalEnrollmentId":"5bf2063e-0e37-4604-886b-6d95dc98bede",
                       "enrollments": [ {
                                        "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
-                                        "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a",
+                                        "schema":"2014",
                                         "link":"www.hmislynk.com/client-api/rest/v2014/clients/5bf2063e-0e37-4604-886b-6d95dc98bede/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0911"
                                       },
                                       {
                                         "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0085",
-                                         "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a",
+                                         "schema":"humanservices",
                                          "link":"www.hmislynk.com/humanservices-api/rest/clients/5bf2063e-0e37-4604-886b-6d95dc98bede/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085"
                                        }
                       ]
@@ -370,11 +370,11 @@ resourceTypes:
                     "enrollment":[
                        {
                           "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
-                          "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a"
+                          "schema":"2014"
                        },
                           {
                              "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0085",
-                             "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a"
+                             "schema":"2015"
                           }
                     ]
                  }
@@ -390,70 +390,3 @@ resourceTypes:
       200:
         body:
           application/json:
-
-/projectsources:
-  get:
-    description: Get project sources
-    responses:
-      200:
-        body:
-          application/json:
-            example:
-              {
-                 "projectSources":{
-                    "pagination":{
-                       "from":0,
-                       "returned":2,
-                       "total":2,
-                       "maximum":30,
-                       "sort":{
-
-                       }
-                    },
-                    "projectSources":[
-                      {
-                        "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a",
-                        "sourcedesc":"Client API 2014",
-                        "sourceURL":"www.hmislynk.com/client-api/rest/v2014/projects"
-                      },
-                      {
-                        "sourceId":"af4b71bb-8641-4c9c-81d6-34408bd53fce",
-                        "sourcedesc":"Client API 2015",
-                        "sourceURL":"www.hmislynk.com/client-api/rest/v2015/projects"
-                      }
-                    ]
-                  }
-                }
-/enrollmentsources:
-  get:
-    description: Get enrollment sources
-    responses:
-      200:
-        body:
-          application/json:
-            example:
-              {
-                 "enrollmentSources":{
-                    "pagination":{
-                       "from":0,
-                       "returned":2,
-                       "total":2,
-                       "maximum":30,
-                       "sort":{
-
-                       }
-                    },
-                    "enrollmentSources":[
-                      {
-                        "sourceId":"1cf4a616-56bd-4c79-bea9-ada7feb7da0a",
-                        "sourcedesc":"Client API 2014",
-                        "sourceURL":"www.hmislynk.com/client-api/rest/v2014/clients/{clientId}/enrollments"
-                      },
-                      {
-                        "sourceId":"3b51f15b-a655-4627-9470-29c982e21b94",
-                        "sourcedesc":"Client API 2015",
-                        "sourceURL":"www.hmislynk.com/client-api/rest/v2015/clients/{clientId}/enrollments"
-                      }
-                    ]
-                  }
-                }
