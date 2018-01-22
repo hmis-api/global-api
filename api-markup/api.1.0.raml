@@ -390,3 +390,145 @@ resourceTypes:
       200:
         body:
           application/json:
+/notifications:
+  post:
+    description: Send email notification to client
+    body:
+      application/json:
+        example:
+                {
+                   "notification":{
+                      "data":{
+                         "recipients":{
+                            "toRecipients":[
+                               "narayana880@gmail.com"
+                            ],
+                            "bccRecipients":[
+                               "narayana880@gmail.com"
+                            ],
+                            "ccRecipients":[
+                               "narayana880@gmail.com"
+                            ]
+                         },
+                         "body":"Test message",
+                         "subject":"Test subject",
+                         "priority":1
+                      },
+                      "method":"email",
+                      "additionalInfo":{
+                         "messageType":"Test type",
+                         "recipientType":"test",
+                         "recipientId":"test"
+                      }
+                   }
+                }
+  get:
+    description: Get notification details.
+    queryParameters:
+      fromdate:
+        description: From date in millisecods
+        type: number
+        required: false
+      todate:
+        description: TO date in millisecods
+        type: number
+        required: false
+      recipienttype:
+        description: Recipient Type
+        type: string
+        required: false
+      recipientid:
+        description: Recipient Id
+        type: string
+        required: false
+      status:
+        description: status
+        type: string
+        required: false
+      startIndex:
+        description: start Index
+        type: number
+        required: false
+      maxItems:
+        description: Page size
+        type: number
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                 "notifications":{
+                    "pagination":{
+                       "from":0,
+                       "total":13,
+                       "maximum":2,
+                       "sort":{
+
+                       }
+                    },
+                    "notifications":[
+                       {
+                          "data":{
+                             "subject":"Test subject",
+                             "status":"CREATED",
+                             "recipients":{
+                                "toRecipients":[
+                                   "narayana880@gmail.com"
+                                ],
+                                "bccRecipients":[
+                                   "narayana880@gmail.com"
+                                ],
+                                "ccRecipients":[
+                                   "narayana880@gmail.com"
+                                ]
+                             },
+                             "body":"Test message",
+                             "parameters":{
+                                "parameter":[
+
+                                ]
+                             }
+                          },
+                          "method":"email",
+                          "additionalInfo":{
+                             "recipientType":"test",
+                             "recipientId":"test",
+                             "messageType":"Test type"
+                          },
+                          "createdTime":"01-21-2018 09:54",
+                          "updatedTime":"01-21-2018 09:54"
+                       },
+                       {
+                          "data":{
+                             "subject":"Test subject",
+                             "status":"CREATED",
+                             "recipients":{
+                                "toRecipients":[
+                                   "narayana880@gmail.com"
+                                ],
+                                "bccRecipients":[
+                                   "narayana880@gmail.com"
+                                ],
+                                "ccRecipients":[
+                                   "narayana880@gmail.com"
+                                ]
+                             },
+                             "body":"Test message",
+                             "parameters":{
+                                "parameter":[
+
+                                ]
+                             }
+                          },
+                          "method":"email",
+                          "additionalInfo":{
+
+                          },
+                          "createdTime":"01-21-2018 21:02",
+                          "updatedTime":"01-21-2018 21:02"
+                       }
+                    ]
+                 }
+              }
