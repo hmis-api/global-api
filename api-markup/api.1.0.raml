@@ -1,10 +1,10 @@
 #%RAML 1.0
 title: Global Human Services
-version: 1.1.1
+version: 1.1.2
 mediaType: application/json
 protocols:
   - HTTPS
-baseUri: 'https://www.hmislynk.com/hmis-clientapi/rest'
+baseUri: 'https://www.hmislynk.com/hmis-globalapi/rest'
 securedBy: [oauth_2_0]
 securitySchemes:
   oauth_2_0: !include security-schemes/oauth_2_0.raml
@@ -392,65 +392,95 @@ resourceTypes:
           application/json:
 /notifications:
   post:
-    description: Send email notification to client
+    description: API to create a notification request. Any one of the recipients is mandatory (TO, CC or BCC). Multiple email addresses should be comma delimeted. "Body" and "Subject" are mandatory fields. Notification can be sent with "HIGH" priority by setting the "priority" value to 1. None of the elements with in "additionalInfo" section are mandatory.
     body:
       application/json:
         example:
                 {
                    "notification":{
+                      "method":"EMAIL",
                       "data":{
                          "recipients":{
                             "toRecipients":[
-                               "narayana880@gmail.com"
+                               "surya.yadavalli@gmail.com",  "surya.yadavalli@hmislynk.com"
                             ],
                             "bccRecipients":[
-                               "narayana880@gmail.com"
+                               "jceleldon@ctagroup.com"
                             ],
                             "ccRecipients":[
-                               "narayana880@gmail.com"
+                               "admin@ctagroup.com"
                             ]
                          },
                          "body":"Test message",
                          "subject":"Test subject",
                          "priority":1
                       },
-                      "method":"email",
+
                       "additionalInfo":{
-                         "messageType":"Test type",
-                         "recipientType":"test",
-                         "recipientId":"test"
+                         "messageType":"Cancellation Notice",
+                         "recipientType":"clientID",
+                         "recipientId":"18a93ad8-cced-49c5-9185-9cb3da9de89b"
                       }
                    }
                 }
+    responses:
+      200:
+        body:
+          application/json:
+          
+      400:
+        body:
+          application/json:
+            example:
+              {
+                 "errors":{
+                    "error":[
+                       {
+                          "message":"Email body is required"
+                       }
+                    ]
+                 }
+              }
+
   get:
-    description: Get notification details.
+    description: !
+            " GET the notification details along with their current status and timestamps. These details can be filtered using the following query parameters. Few examples below
+              \n\n* hmis-globalapi/rest/notifications?fromdate=1516546276760 - Returns all the notifications sent from Sun Jan 21 2018 14:51:16
+              \n\n* hmis-globalapi/rest/notifications?fromdate=1516521600000&todate=1516693923129 - Returns all notifications sent between Sun Jan 21 2018 08:00:00 and Tue Jan 23 2018 07:52:03
+              \n\n* hmis-globalapi/rest/notifications?status=CREATED,DELIVERED - Returns all notifications that are with status CREATED and DELIVERED
+              \n\n* hmis-globalapi/rest/notifications?recipienttype=clientid&recipientid=cf98b9b2-9a77-4133-99a3-b60f05a12ad1 - Returns all notifications associated with the client Id cf98b9b2-9a77-4133-99a3-b60f05a12ad1
+              \n\n* hmis-globalapi/rest/notifications?status=DELIVERED&recipienttype=clientid&recipientid=cf98b9b2-9a77-4133-99a3-b60f05a12ad1 - Returns all notifications delivered to client Id cf98b9b2-9a77-4133-99a3-b60f05a12ad1
+              \n\n* hmis-globalapi/rest/notifications?fromdate=1516546276760&recipienttype=clientid&recipientid=cf98b9b2-9a77-4133-99a3-b60f05a12ad1 - Returns all notifications associated with the client Id from Sun Jan 21 2018 14:51:16 "
     queryParameters:
       fromdate:
-        description: From date in millisecods
+        description: |
+                "From date" in millisecods - This will fetch all the notifications starting from this date/time.
         type: number
         required: false
       todate:
-        description: TO date in millisecods
+        description: |
+                      "To date" in millisecods  - This will fetch all the notifications until this date / time.
         type: number
         required: false
       recipienttype:
-        description: Recipient Type
+        description: Recipient Type - Currently supported recipient Type is only "ClientID"
         type: string
         required: false
       recipientid:
-        description: Recipient Id
+        description: |
+              Recipient Id -  The client identifier (UUID) example: "cf98b9b2-9a77-4133-99a3-b60f05a12ad1"
         type: string
         required: false
       status:
-        description: status
+        description: status - Possible statuses that a notification can have CREATED , DELIVERED , FAILED
         type: string
         required: false
       startIndex:
-        description: start Index
+        description: The start Index from where the search results should be returned. Default - 0
         type: number
         required: false
       maxItems:
-        description: Page size
+        description: the number or Items that should be included in the results . Default - 200
         type: number
         required: false
     responses:
@@ -475,13 +505,13 @@ resourceTypes:
                              "status":"CREATED",
                              "recipients":{
                                 "toRecipients":[
-                                   "narayana880@gmail.com"
+                                   "surya.yadavalli@gmail.com"
                                 ],
                                 "bccRecipients":[
-                                   "narayana880@gmail.com"
+                                   "surya.yadavalli@gmail.com"
                                 ],
                                 "ccRecipients":[
-                                   "narayana880@gmail.com"
+                                   "surya.yadavalli@gmail.com"
                                 ]
                              },
                              "body":"Test message",
@@ -491,28 +521,29 @@ resourceTypes:
                                 ]
                              }
                           },
-                          "method":"email",
+                          "method":"EMAIL",
                           "additionalInfo":{
-                             "recipientType":"test",
-                             "recipientId":"test",
-                             "messageType":"Test type"
+                             "recipientType":"Client",
+                             "recipientId":"6997cbb0-4485-4ac8-9a40-f8099726c9e3",
+                             "messageType":"message type"
                           },
-                          "createdTime":"01-21-2018 09:54",
-                          "updatedTime":"01-21-2018 09:54"
+                          "createdTimeStamp":"01-21-2018 09:54",
+                          "lastStatusTimeStamp":"01-21-2018 09:54"
                        },
                        {
                           "data":{
                              "subject":"Test subject",
-                             "status":"CREATED",
+                             "status":"FAILED",
+                             "statusMessage":"Invalid recipient email address",
                              "recipients":{
                                 "toRecipients":[
-                                   "narayana880@gmail.com"
+                                   "surya.yadavalli@gmail.com"
                                 ],
                                 "bccRecipients":[
-                                   "narayana880@gmail.com"
+                                   "surya.yadavalli@gmail.com","support@hslynk.com"
                                 ],
                                 "ccRecipients":[
-                                   "narayana880@gmail.com"
+                                   "surya.yadavalli@gmail.com"
                                 ]
                              },
                              "body":"Test message",
@@ -522,12 +553,14 @@ resourceTypes:
                                 ]
                              }
                           },
-                          "method":"email",
+                          "method":"EMAIL",
                           "additionalInfo":{
-
+                             "recipientType":"ClientId",
+                             "recipientId":"6997cbb0-4485-4ac8-9a40-f8099726c9e3",
+                             "messageType":"Cancellation Notice"
                           },
-                          "createdTime":"01-21-2018 21:02",
-                          "updatedTime":"01-21-2018 21:02"
+                          "createdTimeStamp":"01-21-2018 21:02",
+                          "lastStatusTimeStamp":"01-21-2018 21:02"
                        }
                     ]
                  }
