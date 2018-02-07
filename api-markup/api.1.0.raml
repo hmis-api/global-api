@@ -1,6 +1,6 @@
 #%RAML 1.0
 title: Global Human Services
-version: 1.1.2
+version: 1.1.3
 mediaType: application/json
 protocols:
   - HTTPS
@@ -293,9 +293,15 @@ resourceTypes:
           application/json:
             example:
               {
-               "globalEnrollment":{
-                      "globalEnrollmentId":"5bf2063e-0e37-4604-886b-6d95dc98bede"
-               }
+                 "globalEnrollment":{
+                    "id":"a2919645-c366-49b9-a101-3b803fa15d3d",
+                    "dedupClientId":"b3f60ea0-79a9-11e6-ab44-02f305dabccf",
+                    "enrollments":{
+                       "enrollments":[
+
+                       ]
+                    }
+                 }
               }
   get:
     description: Get all global enrollment
@@ -304,35 +310,49 @@ resourceTypes:
         body:
           application/json:
             example:
-                  {
-                     "globalEnrollments":{
-                        "pagination":{
-                           "from":0,
-                           "returned":1,
-                           "total":1,
-                           "maximum":30,
-                           "sort":{
+              {
+                 "globalEnrollments":{
+                    "pagination":{
+                       "from":0,
+                       "returned":1,
+                       "total":1,
+                       "maximum":30,
+                       "sort":{
 
-                           }
-                        },
-                        "globalEnrollments":[
-                           {
-                              "globalEnrollmentId":"5bf2063e-0e37-4604-886b-6d95dc98bede",
-                              "enrollments": [ {
-                                               "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
-                                                "schema":"2014",
-                                                "link":"www.hmislynk.com/client-api/rest/v2014/clients/5bf2063e-0e37-4604-886b-6d95dc98bede/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0911"
-                                              },
-                                              {
-                                                "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0085",
-                                                 "schema":"humanservices",
-                                                 "link":"www.hmislynk.com/humanservices-api/rest/clients/5bf2063e-0e37-4604-886b-6d95dc98bede/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085"
-                                               }
-                              ]
-                           }
-                        ]
-                     }
-                  }
+                       }
+                    },
+                    "globalEnrollments":[
+                       {
+                          "id":"a2919645-c366-49b9-a101-3b803fa15d3d",
+                          "dedupClientId":"b3f60ea0-79a9-11e6-ab44-02f305dabccf",
+                          "enrollments":{
+                             "enrollments":[
+                                {
+                                   "id":"0ffdf949-b799-43d3-82ca-506478274a74",
+                                   "enrollmentId":"637fbfbb-e75c-49f1-900f-1aa0015aefab",
+                                   "clientId":"6bf95840-8567-469b-9efe-8c6351294e55",
+                                   "source":"2016",
+                                   "link":"hmis-clientapi/v2016/rest/clients/6bf95840-8567-469b-9efe-8c6351294e55/enrollments/637fbfbb-e75c-49f1-900f-1aa0015aefab",
+                                   "dateCreated":"02-07-2018",
+                                   "dateUpdated":"02-07-2018"
+                                },
+                                {
+                                   "id":"183b0b94-9d14-44ad-ad98-9408b328230d",
+                                   "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0085",
+                                   "clientId":"d4a9b184-21ea-4136-b9b8-0d59e8ee7b71",
+                                   "source":"2015",
+                                   "link":"hmis-clientapi/v2015/rest/clients/d4a9b184-21ea-4136-b9b8-0d59e8ee7b71/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085",
+                                   "dateCreated":"02-07-2018",
+                                   "dateUpdated":"02-07-2018"
+                                }
+                             ]
+                          },
+                          "dateCreated":"02-07-2018",
+                          "dateUpdated":"02-07-2018"
+                       }
+                    ]
+                 }
+              }
 /clients/{clientDedupId}/global-enrollments/{global-enrollmentId}:
   get:
     description: Get selected global enrollment
@@ -341,22 +361,36 @@ resourceTypes:
         body:
           application/json:
             example:
-                  {
-                   "globalEnrollment": {
-                      "globalEnrollmentId":"5bf2063e-0e37-4604-886b-6d95dc98bede",
-                      "enrollments": [ {
-                                       "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
-                                        "schema":"2014",
-                                        "link":"www.hmislynk.com/client-api/rest/v2014/clients/5bf2063e-0e37-4604-886b-6d95dc98bede/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0911"
-                                      },
-                                      {
-                                        "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0085",
-                                         "schema":"humanservices",
-                                         "link":"www.hmislynk.com/humanservices-api/rest/clients/5bf2063e-0e37-4604-886b-6d95dc98bede/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085"
-                                       }
-                      ]
-                   }
-                  }
+              {
+                 "globalEnrollment":{
+                    "id":"a2919645-c366-49b9-a101-3b803fa15d3d",
+                    "dedupClientId":"b3f60ea0-79a9-11e6-ab44-02f305dabccf",
+                    "enrollments":{
+                       "enrollments":[
+                          {
+                             "id":"0ffdf949-b799-43d3-82ca-506478274a74",
+                             "enrollmentId":"637fbfbb-e75c-49f1-900f-1aa0015aefab",
+                             "clientId":"6bf95840-8567-469b-9efe-8c6351294e55",
+                             "source":"2016",
+                             "link":"hmis-clientapi/v2016/rest/clients/6bf95840-8567-469b-9efe-8c6351294e55/enrollments/637fbfbb-e75c-49f1-900f-1aa0015aefab",
+                             "dateCreated":"02-07-2018",
+                             "dateUpdated":"02-07-2018"
+                          },
+                          {
+                             "id":"183b0b94-9d14-44ad-ad98-9408b328230d",
+                             "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0085",
+                             "clientId":"d4a9b184-21ea-4136-b9b8-0d59e8ee7b71",
+                             "source":"2015",
+                             "link":"hmis-clientapi/v2015/rest/clients/d4a9b184-21ea-4136-b9b8-0d59e8ee7b71/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085",
+                             "dateCreated":"02-07-2018",
+                             "dateUpdated":"02-07-2018"
+                          }
+                       ]
+                    },
+                    "dateCreated":"02-07-2018",
+                    "dateUpdated":"02-07-2018"
+                 }
+              }
   delete:
     description: Delete selected global enrollment
 /clients/{clientDedupId}/global-enrollments/{global-enrollmentId}/enrollments:
@@ -365,20 +399,23 @@ resourceTypes:
     body:
       application/json:
         example:
-              {
-                 "enrollments":{
-                    "enrollment":[
-                       {
-                          "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
-                          "schema":"2014"
-                       },
-                          {
-                             "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0085",
-                             "schema":"2015"
-                          }
-                    ]
-                 }
-              }
+          {
+            "enrollments": {
+              "enrollments": [
+                {
+                  "enrollmentId": "637fbfbb-e75c-49f1-900f-1aa0015aefab",
+                  "source": "2016",
+                  "clientId":"6bf95840-8567-469b-9efe-8c6351294e55"
+
+                },
+                {
+                  "enrollmentId": "d12a5b43-9411-4fe3-8cd3-0778459d0085",
+                  "source": "2015",
+                  "clientId":"d4a9b184-21ea-4136-b9b8-0d59e8ee7b71"
+                }
+              ]
+            }
+          }
     responses:
       200:
         body:
@@ -427,7 +464,7 @@ resourceTypes:
       200:
         body:
           application/json:
-          
+
       400:
         body:
           application/json:
