@@ -286,7 +286,27 @@ resourceTypes:
 /clients/{clientDedupId}/global-enrollments:
   post:
     description: Create a global enrollment for a client
-
+    body:
+      application/json:
+        example:
+                {
+                   "globalEnrollment":{
+                      "enrollments":{
+                         "enrollments":[
+                            {
+                               "enrollmentId":"637fbfbb-e75c-49f1-900f-1aa0015aefab",
+                               "source":"2016",
+                               "clientId":"6bf95840-8567-469b-9efe-8c6351294e55"
+                            },
+                            {
+                               "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0085",
+                               "source":"2015",
+                               "clientId":"d4a9b184-21ea-4136-b9b8-0d59e8ee7b71"
+                            }
+                         ]
+                      }
+                   }
+                }
     responses:
       200:
         body:
@@ -294,11 +314,22 @@ resourceTypes:
             example:
               {
                  "globalEnrollment":{
-                    "id":"a2919645-c366-49b9-a101-3b803fa15d3d",
+                    "id":"bcd68553-08a0-4463-8713-3619f1022fc1",
                     "dedupClientId":"b3f60ea0-79a9-11e6-ab44-02f305dabccf",
                     "enrollments":{
                        "enrollments":[
-
+                          {
+                             "enrollmentId":"637fbfbb-e75c-49f1-900f-1aa0015aefab",
+                             "clientId":"6bf95840-8567-469b-9efe-8c6351294e55",
+                             "source":"2016",
+                             "link":"hmis-clientapi/v2016/rest/clients/6bf95840-8567-469b-9efe-8c6351294e55/enrollments/637fbfbb-e75c-49f1-900f-1aa0015aefab"
+                          },
+                          {
+                             "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0085",
+                             "clientId":"d4a9b184-21ea-4136-b9b8-0d59e8ee7b71",
+                             "source":"2015",
+                             "link":"hmis-clientapi/v2015/rest/clients/d4a9b184-21ea-4136-b9b8-0d59e8ee7b71/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085"
+                          }
                        ]
                     }
                  }
@@ -332,23 +363,17 @@ resourceTypes:
                                    "enrollmentId":"637fbfbb-e75c-49f1-900f-1aa0015aefab",
                                    "clientId":"6bf95840-8567-469b-9efe-8c6351294e55",
                                    "source":"2016",
-                                   "link":"hmis-clientapi/v2016/rest/clients/6bf95840-8567-469b-9efe-8c6351294e55/enrollments/637fbfbb-e75c-49f1-900f-1aa0015aefab",
-                                   "dateCreated":"02-07-2018",
-                                   "dateUpdated":"02-07-2018"
+                                   "link":"hmis-clientapi/v2016/rest/clients/6bf95840-8567-469b-9efe-8c6351294e55/enrollments/637fbfbb-e75c-49f1-900f-1aa0015aefab"
                                 },
                                 {
                                    "id":"183b0b94-9d14-44ad-ad98-9408b328230d",
                                    "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0085",
                                    "clientId":"d4a9b184-21ea-4136-b9b8-0d59e8ee7b71",
                                    "source":"2015",
-                                   "link":"hmis-clientapi/v2015/rest/clients/d4a9b184-21ea-4136-b9b8-0d59e8ee7b71/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085",
-                                   "dateCreated":"02-07-2018",
-                                   "dateUpdated":"02-07-2018"
+                                   "link":"hmis-clientapi/v2015/rest/clients/d4a9b184-21ea-4136-b9b8-0d59e8ee7b71/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085"
                                 }
                              ]
-                          },
-                          "dateCreated":"02-07-2018",
-                          "dateUpdated":"02-07-2018"
+                          }
                        }
                     ]
                  }
@@ -372,23 +397,18 @@ resourceTypes:
                              "enrollmentId":"637fbfbb-e75c-49f1-900f-1aa0015aefab",
                              "clientId":"6bf95840-8567-469b-9efe-8c6351294e55",
                              "source":"2016",
-                             "link":"hmis-clientapi/v2016/rest/clients/6bf95840-8567-469b-9efe-8c6351294e55/enrollments/637fbfbb-e75c-49f1-900f-1aa0015aefab",
-                             "dateCreated":"02-07-2018",
-                             "dateUpdated":"02-07-2018"
+                             "link":"hmis-clientapi/v2016/rest/clients/6bf95840-8567-469b-9efe-8c6351294e55/enrollments/637fbfbb-e75c-49f1-900f-1aa0015aefab"
+
                           },
                           {
                              "id":"183b0b94-9d14-44ad-ad98-9408b328230d",
                              "enrollmentId":"d12a5b43-9411-4fe3-8cd3-0778459d0085",
                              "clientId":"d4a9b184-21ea-4136-b9b8-0d59e8ee7b71",
                              "source":"2015",
-                             "link":"hmis-clientapi/v2015/rest/clients/d4a9b184-21ea-4136-b9b8-0d59e8ee7b71/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085",
-                             "dateCreated":"02-07-2018",
-                             "dateUpdated":"02-07-2018"
+                             "link":"hmis-clientapi/v2015/rest/clients/d4a9b184-21ea-4136-b9b8-0d59e8ee7b71/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085"
                           }
                        ]
-                    },
-                    "dateCreated":"02-07-2018",
-                    "dateUpdated":"02-07-2018"
+                    }
                  }
               }
   delete:
