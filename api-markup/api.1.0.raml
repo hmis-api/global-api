@@ -1,6 +1,6 @@
 #%RAML 1.0
 title: Global Human Services
-version: 1.1.3
+version: 1.2.0
 mediaType: application/json
 protocols:
   - HTTPS
@@ -149,25 +149,49 @@ resourceTypes:
     body:
         application/json:
           example:
-                      {
-                       "globalProject":{
-                          "projectName":"Sample Project Name",
-                          "projectCommonName":"Sample Project Common Name",
-                          "description":"Sample Project description"
-                       }
-                      }
+                  {
+                     "globalProject":{
+                        "projectName":"Project Name",
+                        "projectCommonName":"Project common name",
+                        "description":" description",
+                        "projects":{
+                           "projects":[
+                              {
+                                 "projectId":"f9748a7b-80ac-4ffd-86f7-c8e71416502f",
+                                 "source":"2015"
+                              },
+                              {
+                                 "projectId":"9a147cc3-7b78-4a82-abe4-f42f9ee59b61",
+                                 "source":"2014"
+                              }
+                           ]
+                        }
+                     }
+                  }
     responses:
       200:
         body:
           application/json:
             example:
                     {
-                     "globalProject": {
-                        "projectId":"3d65a9bc-af57-4e3e-bc4d-29d661767ac9",
-                        "projectName":"Sample Project Name",
-                        "projectCommonName":"Sample Project Common Name",
-                        "description":"Sample Project description"
-                     }
+                       "globalProject":{
+                          "id":"661189b2-183f-4d03-aba0-7d3050b62a5f",
+                          "projectName":"Project Name",
+                          "projectCommonName":"Project common name",
+                          "description":" description",
+                          "projects":{
+                             "projects":[
+                                {
+                                   "projectId":"f9748a7b-80ac-4ffd-86f7-c8e71416502f",
+                                   "source":"2015"
+                                },
+                                {
+                                   "projectId":"9a147cc3-7b78-4a82-abe4-f42f9ee59b61",
+                                   "source":"2014"
+                                }
+                             ]
+                          }
+                       }
                     }
   get:
     description: Get all global projects
@@ -176,34 +200,66 @@ resourceTypes:
         body:
           application/json:
             example:
-                  {
-                     "globalProjects":{
-                        "pagination":{
-                           "from":0,
-                           "returned":1,
-                           "total":1,
-                           "maximum":30,
-                           "sort":{
+                      {
+                         "globalProjects":{
+                            "pagination":{
+                               "from":0,
+                               "returned":2,
+                               "total":2,
+                               "maximum":30,
+                               "sort":{
 
-                           }
-                        },
-                        "globalProjects":[
-                           {
-                              "projectId":"3d65a9bc-af57-4e3e-bc4d-29d661767ac9",
-                              "projectName":"Sample Project Name",
-                              "projectCommonName":"Sample Project Common Name",
-                              "description":"Sample Project description",
-                              "dateCreated":"03-15-2016",
-                              "projects": [ {
-                                               "projectId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
-                                                "schema":"2014",
-                                                "link":"www.hmislynk.com/client-api/rest/v2014/projects/d12a5b43-9411-4fe3-8cd3-0778459d0911"
-                                              }
-                              ]
-                           }
-                        ]
-                     }
-                  }
+                               }
+                            },
+                            "globalProjects":[
+                               {
+                                  "id":"38d97c40-ef8f-465a-9ede-d8933385c0ed",
+                                  "projectName":"name",
+                                  "projectCommonName":"common name",
+                                  "description":"descrption",
+                                  "projects":{
+                                     "projects":[
+                                        {
+                                           "projectId":"f9748a7b-80ac-4ffd-86f7-c8e71416502f",
+                                           "source":"2015",
+                                           "link":"/hmis-clientapi/v2015/rest/projects/f9748a7b-80ac-4ffd-86f7-c8e71416502f"
+                                        },
+                                        {
+                                           "projectId":"9a147cc3-7b78-4a82-abe4-f42f9ee59b61",
+                                           "source":"2014",
+                                           "link":"/hmis-clientapi/v2014/rest/projects/9a147cc3-7b78-4a82-abe4-f42f9ee59b61"
+                                        },
+                                        {
+                                           "projectId":"9d278142-978d-461e-8aea-07d629e462e8",
+                                           "source":"2014",
+                                           "link":"/hmis-clientapi/v2014/rest/projects/9d278142-978d-461e-8aea-07d629e462e8"
+                                        }
+                                     ]
+                                  }
+                               },
+                               {
+                                  "id":"d0242f55-c019-41c2-8f0c-6dadbb38c875",
+                                  "projectName":"Project Name",
+                                  "projectCommonName":"Project common name",
+                                  "description":" description",
+                                  "projects":{
+                                     "projects":[
+                                        {
+                                           "projectId":"f9748a7b-80ac-4ffd-86f7-c8e71416502f",
+                                           "source":"2015",
+                                           "link":"/hmis-clientapi/v2015/rest/projects/f9748a7b-80ac-4ffd-86f7-c8e71416502f"
+                                        },
+                                        {
+                                           "projectId":"9a147cc3-7b78-4a82-abe4-f42f9ee59b61",
+                                           "source":"2014",
+                                           "link":"/hmis-clientapi/v2014/rest/projects/9a147cc3-7b78-4a82-abe4-f42f9ee59b61"
+                                        }
+                                     ]
+                                  }
+                               }
+                            ]
+                         }
+                      }
 /global-projects/{global-projectId}:
   put:
     description: Update selected global project
@@ -238,39 +294,48 @@ resourceTypes:
         body:
           application/json:
             example:
-                  {
-                   "globalProject": {
-                     "projectId":"3d65a9bc-af57-4e3e-bc4d-29d661767ac9",
-                     "projectName":"Sample Project Name",
-                     "projectCommonName":"Sample Project Common Name",
-                     "description":"Sample Project description",
-                      "projects": [ {
-                                       "projectId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
-                                        "schema":"2014",
-                                        "link":"www.hmislynk.com/client-api/rest/v2014/projects/d12a5b43-9411-4fe3-8cd3-0778459d0911"
-                                      }
-                      ]
-
-                   }
-                  }
-  delete:
-    description: Delete selected global project
+                      {
+                         "globalProject":{
+                            "id":"d0242f55-c019-41c2-8f0c-6dadbb38c875",
+                            "projectName":"Project Name",
+                            "projectCommonName":"Project common name",
+                            "description":" description",
+                            "projects":{
+                               "projects":[
+                                  {
+                                     "projectId":"f9748a7b-80ac-4ffd-86f7-c8e71416502f",
+                                     "source":"2015",
+                                     "link":"/hmis-clientapi/v2015/rest/projects/f9748a7b-80ac-4ffd-86f7-c8e71416502f"
+                                  },
+                                  {
+                                     "projectId":"9a147cc3-7b78-4a82-abe4-f42f9ee59b61",
+                                     "source":"2014",
+                                     "link":"/hmis-clientapi/v2014/rest/projects/9a147cc3-7b78-4a82-abe4-f42f9ee59b61"
+                                  }
+                               ]
+                            }
+                         }
+                      }
 /global-projects/{global-projectId}/projects:
   put:
     description: Add projects to selected global project
     body:
       application/json:
         example:
-              {
-                 "projects":{
-                    "project":[
-                       {
-                          "projectId":"d12a5b43-9411-4fe3-8cd3-0778459d0911",
-                          "schema":"2014"
-                       }
-                    ]
-                 }
-              }
+          {
+             "projects":{
+                "projects":[
+                   {
+                      "projectId":"9d278142-978d-461e-8aea-07d629e462e8",
+                      "source":"2014"
+                   },
+                   {
+                      "projectId":"a56fa6d8-b6c9-4838-b376-09af1306c063",
+                      "source":"2016"
+                   }
+                ]
+             }
+          }
     responses:
       200:
         body:
@@ -282,7 +347,65 @@ resourceTypes:
       200:
         body:
           application/json:
-
+/global-projects/${globalProjectId}/users:
+  put:
+    description: Add users to a global project
+    body:
+      application/json:
+        example: |
+                  {
+                  "users":{
+                     "users":[
+                        {
+                           "userId":"8b6c6ef2-87c7-47f0-8874-4cca6f09367c"
+                        },
+                        {
+                           "userId":"8b6c6ef2-87c7-47f0-8874-4cca6f09365c"
+                        },
+                        {
+                           "userId":"183548a8-4f0e-4b3d-a114-c1e3043cf49d"
+                        }
+                     ]
+                  }
+                  }
+  get:
+    description: Retrive a global project users
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                 "users":{
+                    "users":[
+                       {
+                          "userId":"8b6c6ef2-87c7-47f0-8874-4cca6f09367c",
+                          "username":"developeradmin@hmis.com",
+                          "emailAddress":"hmisprojects@gmail.com",
+                          "firstName":"Developer Admin",
+                          "middleName":"Developer Admin",
+                          "lastName":"Developer Admin",
+                          "gender":0,
+                          "status":"ACTIVE",
+                          "link":"/hmis-user-service/rest/accounts/8b6c6ef2-87c7-47f0-8874-4cca6f09367c"
+                       },
+                       {
+                          "userId":"183548a8-4f0e-4b3d-a114-c1e3043cf49d",
+                          "username":"tes11tq@te42223s.com",
+                          "emailAddress":"test@test.com",
+                          "firstName":"First NameTest",
+                          "middleName":"Middle name",
+                          "lastName":"Last Name",
+                          "gender":0,
+                          "status":"ACTIVE",
+                          "link":"/hmis-user-service/rest/accounts/183548a8-4f0e-4b3d-a114-c1e3043cf49d"
+                       }
+                    ]
+                 }
+              }
+/global-projects/${globalProjectId}/users/{userId}:
+  delete:
+    description: Remove users from a global project
 /clients/{clientDedupId}/global-enrollments:
   post:
     description: Create a global enrollment for a client
