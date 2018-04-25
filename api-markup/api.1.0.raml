@@ -1,6 +1,6 @@
 #%RAML 1.0
 title: Global Human Services
-version: 1.3.1
+version: 1.3.2
 mediaType: application/json
 protocols:
   - HTTPS
@@ -891,6 +891,93 @@ resourceTypes:
         body:
           application/json:
             example: |
+/clients/{clientId}/consents/{consentId}/documents:
+  post:
+    description:  |
+      Uploads the consent document (Verbal / signed document) for the client for a specific consent. The content type should be multipart/form-data ( Content-Type: multipart/form-data).
+    body:
+      multipart/form-data:
+        example: |
+                Content-Type: multipart/form-data; boundary=WebKitFormBoundarytujNY4RwDez6d3Hk
+
+                --WebKitFormBoundarytujNY4RwDez6d3Hk--
+                Content-Disposition: form-data; name="image"; filename="image.jpg"
+                Content-Type: application/octet-stream
+
+                ... content of image.jpg ...
+
+                --WebKitFormBoundarytujNY4RwDez6d3Hk--
+    responses:
+      404:
+        body:
+          application/json:
+            example: |
+              {
+                  "errors": [
+                    {
+                      "code": "CLIENT_CONSENT_NOT_FOUND",
+                      "message": "Client consent not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa"
+                    }
+                  ]
+              }
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                 "Documents":{
+                    "documents":[
+                       {
+                          "mimeType":"application/pdf",
+                          "size":169147,
+                          "fileName":"Agenda_Zachary P Test_10Apr2018_1523459800803.pdf",
+                          "documentId":"e3dc78a6-b898-42bb-bf7b-02a1236dc5ab"
+                       },
+                       {
+                          "mimeType":"application/pdf",
+                          "size":169147,
+                          "fileName":"Agenda_Zachary P Test_10Apr2018_1523459739642.pdf",
+                          "documentId":"86c7d8e3-f21e-438a-8a03-bdf12bb33abd"
+                       }
+                    ]
+                 }
+              }
+      404:
+        body:
+          application/json:
+            example: |
+              {
+                  "errors": [
+                    {
+                      "code": "CLIENT_CONSENT_NOT_FOUND",
+                      "message": "Client consent not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa"
+                    }
+                  ]
+              }
+/clients/{clientId}/consents/{consentId}/documents/{documentId}:
+  get:
+    description: Download consent document
+  delete:
+    description: delete consent document
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+      404:
+        body:
+          application/json:
+            example: |
+              {
+                  "errors": [
+                    {
+                      "code": "CLIENT_CONSENT_NOT_FOUND",
+                      "message": "Client consent not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa"
+                    }
+                  ]
+              }
 /clients/{clientId}/consents/{consentId}/projects:
   put:
     description: Add global projects to a client
