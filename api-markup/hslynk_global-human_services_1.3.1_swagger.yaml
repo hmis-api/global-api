@@ -1,0 +1,1051 @@
+openapi: 3.0.0
+info:
+  title: Global Human Services
+  version: "1.3.1"
+servers:
+  - url: 'https://www.hmislynk.com/hmis-globalapi/rest'
+paths:
+  '/search/{searchentity}':
+    get:
+      responses:
+        '200':
+          description: OK – Everything is working.
+          content:
+            application/json:
+              schema:
+                example: |
+                  example search response for client search:
+
+                    {
+                      "searchResults": {
+                        "pagination": {
+                          "total":"2"
+                          "from": "0",
+                          "maximum": "50",
+                          "returned":"2"
+                        },
+                        "items": [
+                          {
+                            "clientId": "65e3df62-dd22-4d07-83ef-6858a6322839",
+                            "firstName": "Eric",
+                            "middleName": "Eric",
+                            "lastName": "Eric",
+                            "nameSuffix": "NS ",
+                            "nameDataQuality": "1",
+                            "ssn": "ssn ",
+                            "ssnDataQuality": "1",
+                            "dob": "1459498034983",
+                            "dobDataQuality": "1",
+                            "race": "1",
+                            "ethnicity": "1",
+                            "gender": "1",
+                            "otherGender": "Test",
+                            "veteranStatus": "8",
+                            "link":"/hmis-clientapi/rest/v2015/clients/65e3df62-dd22-4d07-83ef-6858a6322839"
+                          },
+                          {
+                            "clientId": "cf98b9b2-9a77-4133-99a3-b60f05a12ad1",
+                            "firstName": "Eric",
+                            "middleName": "Eric",
+                            "lastName": "Eric",
+                            "nameSuffix": "NS ",
+                            "nameDataQuality": "1",
+                            "ssn": "ssn ",
+                            "ssnDataQuality": "1",
+                            "dob": "1459498034983",
+                            "dobDataQuality": "1",
+                            "race": "1",
+                            "ethnicity": "1",
+                            "gender": "1",
+                            "otherGender": "Test",
+                            "veteranStatus": "8",
+                            "link":"/hmis-clientapi/rest/v2014/clients/cf98b9b2-9a77-4133-99a3-b60f05a12ad1"
+                          }
+                        ]
+                      }
+                    }
+
+                  and example search response for projects search:
+
+                    {
+                     "searchResults":{
+                        "pagination":{
+                           "from":0,
+                           "returned":1,
+                           "total":1,
+                           "maximum":50,
+                           "sort":{
+                              "field":"id",
+                              "order":"asc"
+                           }
+                        },
+                        "items":[
+                           {
+                              "projectId":"066c95d3-c97c-40b9-b8c1-bf12cafdfca4",
+                              "projectName":"ProjectName_1459515376900",
+                              "projectCommonName":"ProjectCommonName_1459515376900",
+                              "continuumProject":0,
+                              "projectType":2,
+                              "targetPopulation":3,
+                              "trackingMethod":0,
+                              "schemaYear":2015,
+                              "link":"/hmis-clientapi/rest/v2015/projects/066c95d3-c97c-40b9-b8c1-bf12cafdfca4",
+                              "projectGroup":"HO0002"
+                           }
+                        ]
+                      }
+                    }
+        '400':
+          description: Bad Request – The request was invalid or cannot be served.
+        '401':
+          description: Unauthorized – The request requires an user authentication.
+        '403':
+          description: >-
+            Forbidden – The server understood the request, but is refusing it or
+            the access is not allowed.
+        '404':
+          description: Not found – There is no resource behind the URI.
+        '500':
+          description: Internal Server Error
+      description: >
+        The Search API is optimized to find the specific entity you're looking
+        for (e.g., a client, enrollments, etc.).  It's designed to  find the one
+        result you're looking for (or maybe the few results you're looking for).
+        Currently hmislynk supporting search on 'clients' entity only. Just like
+        searching on Google, you sometimes want to see a few pages of search
+        results so that you can find the item that best meets your needs. 
+        HMISLynk Search API provides up to 50 results for each search.  However,
+        the search results can be limited by the client.  Note: Current
+        supporting URI is /search/clients and /search/projects
+      operationId: GET_search-searchentity
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: >
+            The search keywords for clients, as well as any qualifiers.Currently
+            supported search fields are first name,middle name,last
+            name,dob,source system id and ssn. For search on "date of birth"
+            field the format MM-dd-YYYY should be used for the search keyword.
+
+            The seach keywords for projects, as well as any qualifiers. Currenly
+            supported search fields are projectName, projectCommonName,
+            projectId.
+          schema:
+            type: string
+        - name: sort
+          in: query
+          required: true
+          description: The sort field. Default- results are sorted by "created date".
+          schema:
+            type: string
+        - name: order
+          in: query
+          required: true
+          description: >-
+            The sort order if sort parameter is provided. One of asc or desc.
+            Default- desc.
+          schema:
+            default: desc
+            type: string
+        - name: startIndex
+          in: query
+          required: true
+          description: >-
+            The start Index from where the search results should be returned.
+            Default - 0
+          schema:
+            default: 0
+            type: integer
+        - name: maxItems
+          in: query
+          required: true
+          description: >-
+            the number or Items that should be included in the results . Default
+            - 50
+          schema:
+            default: 50
+            type: integer
+        - name: exclude
+          in: query
+          required: true
+          description: >
+            Excludes flieds from the search.Currently it suppoted value is "ssi"
+            (to exclude source system id) only.
+          schema:
+            type: string
+    parameters:
+      - name: searchentity
+        in: path
+        required: true
+        schema:
+          type: string
+  /global-projects:
+    post:
+      description: Create a global project
+      operationId: POST_global-projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                globalProject:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    projectName:
+                      type: string
+                    projectCommonName: 
+                      type: string
+                    description: 
+                      type: string
+                    sourceSystemId:
+                      type: string
+                  required:
+                    - id
+                    - projectName
+                    - projectCommonName
+                    - description
+                    - sourceSystemId
+              required:
+                - globalProject
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                  globalProject:
+                    id: 661189b2-183f-4d03-aba0-7d3050b62a5f
+                    projectName: Project Name
+                    projectCommonName: Project common name
+                    description: description
+                    sourceSystemId: source123
+                    projects:
+                      projects:
+                        - projectId: f9748a7b-80ac-4ffd-86f7-c8e71416502f
+                          source: 2015
+                        - projectId: 9a147cc3-7b78-4a82-abe4-f42f9ee59b61
+                          source: 2014
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                  globalProjects:
+                    pagination:
+                      from: 0
+                      returned: 2
+                      total: 2
+                      maximum: 30
+                      sort: {}
+                    globalProjects:
+                      - id: 38d97c40-ef8f-465a-9ede-d8933385c0ed
+                        projectName: name
+                        projectCommonName: common name
+                        description: description
+                        sourceSystemId: source123
+                        projects:
+                          projects:
+                            - projectId: f9748a7b-80ac-4ffd-86f7-c8e71416502f
+                              source: '2015'
+                              link: >-
+                                /hmis-clientapi/v2015/rest/projects/f9748a7b-80ac-4ffd-86f7-c8e71416502f
+                            - projectId: 9a147cc3-7b78-4a82-abe4-f42f9ee59b61
+                              source: '2014'
+                              link: >-
+                                /hmis-clientapi/v2014/rest/projects/9a147cc3-7b78-4a82-abe4-f42f9ee59b61
+                            - projectId: 9d278142-978d-461e-8aea-07d629e462e8
+                              source: '2014'
+                              link: >-
+                                /hmis-clientapi/v2014/rest/projects/9d278142-978d-461e-8aea-07d629e462e8
+                      - id: d0242f55-c019-41c2-8f0c-6dadbb38c875
+                        projectName: Project Name
+                        projectCommonName: Project common name
+                        description: ' description'
+                        sourceSystemId: source124
+                        projects:
+                          projects:
+                            - projectId: f9748a7b-80ac-4ffd-86f7-c8e71416502f
+                              source: '2015'
+                              link: >-
+                                /hmis-clientapi/v2015/rest/projects/f9748a7b-80ac-4ffd-86f7-c8e71416502f
+                            - projectId: 9a147cc3-7b78-4a82-abe4-f42f9ee59b61
+                              source: '2014'
+                              link: >-
+                                /hmis-clientapi/v2014/rest/projects/9a147cc3-7b78-4a82-abe4-f42f9ee59b61
+      description: Get all global projects
+      operationId: GET_global-projects
+  '/global-projects/{global-projectId}':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  globalProject:
+                    projectId: 3d65a9bc-af57-4e3e-bc4d-29d661767ac9
+                    projectName: Sample Project Name
+                    projectCommonName: Sample Project Common Name
+                    description: Sample Project description
+      description: Update selected global project
+      operationId: PUT_global-projects-global-projectId
+      requestBody:
+        content:
+          application/json:
+            example:
+              globalProject:
+                projectName: Sample Project Name
+                projectCommonName: Sample Project Common Name
+                description: Sample Project description
+            schema:
+              type: string
+        required: true
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  globalProject:
+                    id: d0242f55-c019-41c2-8f0c-6dadbb38c875
+                    projectName: Project Name
+                    projectCommonName: Project common name
+                    description: ' description'
+                    projects:
+                      projects:
+                        - projectId: f9748a7b-80ac-4ffd-86f7-c8e71416502f
+                          source: '2015'
+                          link: >-
+                            /hmis-clientapi/v2015/rest/projects/f9748a7b-80ac-4ffd-86f7-c8e71416502f
+                        - projectId: 9a147cc3-7b78-4a82-abe4-f42f9ee59b61
+                          source: '2014'
+                          link: >-
+                            /hmis-clientapi/v2014/rest/projects/9a147cc3-7b78-4a82-abe4-f42f9ee59b61
+      description: Get selected global project
+      operationId: GET_global-projects-global-projectId
+    parameters:
+      - name: global-projectId
+        in: path
+        required: true
+        schema:
+          type: string
+  '/global-projects/{global-projectId}/projects':
+    put:
+      responses:
+        '200':
+          description: ''
+      description: Add projects to selected global project
+      operationId: PUT_global-projects-global-projectId-projects
+      requestBody:
+        content:
+          application/json:
+            example:
+              projects:
+                projects:
+                  - projectId: 9d278142-978d-461e-8aea-07d629e462e8
+                    source: '2014'
+                  - projectId: a56fa6d8-b6c9-4838-b376-09af1306c063
+                    source: '2016'
+            schema:
+              type: string
+        required: true
+    parameters:
+      - name: global-projectId
+        in: path
+        required: true
+        schema:
+          type: string
+  '/global-projects/{global-projectId}/projects/{projectId}':
+    delete:
+      responses:
+        '200':
+          description: ''
+      description: Remove project from selected global project
+      operationId: DELETE_global-projects-global-projectId-projects-projectId
+    parameters:
+      - name: global-projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+  '/global-projects/${globalProjectId}/users':
+    put:
+      responses:
+        default:
+          description: ''
+      description: Add users to a global project
+      operationId: PUT_global-projects-$globalProjectId-users
+      requestBody:
+        content:
+          application/json:
+            example:
+              users:
+                users:
+                  - userId: 8b6c6ef2-87c7-47f0-8874-4cca6f09367c
+                  - userId: 8b6c6ef2-87c7-47f0-8874-4cca6f09365c
+                  - userId: 183548a8-4f0e-4b3d-a114-c1e3043cf49d
+            schema:
+              type: string
+        required: true
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  users:
+                    users:
+                      - userId: 8b6c6ef2-87c7-47f0-8874-4cca6f09367c
+                        username: developeradmin@hmis.com
+                        emailAddress: hmisprojects@gmail.com
+                        firstName: Developer Admin
+                        middleName: Developer Admin
+                        lastName: Developer Admin
+                        gender: 0
+                        status: ACTIVE
+                        link: >-
+                          /hmis-user-service/rest/accounts/8b6c6ef2-87c7-47f0-8874-4cca6f09367c
+                      - userId: 183548a8-4f0e-4b3d-a114-c1e3043cf49d
+                        username: tes11tq@te42223s.com
+                        emailAddress: test@test.com
+                        firstName: First NameTest
+                        middleName: Middle name
+                        lastName: Last Name
+                        gender: 0
+                        status: ACTIVE
+                        link: >-
+                          /hmis-user-service/rest/accounts/183548a8-4f0e-4b3d-a114-c1e3043cf49d
+      description: Retrive a global project users
+      operationId: GET_global-projects-$globalProjectId-users
+    parameters:
+      - name: globalProjectId
+        in: path
+        required: true
+        schema:
+          type: string
+  '/global-projects/${globalProjectId}/users/{userId}':
+    delete:
+      responses:
+        default:
+          description: ''
+      description: Remove users from a global project
+      operationId: DELETE_global-projects-$globalProjectId-users-userId
+    parameters:
+      - name: globalProjectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+  '/clients/{clientDedupId}/global-enrollments':
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  globalEnrollment:
+                    id: bcd68553-08a0-4463-8713-3619f1022fc1
+                    dedupClientId: b3f60ea0-79a9-11e6-ab44-02f305dabccf
+                    enrollments:
+                      enrollments:
+                        - enrollmentId: 637fbfbb-e75c-49f1-900f-1aa0015aefab
+                          clientId: 6bf95840-8567-469b-9efe-8c6351294e55
+                          source: '2016'
+                          link: >-
+                            hmis-clientapi/v2016/rest/clients/6bf95840-8567-469b-9efe-8c6351294e55/enrollments/637fbfbb-e75c-49f1-900f-1aa0015aefab
+                        - enrollmentId: d12a5b43-9411-4fe3-8cd3-0778459d0085
+                          clientId: d4a9b184-21ea-4136-b9b8-0d59e8ee7b71
+                          source: '2015'
+                          link: >-
+                            hmis-clientapi/v2015/rest/clients/d4a9b184-21ea-4136-b9b8-0d59e8ee7b71/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085
+      description: Create a global enrollment for a client
+      operationId: POST_clients-clientDedupId-global-enrollments
+      requestBody:
+        content:
+          application/json:
+            example:
+              globalEnrollment:
+                enrollments:
+                  enrollments:
+                    - enrollmentId: 637fbfbb-e75c-49f1-900f-1aa0015aefab
+                      source: '2016'
+                      clientId: 6bf95840-8567-469b-9efe-8c6351294e55
+                    - enrollmentId: d12a5b43-9411-4fe3-8cd3-0778459d0085
+                      source: '2015'
+                      clientId: d4a9b184-21ea-4136-b9b8-0d59e8ee7b71
+            schema:
+              type: string
+        required: true
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  globalEnrollments:
+                    pagination:
+                      from: 0
+                      returned: 1
+                      total: 1
+                      maximum: 30
+                      sort: {}
+                    globalEnrollments:
+                      - id: a2919645-c366-49b9-a101-3b803fa15d3d
+                        dedupClientId: b3f60ea0-79a9-11e6-ab44-02f305dabccf
+                        enrollments:
+                          enrollments:
+                            - id: 0ffdf949-b799-43d3-82ca-506478274a74
+                              enrollmentId: 637fbfbb-e75c-49f1-900f-1aa0015aefab
+                              clientId: 6bf95840-8567-469b-9efe-8c6351294e55
+                              source: '2016'
+                              link: >-
+                                hmis-clientapi/v2016/rest/clients/6bf95840-8567-469b-9efe-8c6351294e55/enrollments/637fbfbb-e75c-49f1-900f-1aa0015aefab
+                            - id: 183b0b94-9d14-44ad-ad98-9408b328230d
+                              enrollmentId: d12a5b43-9411-4fe3-8cd3-0778459d0085
+                              clientId: d4a9b184-21ea-4136-b9b8-0d59e8ee7b71
+                              source: '2015'
+                              link: >-
+                                hmis-clientapi/v2015/rest/clients/d4a9b184-21ea-4136-b9b8-0d59e8ee7b71/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085
+      description: Get all global enrollment
+      operationId: GET_clients-clientDedupId-global-enrollments
+    parameters:
+      - name: clientDedupId
+        in: path
+        required: true
+        schema:
+          type: string
+  '/clients/{clientDedupId}/global-enrollments/{global-enrollmentId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  globalEnrollment:
+                    id: a2919645-c366-49b9-a101-3b803fa15d3d
+                    dedupClientId: b3f60ea0-79a9-11e6-ab44-02f305dabccf
+                    enrollments:
+                      enrollments:
+                        - id: 0ffdf949-b799-43d3-82ca-506478274a74
+                          enrollmentId: 637fbfbb-e75c-49f1-900f-1aa0015aefab
+                          clientId: 6bf95840-8567-469b-9efe-8c6351294e55
+                          source: '2016'
+                          link: >-
+                            hmis-clientapi/v2016/rest/clients/6bf95840-8567-469b-9efe-8c6351294e55/enrollments/637fbfbb-e75c-49f1-900f-1aa0015aefab
+                        - id: 183b0b94-9d14-44ad-ad98-9408b328230d
+                          enrollmentId: d12a5b43-9411-4fe3-8cd3-0778459d0085
+                          clientId: d4a9b184-21ea-4136-b9b8-0d59e8ee7b71
+                          source: '2015'
+                          link: >-
+                            hmis-clientapi/v2015/rest/clients/d4a9b184-21ea-4136-b9b8-0d59e8ee7b71/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085
+      description: Get selected global enrollment
+      operationId: GET_clients-clientDedupId-global-enrollments-global-enrollmentId
+    delete:
+      responses:
+        default:
+          description: ''
+      description: Delete selected global enrollment
+      operationId: DELETE_clients-clientDedupId-global-enrollments-global-enrollmentId
+    parameters:
+      - name: clientDedupId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: global-enrollmentId
+        in: path
+        required: true
+        schema:
+          type: string
+  '/clients/{clientDedupId}/global-enrollments/{global-enrollmentId}/enrollments':
+    put:
+      responses:
+        '200':
+          description: ''
+      description: Add enrollment to selected global enrollment
+      operationId: >-
+        PUT_clients-clientDedupId-global-enrollments-global-enrollmentId-enrollments
+      requestBody:
+        content:
+          application/json:
+            example:
+              enrollments:
+                enrollments:
+                  - enrollmentId: 637fbfbb-e75c-49f1-900f-1aa0015aefab
+                    source: '2016'
+                    clientId: 6bf95840-8567-469b-9efe-8c6351294e55
+                  - enrollmentId: d12a5b43-9411-4fe3-8cd3-0778459d0085
+                    source: '2015'
+                    clientId: d4a9b184-21ea-4136-b9b8-0d59e8ee7b71
+            schema:
+              type: string
+        required: true
+    parameters:
+      - name: clientDedupId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: global-enrollmentId
+        in: path
+        required: true
+        schema:
+          type: string
+  '/clients/{clientDedupId}/global-enrollments/{global-enrollmentId}/enrollments/{enrollmentId}':
+    delete:
+      responses:
+        '200':
+          description: ''
+      description: Remove enrollment from selected global enrollment
+      operationId: >-
+        DELETE_clients-clientDedupId-global-enrollments-global-enrollmentId-enrollments-enrollmentId
+    parameters:
+      - name: clientDedupId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: global-enrollmentId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: enrollmentId
+        in: path
+        required: true
+        schema:
+          type: string
+  /notifications:
+    post:
+      responses:
+        '200':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  errors:
+                    error:
+                      - message: Email body is required
+      description: >-
+        API to create a notification request. Any one of the recipients is
+        mandatory (TO, CC or BCC). Multiple email addresses should be comma
+        delimeted. "Body" and "Subject" are mandatory fields. Notification can
+        be sent with "HIGH" priority by setting the "priority" value to 1. None
+        of the elements with in "additionalInfo" section are mandatory.
+      operationId: POST_notifications
+      requestBody:
+        content:
+          application/json:
+            example:
+              notification:
+                method: EMAIL
+                data:
+                  recipients:
+                    toRecipients:
+                      - surya.yadavalli@gmail.com
+                      - surya.yadavalli@hmislynk.com
+                    bccRecipients:
+                      - jceleldon@ctagroup.com
+                    ccRecipients:
+                      - admin@ctagroup.com
+                  body: Test message
+                  subject: Test subject
+                  priority: 1
+                additionalInfo:
+                  messageType: Cancellation Notice
+                  recipientType: clientID
+                  recipientId: 18a93ad8-cced-49c5-9185-9cb3da9de89b
+            schema:
+              type: string
+        required: true
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  notifications:
+                    pagination:
+                      from: 0
+                      total: 13
+                      maximum: 2
+                      sort: {}
+                    notifications:
+                      - data:
+                          subject: Test subject
+                          status: CREATED
+                          recipients:
+                            toRecipients:
+                              - surya.yadavalli@gmail.com
+                            bccRecipients:
+                              - surya.yadavalli@gmail.com
+                            ccRecipients:
+                              - surya.yadavalli@gmail.com
+                          body: Test message
+                          parameters:
+                            parameter: []
+                        method: EMAIL
+                        additionalInfo:
+                          recipientType: Client
+                          recipientId: 6997cbb0-4485-4ac8-9a40-f8099726c9e3
+                          messageType: message type
+                        createdTimeStamp: '01-21-2018 09:54'
+                        lastStatusTimeStamp: '01-21-2018 09:54'
+                      - data:
+                          subject: Test subject
+                          status: FAILED
+                          statusMessage: Invalid recipient email address
+                          recipients:
+                            toRecipients:
+                              - surya.yadavalli@gmail.com
+                            bccRecipients:
+                              - surya.yadavalli@gmail.com
+                              - support@hslynk.com
+                            ccRecipients:
+                              - surya.yadavalli@gmail.com
+                          body: Test message
+                          parameters:
+                            parameter: []
+                        method: EMAIL
+                        additionalInfo:
+                          recipientType: ClientId
+                          recipientId: 6997cbb0-4485-4ac8-9a40-f8099726c9e3
+                          messageType: Cancellation Notice
+                        createdTimeStamp: '01-21-2018 21:02'
+                        lastStatusTimeStamp: '01-21-2018 21:02'
+      description: >2-
+         GET the notification details along with their current status and timestamps. These details can be filtered using the following query parameters. Few examples below 
+
+        * hmis-globalapi/rest/notifications?fromdate=1516546276760 - Returns all
+        the notifications sent from Sun Jan 21 2018 14:51:16 
+
+
+        *
+        hmis-globalapi/rest/notifications?fromdate=1516521600000&todate=1516693923129
+        - Returns all notifications sent between Sun Jan 21 2018 08:00:00 and
+        Tue Jan 23 2018 07:52:03 
+
+
+        * hmis-globalapi/rest/notifications?status=CREATED,DELIVERED - Returns
+        all notifications that are with status CREATED and DELIVERED 
+
+
+        *
+        hmis-globalapi/rest/notifications?recipienttype=clientid&recipientid=cf98b9b2-9a77-4133-99a3-b60f05a12ad1
+        - Returns all notifications associated with the client Id
+        cf98b9b2-9a77-4133-99a3-b60f05a12ad1 
+
+
+        *
+        hmis-globalapi/rest/notifications?status=DELIVERED&recipienttype=clientid&recipientid=cf98b9b2-9a77-4133-99a3-b60f05a12ad1
+        - Returns all notifications delivered to client Id
+        cf98b9b2-9a77-4133-99a3-b60f05a12ad1 
+
+
+        *
+        hmis-globalapi/rest/notifications?fromdate=1516546276760&recipienttype=clientid&recipientid=cf98b9b2-9a77-4133-99a3-b60f05a12ad1
+        - Returns all notifications associated with the client Id from Sun Jan
+        21 2018 14:51:16 
+      operationId: GET_notifications
+      parameters:
+        - name: fromdate
+          in: query
+          description: >
+            "From date" in millisecods - This will fetch all the notifications
+            starting from this date/time.
+          schema:
+            type: number
+        - name: todate
+          in: query
+          description: >
+            "To date" in millisecods  - This will fetch all the notifications
+            until this date / time.
+          schema:
+            type: number
+        - name: recipienttype
+          in: query
+          description: >-
+            Recipient Type - Currently supported recipient Type is only
+            "ClientID"
+          schema:
+            type: string
+        - name: recipientid
+          in: query
+          description: >
+            Recipient Id -  The client identifier (UUID) example:
+            "cf98b9b2-9a77-4133-99a3-b60f05a12ad1"
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: >-
+            status - Possible statuses that a notification can have CREATED ,
+            DELIVERED , FAILED
+          schema:
+            type: string
+        - name: startIndex
+          in: query
+          description: >-
+            The start Index from where the search results should be returned.
+            Default - 0
+          schema:
+            type: number
+        - name: maxItems
+          in: query
+          description: >-
+            the number or Items that should be included in the results . Default
+            - 200
+          schema:
+            type: number
+  '/clients/{clientId}/consents':
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  consent:
+                    clientId: dcdf2326-0d96-43eb-8368-501b29145c53
+                    startTime: 1519914315641
+                    endTime: 1543602600000
+                    globalProjects:
+                      - id: 4b84cb25-d27e-458e-ad5d-d817f30390d2
+                        projects:
+                          projects: []
+                    consentId: db51219d-f439-4250-bdf2-7a1a07816832
+      description: Create client consents
+      operationId: POST_clients-clientId-consents
+      requestBody:
+        content:
+          application/json:
+            example:
+              consent:
+                clientId: dcdf2326-0d96-43eb-8368-501b29145c53
+                startTime: 1519914315641
+                endTime: 1543602600000
+                globalProjects:
+                  - id: 4b84cb25-d27e-458e-ad5d-d817f30390d2
+            schema:
+              type: string
+        required: true
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  consents:
+                    pagination:
+                      from: 0
+                      returned: 1
+                      total: 1
+                      maximum: 30
+                      sort: {}
+                    consents:
+                      - clientId: dcdf2326-0d96-43eb-8368-501b29145c53
+                        status: APPROVED
+                        startTime: 1519914315641
+                        endTime: 1543602600000
+                        globalProjects:
+                          - id: 4b84cb25-d27e-458e-ad5d-d817f30390d2
+                            projectName: Project Name
+                            projectCommonName: Project common name
+                            description: ' description'
+                            projects:
+                              projects: []
+                          - id: 6c0f6f77-ba6c-4365-9ce5-3fe65ccdbe86
+                            projectName: Project Name
+                            projectCommonName: Project common name
+                            description: ' description'
+                            projects:
+                              projects: []
+                        consentId: db51219d-f439-4250-bdf2-7a1a07816832
+      description: Get consents of selected client
+      operationId: GET_clients-clientId-consents
+    parameters:
+      - name: clientId
+        in: path
+        required: true
+        schema:
+          type: string
+  '/clients/{clientId}/consents/{consentId}':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example: ''
+      description: Update a client's consent
+      operationId: PUT_clients-clientId-consents-consentId
+      requestBody:
+        content:
+          application/json:
+            example: |
+              {
+               "consent":{
+                  "startTime":1519914315641,
+                  "endTime":1543602600000
+               }
+            schema:
+              type: string
+        required: true
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  consent:
+                    clientId: dcdf2326-0d96-43eb-8368-501b29145c53
+                    startTime: 1519914315641
+                    endTime: 1543602600000
+                    globalProjects:
+                      - id: 4b84cb25-d27e-458e-ad5d-d817f30390d2
+                        projects:
+                          projects: []
+                    consentId: db51219d-f439-4250-bdf2-7a1a07816832
+      description: Retrive a client's consent
+      operationId: GET_clients-clientId-consents-consentId
+    delete:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example: ''
+      description: Delete a client's consent
+      operationId: DELETE_clients-clientId-consents-consentId
+    parameters:
+      - name: clientId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: consentId
+        in: path
+        required: true
+        schema:
+          type: string
+  '/clients/{clientId}/consents/{consentId}/projects':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example: ''
+      description: Add global projects to a client
+      operationId: PUT_clients-clientId-consents-consentId-projects
+      requestBody:
+        content:
+          application/json:
+            example:
+              globalProjects:
+                globalProjects:
+                  - id: 6c0f6f77-ba6c-4365-9ce5-3fe65ccdbe86
+            schema:
+              type: string
+        required: true
+    parameters:
+      - name: clientId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: consentId
+        in: path
+        required: true
+        schema:
+          type: string
+  '/clients/{clientId}/consents/{consentId}/projects/{globalProjectId}':
+    delete:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example: ''
+      description: Remove global project from a client consent
+      operationId: DELETE_clients-clientId-consents-consentId-projects-globalProjectId
+    parameters:
+      - name: clientId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: consentId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: globalProjectId
+        in: path
+        required: true
+        schema:
+          type: string
+components:
+  schemas: {}
+  responses: {}
+  parameters: {}
+  examples: {}
+  requestBodies: {}
+  headers: {}
+  securitySchemes:
+    oauth_2_0:
+      description: |
+        The HMIS API supports OAuth 2.0 for authenticating all API requests.
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: 'https://hmislynk.com/hmis-authorization-service/rest/token'
+          scopes:
+            user: ''
+            administrator: ''
+  links: {}
+  callbacks: {}
