@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Global Human Services
-  version: 1.3.0
+  version: "1.3.1"
 servers:
   - url: 'https://www.hmislynk.com/hmis-globalapi/rest'
 paths:
@@ -182,9 +182,39 @@ paths:
           type: string
   /global-projects:
     post:
+      description: Create a global project
+      operationId: POST_global-projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                globalProject:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    projectName:
+                      type: string
+                    projectCommonName: 
+                      type: string
+                    description: 
+                      type: string
+                    sourceSystemId:
+                      type: string
+                  required:
+                    - id
+                    - projectName
+                    - projectCommonName
+                    - description
+                    - sourceSystemId
+              required:
+                - globalProject
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -193,36 +223,18 @@ paths:
                     id: 661189b2-183f-4d03-aba0-7d3050b62a5f
                     projectName: Project Name
                     projectCommonName: Project common name
-                    description: ' description'
+                    description: description
+                    sourceSystemId: source123
                     projects:
                       projects:
                         - projectId: f9748a7b-80ac-4ffd-86f7-c8e71416502f
-                          source: '2015'
+                          source: 2015
                         - projectId: 9a147cc3-7b78-4a82-abe4-f42f9ee59b61
-                          source: '2014'
-      description: Create a global project
-      operationId: POST_global-projects
-      requestBody:
-        content:
-          application/json:
-            example:
-              globalProject:
-                projectName: Project Name
-                projectCommonName: Project common name
-                description: ' description'
-                projects:
-                  projects:
-                    - projectId: f9748a7b-80ac-4ffd-86f7-c8e71416502f
-                      source: '2015'
-                    - projectId: 9a147cc3-7b78-4a82-abe4-f42f9ee59b61
-                      source: '2014'
-            schema:
-              type: string
-        required: true
+                          source: 2014
     get:
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -238,7 +250,8 @@ paths:
                       - id: 38d97c40-ef8f-465a-9ede-d8933385c0ed
                         projectName: name
                         projectCommonName: common name
-                        description: descrption
+                        description: description
+                        sourceSystemId: source123
                         projects:
                           projects:
                             - projectId: f9748a7b-80ac-4ffd-86f7-c8e71416502f
@@ -257,6 +270,7 @@ paths:
                         projectName: Project Name
                         projectCommonName: Project common name
                         description: ' description'
+                        sourceSystemId: source124
                         projects:
                           projects:
                             - projectId: f9748a7b-80ac-4ffd-86f7-c8e71416502f
