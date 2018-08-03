@@ -290,7 +290,6 @@ paths:
           description: ''
           content:
             application/json:
-              schema:
                 example:
                   globalProject:
                     projectId: 3d65a9bc-af57-4e3e-bc4d-29d661767ac9
@@ -307,8 +306,6 @@ paths:
                 projectName: Sample Project Name
                 projectCommonName: Sample Project Common Name
                 description: Sample Project description
-            schema:
-              type: string
         required: true
     get:
       responses:
@@ -351,15 +348,14 @@ paths:
       requestBody:
         content:
           application/json:
-            example:
-              projects:
-                projects:
-                  - projectId: 9d278142-978d-461e-8aea-07d629e462e8
-                    source: '2014'
-                  - projectId: a56fa6d8-b6c9-4838-b376-09af1306c063
-                    source: '2016'
             schema:
-              type: string
+              example:
+                projects:
+                  projects:
+                  -  projectId: f9748a7b-80ac-4ffd-86f7-c8e71416502f
+                     source: 2015
+                  -  projectId: 9a147cc3-7b78-4a82-abe4-f42f9ee59b61
+                     source: '2014'
         required: true
     parameters:
       - name: global-projectId
