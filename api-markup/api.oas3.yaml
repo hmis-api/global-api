@@ -1025,6 +1025,163 @@ paths:
         required: true
         schema:
           type: string
+  '/generic-enrollments' :
+    post:
+      description: Create a Generic Enrllment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                genericEnrollment:
+                  globalEnrollmentId: 11d0839d-07ca-43e2-add0-5c848a306085
+                  globalProjectId: 6c0f6f77-ba6c-4365-9ce5-3fe65ccdbe86
+                  active: true
+                  startTime: 08-09-2018 10:11
+                  endTime: 08-09-2019 10:11
+                  globalHouseHoldId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                  genericEnrollment:
+                    id: 39f899ae-e21c-4c81-ab2f-d166ae0d79e7
+                    globalEnrollmentId: 11d0839d-07ca-43e2-add0-5c848a306085
+                    globalProjectId: 6c0f6f77-ba6c-4365-9ce5-3fe65ccdbe86
+                    active: true
+                    globalHouseHoldId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
+                    startTime: 08-09-2018 10:11
+                    endTime: 08-09-2019 10:11
+        '404':
+         description: Global Project not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: Global Project not found                    
+    get:
+      description: Read all generic enrollment of a project group
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                  globalEnrollments:
+                    pagination:
+                      from: 0
+                      returned: 3
+                      total: 3
+                      maximum: 30
+                      sort: {}
+                    globalEnrollments:
+                    - id: b2ae7fd1-9782-46cf-89fd-9a730f3c0189
+                      globalEnrollmentId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
+                      globalProjectId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
+                      active: true
+                      globalHouseHoldId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
+                      startTime: 08-09-2018 10:11
+                      endTime: 08-09-2019 10:11
+                    - id: 3586814f-9601-498a-98de-1adabf610936
+                      globalEnrollmentId: 158d2457-5fd7-49b4-82ff-2549cf0ea397
+                      globalProjectId: 158d2457-5fd7-49b4-82ff-2549cf0ea396
+                      active: true
+                      globalHouseHoldId: 158d2457-5fd7-49b4-82ff-2549cf0ea398
+                      startTime: 08-09-2017 10:11
+                      endTime: 08-09-2020 10:11
+                    - id: 39f899ae-e21c-4c81-ab2f-d166ae0d79e7
+                      globalEnrollmentId: 11d0839d-07ca-43e2-add0-5c848a306085
+                      globalProjectId: 6c0f6f77-ba6c-4365-9ce5-3fe65ccdbe86
+                      active: true
+                      globalHouseHoldId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
+                      startTime: 08-09-2018 10:11
+                      endTime: 08-09-2020 10:11
+  '/generic-enrollments/{generic-enrollmentId}':       
+    parameters:
+      - name: generic-enrollmentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: "UUID"
+    put:
+      description: Update existing genric enrollment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                genericEnrollment:
+                  globalEnrollmentId: 11d0839d-07ca-43e2-add0-5c848a306085
+                  globalProjectId: 6c0f6f77-ba6c-4365-9ce5-3fe65ccdbe86
+                  active: true
+                  startTime: 08-09-2018 10:11
+                  endTime: 08-09-2019 10:11
+                  globalHouseHoldId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
+      responses:
+        '200':
+          description: Success
+        '404':
+         description: Generic Enrollment not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: Generic enrollment not found          
+    delete:
+      description: Delete existing generic enrollment
+      responses:
+        '200':
+         description: Success
+        '404':
+         description: Generic Enrollment not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: Generic enrollment not found
+    get:
+     description: Read existing generic enrollment
+     responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                  genericEnrollment:
+                    id: 39f899ae-e21c-4c81-ab2f-d166ae0d79e7
+                    globalEnrollmentId: 11d0839d-07ca-43e2-add0-5c848a306085
+                    globalProjectId: 6c0f6f77-ba6c-4365-9ce5-3fe65ccdbe86
+                    active: true
+                    globalHouseHoldId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
+                    startTime: 08-09-2018 10:11
+                    endTime: 08-09-2019 10:11
+        '404':
+         description: Generic Enrollment not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: Generic Enrollment not found                    
 components:
   schemas: {}
   responses: {}
