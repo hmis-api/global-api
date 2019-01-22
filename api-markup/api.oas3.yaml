@@ -16,88 +16,67 @@ paths:
           content:
             application/json:
               schema:
-                example: |
-                  example search response for client search:
-
-                    {
-                      "searchResults": {
-                        "pagination": {
-                          "total":"2"
-                          "from": "0",
-                          "maximum": "50",
-                          "returned":"2"
-                        },
-                        "items": [
-                          {
-                            "clientId": "65e3df62-dd22-4d07-83ef-6858a6322839",
-                            "firstName": "Eric",
-                            "middleName": "Eric",
-                            "lastName": "Eric",
-                            "nameSuffix": "NS ",
-                            "nameDataQuality": "1",
-                            "ssn": "ssn ",
-                            "ssnDataQuality": "1",
-                            "dob": "1459498034983",
-                            "dobDataQuality": "1",
-                            "race": "1",
-                            "ethnicity": "1",
-                            "gender": "1",
-                            "otherGender": "Test",
-                            "veteranStatus": "8",
-                            "link":"/hmis-clientapi/rest/v2015/clients/65e3df62-dd22-4d07-83ef-6858a6322839"
-                          },
-                          {
-                            "clientId": "cf98b9b2-9a77-4133-99a3-b60f05a12ad1",
-                            "firstName": "Eric",
-                            "middleName": "Eric",
-                            "lastName": "Eric",
-                            "nameSuffix": "NS ",
-                            "nameDataQuality": "1",
-                            "ssn": "ssn ",
-                            "ssnDataQuality": "1",
-                            "dob": "1459498034983",
-                            "dobDataQuality": "1",
-                            "race": "1",
-                            "ethnicity": "1",
-                            "gender": "1",
-                            "otherGender": "Test",
-                            "veteranStatus": "8",
-                            "link":"/hmis-clientapi/rest/v2014/clients/cf98b9b2-9a77-4133-99a3-b60f05a12ad1"
-                          }
-                        ]
-                      }
-                    }
-
-                  and example search response for projects search:
-
-                    {
-                     "searchResults":{
-                        "pagination":{
-                           "from":0,
-                           "returned":1,
-                           "total":1,
-                           "maximum":50,
-                           "sort":{
-                              "field":"id",
-                              "order":"asc"
+                example: 
+                        {
+                           "searchResults":{
+                              "pagination":{
+                                 "from":0,
+                                 "returned":2,
+                                 "total":2,
+                                 "maximum":50,
+                                 "sort":{
+                                    "field":"id",
+                                    "order":"asc"
+                                 }
+                              },
+                              "items":[
+                                 {
+                                    "clientId":"08bd3d50-cb87-41ac-8b64-b3dc3853c411",
+                                    "dedupClientId":"35ad2c10-184d-11e8-985f-02fe61f7863e",
+                                    "firstName":"Przemyslaw",
+                                    "middleName":"Piotr",
+                                    "lastName":"Gorecki",
+                                    "nameSuffix":"undefined",
+                                    "nameDataQuality":1,
+                                    "ssn":"111-11-1111",
+                                    "ssnDataQuality":1,
+                                    "dob":315532800000,
+                                    "dobDataQuality":1,
+                                    "race":5,
+                                    "ethnicity":0,
+                                    "gender":1,
+                                    "veteranStatus":1,
+                                    "sourceSystemId":"FzFxvqMDjE8w2nAMP",
+                                    "link":"/hmis-clientapi/rest/v2015/clients/08bd3d50-cb87-41ac-8b64-b3dc3853c411",
+                                    "projectGroupCode":"PG0001",
+                                    "phoneNumber":"undefined",
+                                    "emailAddress":"przemyslaw@toptal.com"
+                                 },
+                                 {
+                                    "clientId":"79181dff-2acb-45a9-b78f-380b13082af6",
+                                    "dedupClientId":"1ba28d40-1dfd-11e9-985f-02fe61f7863e",
+                                    "firstName":"Przemyslaw1",
+                                    "middleName":"Piotr",
+                                    "lastName":"Gorecki",
+                                    "nameSuffix":"undefined",
+                                    "nameDataQuality":1,
+                                    "ssn":"111-11-1234",
+                                    "ssnDataQuality":1,
+                                    "dob":315532800000,
+                                    "dobDataQuality":1,
+                                    "race":5,
+                                    "ethnicity":0,
+                                    "gender":1,
+                                    "veteranStatus":1,
+                                    "sourceSystemId":"FzFxvqMDjE8w2nAMP",
+                                    "link":"/hmis-clientapi/rest/v2015/clients/79181dff-2acb-45a9-b78f-380b13082af6",
+                                    "projectGroupCode":"PG0001",
+                                    "phoneNumber":"+919440060881",
+                                    "emailAddress":"przemyslaw@toptal.com"
+                                 }
+                              ]
                            }
-                        },
-                        "items":[
-                           {
-                              "projectId":"066c95d3-c97c-40b9-b8c1-bf12cafdfca4",
-                              "projectName":"ProjectName_1459515376900",
-                              "projectCommonName":"ProjectCommonName_1459515376900",
-                              "continuumProject":0,
-                              "projectType":2,
-                              "targetPopulation":3,
-                              "trackingMethod":0,
-                              "schemaYear":2015,
-                              "link":"/hmis-clientapi/rest/v2015/projects/066c95d3-c97c-40b9-b8c1-bf12cafdfca4",
-                              "projectGroup":"HO0002"
-                           }
-                        ]
-                      }
-                    }
+                        }
         '400':
           description: Bad Request – The request was invalid or cannot be served.
         '401':
