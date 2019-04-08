@@ -1329,7 +1329,7 @@ paths:
                     
                     **Note :** \
                          * [API](https://api.hslynk.com/?urls.primaryName=User%20Service%20%20Api#/default/GET_projectgroups) to get project groups \
-                         * [API](https://api.hslynk.com/?urls.primaryName=User%20Service%20%20Api#/default/GET_projectgroups) to get profiles. \
+                         * [API](https://api.hslynk.com/?urls.primaryName=User%20Service%20%20Api#/default/GET_profiles) to get profiles. \
                          * grantType attribute supports R (for read permission) / W ( for read and write permission) only. Default grant type is **R**.
 
       requestBody:
