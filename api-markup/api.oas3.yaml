@@ -1322,6 +1322,239 @@ paths:
                 - code: REQUEST_RESOURCE_NOTFOUND
                   message: Global Household not found                                      
    
+  '/sharingrules' :
+    post: 
+      description: |
+                    To create a sharing rule
+                    
+                    **Note :** \
+                         * [API](https://api.hslynk.com/?urls.primaryName=User%20Service%20%20Api#/default/GET_projectgroups) to get project groups \
+                         * [API](https://api.hslynk.com/?urls.primaryName=User%20Service%20%20Api#/default/GET_projectgroups) to get profiles. \
+                         * grantType attribute supports R (for read permission) / W ( for read and write permission) only. Default grant type is **R**.
+
+      requestBody:
+         required: true
+         content:
+          application/json:
+           schema:
+             example:
+               sharingRule:
+                 toProjectGroup:
+                   projectGroupCode: TT0015
+                 project:
+                   id: 9ae9ee08-a0eb-4c24-a945-5cd35dcdba91
+                 profile:
+                   id: 305bc184-547c-476f-aada-cd32f2c26034
+                 user:
+                   username: 'surya.yadavalli@gmail.com'
+                 grantType: 'R'
+
+      responses:
+       '200':
+         description: Success
+         content:
+          application/json:
+            schema:
+              example:
+                  sharingRule:
+                    sharingRuleId: 4a62ec6a-b330-4ff5-84bc-a6f4a37dfffa
+                               
+       '404':
+        description: Global Household not found
+        content:
+         application/json:
+          schema:
+           example:
+            errors:
+              error:
+              - code: REQUEST_RESOURCE_NOTFOUND
+                message: Global project not found                    
+    get:
+      description: Read all sharing rules
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                      sharingrules:
+                        pagination:
+                          from: 0
+                          returned: 2
+                          total: 30
+                          maximum: 30
+                          sort: {}
+                        sharingRule:
+                        - sharingRuleId: 79c9715a-1172-44e4-9000-f8a87d95edbd
+                          grantType: 'R'
+                          project:
+                            id: d6ba2cc1-6992-4846-8683-f4bbc467ccda
+                            projectName: Project Name
+                            projectCommonName: Project common name
+                            description: " description"
+                            projects:
+                              projects: []
+                        - sharingRuleId: 79c9715a-1172-44e4-9000-f8a87d95edbd
+                          grantType: 'W'
+                          project:
+                            id: d6ba2cc1-6992-4846-8683-f4bbc467ccda
+                            projectName: Project Name
+                            projectCommonName: Project common name
+                            description: " description"
+                            projects:
+                              projects: []
+                          profile:
+                            profileName: Standard Profile
+                            profileDescription: Standard Profile
+                            apiMethods: []
+                            id: 004aed07-b4d4-4696-b8f6-1607f6f49bac
+                          user:
+                            accountId: 49ebdffb-64e3-4287-aa7a-58d98a3a90d9
+                            username: eric@ejahn.net
+                            emailAddress: eric@ejahn.net
+                            firstName: Eric
+                            lastName: Jahn
+                            gender: 0
+                            status: ACTIVE
+                            twoFactorAuthentication: false
+                            projectGroup:
+                              projectGroupName: PROJECT_GROUP_NAME
+                              projectGroupDesc: PROJECT_GROUP_DESCRIPTION
+                              projectGroupId: 9b9792ca-8730-4d21-9a39-6902229fd4b9
+                              projectGroupCode: PG0001
+                              skipuseridentifers: false
+                              bucketName: pg0001-6546a3c1-5cc3-4d9c-afd6-691a2704d8b9
+                              projects: []
+                            profile:
+                              profileName: Developer Profile
+                              profileDescription: Developer Profile
+                              apiMethods: []
+                              id: 1ebd9476-600c-463f-8c3d-bf8accad472b
+                            roles: []
+
+  '/sharingrules/{sharingrules-id}' :
+    parameters:
+    - name: sharingrules-id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: "UUID"
+    put:
+      description: Update a sharing rule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+               sharingRule:
+                 toProjectGroup:
+                   projectGroupCode: TT0015
+                 project:
+                   id: 9ae9ee08-a0eb-4c24-a945-5cd35dcdba91
+                 profile:
+                   id: 305bc184-547c-476f-aada-cd32f2c26034
+                 user:
+                   username: 'surya.yadavalli@gmail.com'
+                 grantType: 'R'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+        '404':
+          description: not found
+          content:
+           application/json:
+            schema:
+             example:
+               errors:
+                 error:
+                 - code: REQUEST_RESOURCE_NOTFOUND
+                   message: profile not found                    
+    get:
+      description: Read selected sharing rule
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                    sharingRule:
+                      sharingRuleId: 79c9715a-1172-44e4-9000-f8a87d95edbd
+                      grantType: 'R'
+                      project:
+                        id: d6ba2cc1-6992-4846-8683-f4bbc467ccda
+                        projectName: Project Name
+                        projectCommonName: Project common name
+                        description: " description"
+                        projects:
+                          projects: []
+                      profile:
+                        profileName: Standard Profile
+                        profileDescription: Standard Profile
+                        apiMethods: []
+                        id: 004aed07-b4d4-4696-b8f6-1607f6f49bac
+                      user:
+                        accountId: 49ebdffb-64e3-4287-aa7a-58d98a3a90d9
+                        username: eric@ejahn.net
+                        emailAddress: eric@ejahn.net
+                        firstName: Eric
+                        lastName: Jahn
+                        gender: 0
+                        status: ACTIVE
+                        twoFactorAuthentication: false
+                        projectGroup:
+                          projectGroupName: PROJECT_GROUP_NAME
+                          projectGroupDesc: PROJECT_GROUP_DESCRIPTION
+                          projectGroupId: 9b9792ca-8730-4d21-9a39-6902229fd4b9
+                          projectGroupCode: PG0001
+                          skipuseridentifers: false
+                          bucketName: pg0001-6546a3c1-5cc3-4d9c-afd6-691a2704d8b9
+                          projects: []
+                        profile:
+                          profileName: Developer Profile
+                          profileDescription: Developer Profile
+                          apiMethods: []
+                          id: 1ebd9476-600c-463f-8c3d-bf8accad472b
+                        roles: []
+
+
+        '404':
+         description: Resource not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: Sharing rule not found                    
+    delete:
+      description: Delete an existing sharing rule
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+        '404':
+         description: Sharing rule not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: Sharing rule not found                                   
+
 
 components:
   schemas: {}
