@@ -1349,7 +1349,7 @@ paths:
 
       responses:
        '204':
-         description: An empty response will send
+         description: An empty response will be sent to the client.
        '404':
         description: Global project not found
         content:
@@ -1361,7 +1361,7 @@ paths:
                     - code: REQUEST_RESOURCE_NOTFOUND
                       message: Global project not found                    
        '403':
-        description: Unauthorized – The request requires user authentication.
+        description: Unauthorized – User is not authorized this perform this operation.
         content:
          application/json:
             schema:
@@ -1403,7 +1403,7 @@ paths:
                         projectName: Project Name
                       grantType: 'W'          
        '403':
-        description: Unauthorized – The request requires user authentication.
+        description: Unauthorized – User is not authorized this perform this operation.
         content:
          application/json:
             schema:
@@ -1454,7 +1454,7 @@ paths:
                  - code: REQUEST_RESOURCE_NOTFOUND
                    message: role not found                    
         '403':
-         description: Unauthorized – The request requires user authentication.
+         description: Unauthorized – User is not authorized this perform this operation.
          content:
           application/json:
             schema:
@@ -1490,7 +1490,7 @@ paths:
                 - code: REQUEST_RESOURCE_NOTFOUND
                   message: Sharing rule not found       
         '403':
-         description: Unauthorized – The request requires user authentication.
+         description: Unauthorized – User is not authorized this perform this operation.
          content:
           application/json:
             schema:
@@ -1519,7 +1519,7 @@ paths:
                 - code: REQUEST_RESOURCE_NOTFOUND
                   message: Sharing rule not found                                   
         '403':
-         description: Unauthorized – The request requires user authentication.
+         description: Unauthorized – User is not authorized this perform this operation.
          content:
           application/json:
             schema:
@@ -1543,7 +1543,7 @@ components:
       type: oauth2
       flows:
         password:
-          tokenUrl: 'https://hmislynk.com/hmis-authorization-service/rest/token'
+          tokenUrl: 'https://hslynk.com/hmis-authorization-service/rest/token'
           scopes:
             user: ''
             administrator: ''
