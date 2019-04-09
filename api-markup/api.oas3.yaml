@@ -1348,24 +1348,28 @@ paths:
                   grantType: 'R'
 
       responses:
-       '200':
-         description: Success
-         content:
-          application/json:
-            schema:
-              example:
-                  sharingRule:
-                               
+       '204':
+         description: An empty response will send
        '404':
-        description: Global Household not found
+        description: Global project not found
         content:
          application/json:
-          schema:
-           example:
-            errors:
-              error:
-              - code: REQUEST_RESOURCE_NOTFOUND
-                message: Global project not found                    
+            schema:
+               example:
+                  errors:
+                    error:
+                    - code: REQUEST_RESOURCE_NOTFOUND
+                      message: Global project not found                    
+       '403':
+        description: Unauthorized – The request requires user authentication.
+        content:
+         application/json:
+            schema:
+               example:
+                  errors:
+                    error:
+                    - code: ACCESS_DENIED
+                      message: Unauthorized to perform this action.                          
     get:
       description: Retrieve all the sharing rules.
       responses:
@@ -1397,7 +1401,17 @@ paths:
                         projectGroupCode: PG0001
                       project:
                         projectName: Project Name
-                      grantType: 'W'                        
+                      grantType: 'W'          
+       '403':
+        description: Unauthorized – The request requires user authentication.
+        content:
+         application/json:
+            schema:
+               example:
+                  errors:
+                    error:
+                    - code: ACCESS_DENIED
+                      message: Unauthorized to perform this action.                                         
   '/sharingrules/{sharingruleId}' :
     parameters:
     - name: sharingruleId
@@ -1430,7 +1444,7 @@ paths:
               schema:
                 example: |
         '404':
-          description: not found
+          description: resource not found
           content:
            application/json:
             schema:
@@ -1438,7 +1452,17 @@ paths:
                errors:
                  error:
                  - code: REQUEST_RESOURCE_NOTFOUND
-                   message: profile not found                    
+                   message: role not found                    
+        '403':
+         description: Unauthorized – The request requires user authentication.
+         content:
+          application/json:
+            schema:
+              example:
+                  errors:
+                    error:
+                    - code: ACCESS_DENIED
+                      message: Unauthorized to perform this action.                                      
     get:
       description: Retrieve a specific sharing rule.
       responses:
@@ -1464,7 +1488,17 @@ paths:
               errors:
                 error:
                 - code: REQUEST_RESOURCE_NOTFOUND
-                  message: Sharing rule not found                    
+                  message: Sharing rule not found       
+        '403':
+         description: Unauthorized – The request requires user authentication.
+         content:
+          application/json:
+            schema:
+              example:
+                  errors:
+                    error:
+                    - code: ACCESS_DENIED
+                      message: Unauthorized to perform this action.                                     
     delete:
       description: Delete a specific sharing rule
       responses:
@@ -1484,7 +1518,16 @@ paths:
                 error:
                 - code: REQUEST_RESOURCE_NOTFOUND
                   message: Sharing rule not found                                   
-
+        '403':
+         description: Unauthorized – The request requires user authentication.
+         content:
+          application/json:
+            schema:
+              example:
+                  errors:
+                    error:
+                    - code: ACCESS_DENIED
+                      message: Unauthorized to perform this action.                   
 
 components:
   schemas: {}
