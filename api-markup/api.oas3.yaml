@@ -810,6 +810,79 @@ paths:
             - 200
           schema:
             type: number
+  '/clients/{dedupClientId}' :      
+    get:
+      operationId: GET_clients-by-dedupClientId
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example: 
+                   clients:
+                      pagination:
+                        from: 0
+                        total: 2
+                        maximum: 30
+                        returned: 2 
+                        sort: {}
+                      clients:
+                      - clientId: 79181dff-2acb-45a9-b78f-380b13082af6
+                        dedupClientId: 1ba28d40-1dfd-11e9-985f-02fe61f7863e
+                        firstName: Przemyslaw1
+                        middleName: Piotr
+                        lastName: Gorecki
+                        nameSuffix: undefined
+                        nameDataQuality: 1
+                        ssn: 111-11-1234
+                        ssnDataQuality: 1
+                        dob: 315513000000
+                        dobDataQuality: 1
+                        race: 5
+                        ethnicity: 0
+                        gender: 1
+                        veteranStatus: 1
+                        sourceSystemId: FzFxvqMDjE8w2nAMP
+                        link: "/hmis-clientapi/rest/v2015/clients/79181dff-2acb-45a9-b78f-380b13082af6"
+                        projectGroupCode: PG0001
+                        phoneNumber: "+919440060881"
+                      - clientId: 8524af9d-e561-4417-b656-fc5a5c5bcf32
+                        dedupClientId: 1ba28d40-1dfd-11e9-985f-02fe61f7863e
+                        firstName: First Name
+                        middleName: Middle Name
+                        lastName: LAST NAME
+                        nameSuffix: NS
+                        nameDataQuality: 1
+                        ssn: 123-45-6789
+                        ssnDataQuality: 1
+                        dob: 1459498034983
+                        dobDataQuality: 1
+                        race: 1
+                        ethnicity: 1
+                        gender: 1
+                        otherGender: Test
+                        veteranStatus: 8
+                        sourceSystemId: FzFxvqMDjE8w2nAMP
+                        link: "/hmis-clientapi/rest/v2015/clients/8524af9d-e561-4417-b656-fc5a5c5bcf32"
+                        projectGroupCode: PG0001
+        '404':
+         description: DedupClientId not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: DedupClientId not found 2ba28d40-1dfd-11e9-985f-02fe61f7863e
+    parameters:
+      - name: dedupClientId
+        in: path
+        required: true
+        schema:
+          type: string    
+    
   '/clients/{clientId}/consents':
     post:
       responses:
@@ -1349,7 +1422,7 @@ paths:
 
       responses:
        '204':
-         description: An empty response will be sent to the client.
+         description: An empty response will send
        '404':
         description: Global project not found
         content:
@@ -1361,7 +1434,7 @@ paths:
                     - code: REQUEST_RESOURCE_NOTFOUND
                       message: Global project not found                    
        '403':
-        description: Unauthorized – User is not authorized this perform this operation.
+        description: Unauthorized – The request requires user authentication.
         content:
          application/json:
             schema:
@@ -1403,7 +1476,7 @@ paths:
                         projectName: Project Name
                       grantType: 'W'          
        '403':
-        description: Unauthorized – User is not authorized this perform this operation.
+        description: Unauthorized – The request requires user authentication.
         content:
          application/json:
             schema:
@@ -1454,7 +1527,7 @@ paths:
                  - code: REQUEST_RESOURCE_NOTFOUND
                    message: role not found                    
         '403':
-         description: Unauthorized – User is not authorized this perform this operation.
+         description: Unauthorized – The request requires user authentication.
          content:
           application/json:
             schema:
@@ -1490,7 +1563,7 @@ paths:
                 - code: REQUEST_RESOURCE_NOTFOUND
                   message: Sharing rule not found       
         '403':
-         description: Unauthorized – User is not authorized this perform this operation.
+         description: Unauthorized – The request requires user authentication.
          content:
           application/json:
             schema:
@@ -1519,7 +1592,7 @@ paths:
                 - code: REQUEST_RESOURCE_NOTFOUND
                   message: Sharing rule not found                                   
         '403':
-         description: Unauthorized – User is not authorized this perform this operation.
+         description: Unauthorized – The request requires user authentication.
          content:
           application/json:
             schema:
@@ -1543,7 +1616,7 @@ components:
       type: oauth2
       flows:
         password:
-          tokenUrl: 'https://hslynk.com/hmis-authorization-service/rest/token'
+          tokenUrl: 'https://hmislynk.com/hmis-authorization-service/rest/token'
           scopes:
             user: ''
             administrator: ''
