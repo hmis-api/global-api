@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Global Human Services
-  version: "1.4.0"
+  version: "1.4.1"
   description: |
        **Note :**
               Please note that the partial updates are supported via PUT APIs. However, Note that If "null" value is passed for any element, in the PUT request body, it will be ignored. An empty string value should be sent (instead of "null" value) for the elements that need to be updated with NULL values.
@@ -17,66 +17,48 @@ paths:
             application/json:
               schema:
                 example: 
-                        {
-                           "searchResults":{
-                              "pagination":{
-                                 "from":0,
-                                 "returned":2,
-                                 "total":2,
-                                 "maximum":50,
-                                 "sort":{
-                                    "field":"id",
-                                    "order":"asc"
-                                 }
-                              },
-                              "items":[
-                                 {
-                                    "clientId":"08bd3d50-cb87-41ac-8b64-b3dc3853c411",
-                                    "dedupClientId":"35ad2c10-184d-11e8-985f-02fe61f7863e",
-                                    "firstName":"Przemyslaw",
-                                    "middleName":"Piotr",
-                                    "lastName":"Gorecki",
-                                    "nameSuffix":"undefined",
-                                    "nameDataQuality":1,
-                                    "ssn":"111-11-1111",
-                                    "ssnDataQuality":1,
-                                    "dob":315532800000,
-                                    "dobDataQuality":1,
-                                    "race":5,
-                                    "ethnicity":0,
-                                    "gender":1,
-                                    "veteranStatus":1,
-                                    "sourceSystemId":"FzFxvqMDjE8w2nAMP",
-                                    "link":"/hmis-clientapi/rest/v2015/clients/08bd3d50-cb87-41ac-8b64-b3dc3853c411",
-                                    "projectGroupCode":"PG0001",
-                                    "phoneNumber":"undefined",
-                                    "emailAddress":"przemyslaw@toptal.com"
-                                 },
-                                 {
-                                    "clientId":"79181dff-2acb-45a9-b78f-380b13082af6",
-                                    "dedupClientId":"1ba28d40-1dfd-11e9-985f-02fe61f7863e",
-                                    "firstName":"Przemyslaw1",
-                                    "middleName":"Piotr",
-                                    "lastName":"Gorecki",
-                                    "nameSuffix":"undefined",
-                                    "nameDataQuality":1,
-                                    "ssn":"111-11-1234",
-                                    "ssnDataQuality":1,
-                                    "dob":315532800000,
-                                    "dobDataQuality":1,
-                                    "race":5,
-                                    "ethnicity":0,
-                                    "gender":1,
-                                    "veteranStatus":1,
-                                    "sourceSystemId":"FzFxvqMDjE8w2nAMP",
-                                    "link":"/hmis-clientapi/rest/v2015/clients/79181dff-2acb-45a9-b78f-380b13082af6",
-                                    "projectGroupCode":"PG0001",
-                                    "phoneNumber":"+919440060881",
-                                    "emailAddress":"przemyslaw@toptal.com"
-                                 }
-                              ]
-                           }
-                        }
+                    searchResults:
+                      pagination:
+                        from: 0
+                        returned: 1
+                        total: 1
+                        maximum: 50
+                        sort:
+                          field: id
+                          order: asc
+                      items:
+                      - clientId: 0f23d93e-23c3-435e-baec-ec267f13f66c
+                        dedupClientId: ad9a9390-bcd7-11e9-a57b-02fe61f7863e
+                        firstName: Ryan_1565597013222
+                        middleName: ''
+                        lastName: Peterson_1565597013222
+                        nameSuffix: NS
+                        nameDataQuality: 1
+                        ssn: 123-45-6789
+                        ssnDataQuality: 1
+                        dob: 340009200000
+                        dobDataQuality: 1
+                        race: 1
+                        ethnicity: 1
+                        gender: 0
+                        phoneNumber: 123456779
+                        emailAddress: test@test.com
+                        link: "/hmis-clientapi/rest/v2017/clients/0f23d93e-23c3-435e-baec-ec267f13f66c"
+                        projectGroupCode: PG0001
+                        links:
+                          eligibleClients:
+                            data:
+                            - rel: 0f23d93e-23c3-435e-baec-ec267f13f66c
+                              href: https://www.hslynk.com/house-matching-api/rest/eligibleclients/0f23d93e-23c3-435e-baec-ec267f13f66c
+                          survey.submissions:
+                            data:
+                            - rel: 528faca1-ccb6-436a-bd97-8cd6e00c5105
+                              href: https://www.hslynk.com/survey-api/rest/clients/0f23d93e-23c3-435e-baec-ec267f13f66c/surveys/5d3f239c-fdf5-4806-80ec-54886fb58e2b/submissions/528faca1-ccb6-436a-bd97-8cd6e00c5105
+                          enrollments:
+                            data:
+                            - rel: d9845282-afd5-43e8-8935-1ae186a04dea
+                              href: https://www.hslynk.com/hmis-clientapi-v2017/rest/clients/0f23d93e-23c3-435e-baec-ec267f13f66c/enrollments/d9845282-afd5-43e8-8935-1ae186a04dea
+
         '400':
           description: Bad Request – The request was invalid or cannot be served.
         '401':
@@ -97,8 +79,13 @@ paths:
         searching on Google, you sometimes want to see a few pages of search
         results so that you can find the item that best meets your needs. 
         HMISLynk Search API provides up to 50 results for each search.  However,
-        the search results can be limited by the client.  Note: Current
-        supporting URI is /search/clients and /search/projects
+        the search results can be limited by the client.   
+        **Note :** Current supporting URI is /search/clients and /search/projects. \
+            API returns the following in the response.\ 
+            ** Latest (by effective date) FN, MI, LN, email, phone [email and phone will come from the generic client record], SSN, DOB, SSN, gender, veteran status.If any of these have not been collected, those elements will be simply omitted. \
+            ** Links to enrollments for all HMIS enrollment records if there is anything to retrieve. Otherwise this link is not present.\
+            ** Links to all client survey submissions,if there is anything to retrieve. Otherwise this link is not present\
+            ** Links to all eligible client records (active list) for the client ,if there is anything to retrieve. Otherwise this link is not present.
       operationId: GET_search-searchentity
       parameters:
         - name: q
@@ -1616,7 +1603,7 @@ components:
       type: oauth2
       flows:
         password:
-          tokenUrl: 'https://hmislynk.com/hmis-authorization-service/rest/token'
+          tokenUrl: 'https://hslynk.com/hmis-authorization-service/rest/token'
           scopes:
             user: ''
             administrator: ''
