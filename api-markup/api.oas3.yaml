@@ -79,13 +79,12 @@ paths:
         searching on Google, you sometimes want to see a few pages of search
         results so that you can find the item that best meets your needs. 
         HMISLynk Search API provides up to 50 results for each search.  However,
-        the search results can be limited by the client.   
-        **Note :** Current supporting URI is /search/clients and /search/projects. \
-            API returns the following in the response.\ 
-            ** Latest (by effective date) FN, MI, LN, email, phone [email and phone will come from the generic client record], SSN, DOB, SSN, gender, veteran status.If any of these have not been collected, those elements will be simply omitted. \
-            ** Links to enrollments for all HMIS enrollment records if there is anything to retrieve. Otherwise this link is not present.\
-            ** Links to all client survey submissions,if there is anything to retrieve. Otherwise this link is not present\
-            ** Links to all eligible client records (active list) for the client ,if there is anything to retrieve. Otherwise this link is not present.
+        the search results can be limited by the client. Current supporting URI is /search/clients and /search/projects.   
+            API returns the following in the response.  \
+            * Latest (by effective date) FN, MI, LN, email, phone [email and phone will come from the generic client record], SSN, DOB, SSN, gender, veteran status.If any of these have not been collected, those elements will be simply omitted. \
+            * Links to enrollments for all HMIS enrollment records if there is anything to retrieve. Otherwise this link is not present.\
+            * Links to all client survey submissions,if there is anything to retrieve. Otherwise this link is not present\
+            * Links to all eligible client records (active list) for the client ,if there is anything to retrieve. Otherwise this link is not present.
       operationId: GET_search-searchentity
       parameters:
         - name: q
