@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Global Human Services
-  version: "1.4.1"
+  version: "1.4.2"
   description: |
        **Note :**
               Please note that the partial updates are supported via PUT APIs. However, Note that If "null" value is passed for any element, in the PUT request body, it will be ignored. An empty string value should be sent (instead of "null" value) for the elements that need to be updated with NULL values.
@@ -609,6 +609,36 @@ paths:
         required: true
         schema:
           type: string
+  /events:
+    post:
+      responses:
+        '200':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  errors:
+                    error:
+                      - message: event type is required
+      description: >-
+        API to create a amq request. eventType attribute represents to AMQ queue Name.
+      operationId: POST_events
+      requestBody:
+        content:
+          application/json:
+            example:
+                amqEvent:
+                  payload:
+                    projectGroupCode: PG0001
+                    oldClientDedupId: 46b89200-656a-11e8-985f-02fe61f7863e
+                    newClientDedupId: eac0fc00-f727-11e6-bdda-06c37be0e663
+                  eventType: client.merge
+            schema:
+              type: string
+        required: true          
   /notifications:
     post:
       responses:
