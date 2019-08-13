@@ -629,15 +629,14 @@ paths:
       requestBody:
         content:
           application/json:
-            example:
+              schema:
+               example:
                 amqEvent:
                   payload:
                     projectGroupCode: PG0001
                     oldClientDedupId: 46b89200-656a-11e8-985f-02fe61f7863e
                     newClientDedupId: eac0fc00-f727-11e6-bdda-06c37be0e663
                   eventType: client.merge
-            schema:
-              type: string
         required: true          
   /notifications:
     post:
@@ -663,27 +662,26 @@ paths:
       requestBody:
         content:
           application/json:
-            example:
-              notification:
-                method: EMAIL
-                data:
-                  recipients:
-                    toRecipients:
-                      - surya.yadavalli@gmail.com
-                      - surya.yadavalli@hmislynk.com
-                    bccRecipients:
-                      - jceleldon@ctagroup.com
-                    ccRecipients:
-                      - admin@ctagroup.com
-                  body: Test message
-                  subject: Test subject
-                  priority: 1
-                additionalInfo:
-                  messageType: Cancellation Notice
-                  recipientType: clientID
-                  recipientId: 18a93ad8-cced-49c5-9185-9cb3da9de89b
             schema:
-              type: string
+              example:
+                notification:
+                  method: EMAIL
+                  data:
+                    recipients:
+                      toRecipients:
+                        - surya.yadavalli@gmail.com
+                        - surya.yadavalli@hmislynk.com
+                      bccRecipients:
+                        - jceleldon@ctagroup.com
+                      ccRecipients:
+                        - admin@ctagroup.com
+                    body: Test message
+                    subject: Test subject
+                    priority: 1
+                  additionalInfo:
+                    messageType: Cancellation Notice
+                    recipientType: clientID
+                    recipientId: 18a93ad8-cced-49c5-9185-9cb3da9de89b
         required: true
     get:
       responses:
