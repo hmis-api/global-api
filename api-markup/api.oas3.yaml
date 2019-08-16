@@ -624,19 +624,19 @@ paths:
                     error:
                       - message: event type is required
       description: >-
-        API to create a amq request. eventType attribute represents to AMQ queue Name.
+                API to create a Event. An event can be handled either via messaging system (pub/sub model) or by other handlers depending on the event type. Currently supported event type is client.merge, client.unmerge
       operationId: POST_events
       requestBody:
         content:
           application/json:
               schema:
                example:
-                amqEvent:
-                  payload:
-                    projectGroupCode: PG0001
-                    oldClientDedupId: 46b89200-656a-11e8-985f-02fe61f7863e
-                    newClientDedupId: eac0fc00-f727-11e6-bdda-06c37be0e663
-                  eventType: client.merge
+                    event:
+                      payload:
+                        projectGroupCode: PG0001
+                        currentDedupId: 46b89200-656a-11e8-985f-02fe61f7863e
+                        targetDedupId: eac0fc00-f727-11e6-bdda-06c37be0e663
+                      eventType: client.merge
         required: true          
   /notifications:
     post:
