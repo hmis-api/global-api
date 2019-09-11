@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Global Human Services
-  version: "1.4.2"
+  version: "1.4.3"
   description: |
        **Note :**
               Please note that the partial updates are supported via PUT APIs. However, Note that If "null" value is passed for any element, in the PUT request body, it will be ignored. An empty string value should be sent (instead of "null" value) for the elements that need to be updated with NULL values.
@@ -16,7 +16,7 @@ paths:
           content:
             application/json:
               schema:
-                example: 
+                example:
                     searchResults:
                       pagination:
                         from: 0
@@ -77,9 +77,9 @@ paths:
         result you're looking for (or maybe the few results you're looking for).
         Currently hmislynk supporting search on 'clients' entity only. Just like
         searching on Google, you sometimes want to see a few pages of search
-        results so that you can find the item that best meets your needs. 
+        results so that you can find the item that best meets your needs.
         HMISLynk Search API provides up to 50 results for each search.  However,
-        the search results can be limited by the client. Current supporting URI is /search/clients and /search/projects.   
+        the search results can be limited by the client. Current supporting URI is /search/clients and /search/projects.
             API returns the following in the response.  \
             * Latest (by effective date) FN, MI, LN, email, phone [email and phone will come from the generic client record], SSN, DOB, SSN, gender, veteran status.If any of these have not been collected, those elements will be simply omitted. \
             * Links to enrollments for all HMIS enrollment records if there is anything to retrieve. Otherwise this link is not present.\
@@ -166,9 +166,9 @@ paths:
                       type: string
                     projectName:
                       type: string
-                    projectCommonName: 
+                    projectCommonName:
                       type: string
-                    description: 
+                    description:
                       type: string
                     sourceSystemId:
                       type: string
@@ -637,7 +637,93 @@ paths:
                         currentDedupId: 46b89200-656a-11e8-985f-02fe61f7863e
                         targetDedupId: eac0fc00-f727-11e6-bdda-06c37be0e663
                       eventType: client.merge
-        required: true          
+        required: true
+  /clients/{clientId}/dedup/merge:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  client:
+                    - clientId: b42e7c50-c72a-11e9-a57b-02fe61f7863e
+                      dedupClientId: 64834220-6727-11e9-9f34-02fe61f7863e
+                      oldDedupClientId: 1ba28d40-1dfd-11e9-985f-02fe61f7863e
+                      firstName: Przemyslaw1
+                      lastName: Gorecki
+                      ssn: 123-45-6789
+                      dob: 1459517834983
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  errors:
+                    error:
+                      - message: Client Id is requried.
+      description: >-
+                Client merge is a 2 step process and this API covers step# 1.
+                1) API to determine a correct dedupClientId for a client.
+                2) Use /events API to merge a client by providing the dedupClientId generated from the response.
+      operationId: POST_clients-clientId-dedup-merge
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                  client:
+                    clientId : b42e7c50-c72a-11e9-a57b-02fe61f7863e
+                    firstName: Przemyslaw1
+                    lastName: Gorecki
+                    ssn: 123-45-6789
+                    dob: 1459517834983
+        required: true
+  /clients/{clientId}/dedup/unmerge:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  client:
+                    - clientId: b42e7c50-c72a-11e9-a57b-02fe61f7863e
+                      dedupClientId: 1ba28d40-1dfd-11e9-985f-02fe61f7863e
+                      oldDedupClientId: 64834220-6727-11e9-9f34-02fe61f7863e
+                      firstName: Przemyslaw1
+                      lastName: Gorecki
+                      ssn: 123-45-6789
+                      dob: 1459517834983
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  errors:
+                    error:
+                      - message: Client Id is requried.
+      description: >-
+                          Client unmerge is a 2 step process and this API covers step# 1.
+                          1) API to determine a correct dedupClientId for a client.
+                          2) Use /events API to unmerge a client by providing the dedupClientId generated from the response.
+      operationId: POST_clients-clientId-dedup-unmerge
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                  client:
+                    clientId : b42e7c50-c72a-11e9-a57b-02fe61f7863e
+                    firstName: Przemyslaw1
+                    lastName: Gorecki
+                    ssn: 123-45-6789
+                    dob: 1459517834983
+        required: true
   /notifications:
     post:
       responses:
@@ -741,38 +827,38 @@ paths:
                         createdTimeStamp: '01-21-2018 21:02'
                         lastStatusTimeStamp: '01-21-2018 21:02'
       description: >2-
-         GET the notification details along with their current status and timestamps. These details can be filtered using the following query parameters. Few examples below 
+         GET the notification details along with their current status and timestamps. These details can be filtered using the following query parameters. Few examples below
 
         * hmis-globalapi/rest/notifications?fromdate=1516546276760 - Returns all
-        the notifications sent from Sun Jan 21 2018 14:51:16 
+        the notifications sent from Sun Jan 21 2018 14:51:16
 
 
         *
         hmis-globalapi/rest/notifications?fromdate=1516521600000&todate=1516693923129
         - Returns all notifications sent between Sun Jan 21 2018 08:00:00 and
-        Tue Jan 23 2018 07:52:03 
+        Tue Jan 23 2018 07:52:03
 
 
         * hmis-globalapi/rest/notifications?status=CREATED,DELIVERED - Returns
-        all notifications that are with status CREATED and DELIVERED 
+        all notifications that are with status CREATED and DELIVERED
 
 
         *
         hmis-globalapi/rest/notifications?recipienttype=clientid&recipientid=cf98b9b2-9a77-4133-99a3-b60f05a12ad1
         - Returns all notifications associated with the client Id
-        cf98b9b2-9a77-4133-99a3-b60f05a12ad1 
+        cf98b9b2-9a77-4133-99a3-b60f05a12ad1
 
 
         *
         hmis-globalapi/rest/notifications?status=DELIVERED&recipienttype=clientid&recipientid=cf98b9b2-9a77-4133-99a3-b60f05a12ad1
         - Returns all notifications delivered to client Id
-        cf98b9b2-9a77-4133-99a3-b60f05a12ad1 
+        cf98b9b2-9a77-4133-99a3-b60f05a12ad1
 
 
         *
         hmis-globalapi/rest/notifications?fromdate=1516546276760&recipienttype=clientid&recipientid=cf98b9b2-9a77-4133-99a3-b60f05a12ad1
         - Returns all notifications associated with the client Id from Sun Jan
-        21 2018 14:51:16 
+        21 2018 14:51:16
       operationId: GET_notifications
       parameters:
         - name: fromdate
@@ -824,7 +910,7 @@ paths:
             - 200
           schema:
             type: number
-  '/clients/{dedupClientId}' :      
+  '/clients/{dedupClientId}' :
     get:
       operationId: GET_clients-by-dedupClientId
       responses:
@@ -833,13 +919,13 @@ paths:
           content:
             application/json:
               schema:
-                example: 
+                example:
                    clients:
                       pagination:
                         from: 0
                         total: 2
                         maximum: 30
-                        returned: 2 
+                        returned: 2
                         sort: {}
                       clients:
                       - clientId: 79181dff-2acb-45a9-b78f-380b13082af6
@@ -895,8 +981,8 @@ paths:
         in: path
         required: true
         schema:
-          type: string    
-    
+          type: string
+
   '/clients/{clientId}/consents':
     post:
       responses:
@@ -1134,7 +1220,7 @@ paths:
               errors:
                 error:
                 - code: REQUEST_RESOURCE_NOTFOUND
-                  message: Global Project not found                    
+                  message: Global Project not found
     get:
       description: Read all generic enrollment of a project group
       responses:
@@ -1173,7 +1259,7 @@ paths:
                       globalHouseholdId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
                       startTime: 08-09-2018 10:11
                       endTime: 08-09-2020 10:11
-  '/generic-enrollments/{generic-enrollmentId}':       
+  '/generic-enrollments/{generic-enrollmentId}':
     parameters:
       - name: generic-enrollmentId
         in: path
@@ -1208,7 +1294,7 @@ paths:
               errors:
                 error:
                 - code: REQUEST_RESOURCE_NOTFOUND
-                  message: Generic enrollment not found          
+                  message: Generic enrollment not found
     delete:
       description: Delete existing generic enrollment
       responses:
@@ -1250,7 +1336,7 @@ paths:
               errors:
                 error:
                 - code: REQUEST_RESOURCE_NOTFOUND
-                  message: Generic Enrollment not found          
+                  message: Generic Enrollment not found
   '/global-Households' :
     post:
       description: Create a Global house hold
@@ -1284,7 +1370,7 @@ paths:
               errors:
                 error:
                 - code: REQUEST_RESOURCE_NOTFOUND
-                  message: Global Household not found                    
+                  message: Global Household not found
     get:
       description: Read all global Households of a project group
       responses:
@@ -1358,7 +1444,7 @@ paths:
               errors:
                 error:
                 - code: REQUEST_RESOURCE_NOTFOUND
-                  message: Global Household not found                    
+                  message: Global Household not found
     get:
       description: Read selected global Household
       responses:
@@ -1378,7 +1464,7 @@ paths:
                         genericHouseholdId: 890ab7f2-f812-4268-b8e5-924766d2d9de
                         hmisHouseholdId: 890ab7f2-f812-4268-b8e5-924766d2d9ef
                         dateUpdated: '2018-09-14'
-                        dateCreated: 2018-09-14 09:09       
+                        dateCreated: 2018-09-14 09:09
         '404':
          description: Global Household not found
          content:
@@ -1388,7 +1474,7 @@ paths:
               errors:
                 error:
                 - code: REQUEST_RESOURCE_NOTFOUND
-                  message: Global Household not found                    
+                  message: Global Household not found
     delete:
       description: Delete an existing global house hold and mappings
       responses:
@@ -1407,13 +1493,13 @@ paths:
               errors:
                 error:
                 - code: REQUEST_RESOURCE_NOTFOUND
-                  message: Global Household not found                                      
-   
+                  message: Global Household not found
+
   '/sharingrules' :
-    post: 
+    post:
       description: |
                     This API enables the Customer Admins / project Admins in a project group to be able grant access (read or write) to specific project(s) to role(s) in a different project group.  Grant via sharing rule can be given to multiple roles and / or multiple projects.
-                    
+
                     **Note :** \
                          * [API](https://api.hslynk.com/?urls.primaryName=User%20Service%20%20Api#/default/GET_projectgroups) to get project groups \
                          * [API](https://api.hslynk.com/?urls.primaryName=User%20Service%20%20Api#/default/GET_roles) to get roles. \
@@ -1446,7 +1532,7 @@ paths:
                   errors:
                     error:
                     - code: REQUEST_RESOURCE_NOTFOUND
-                      message: Global project not found                    
+                      message: Global project not found
        '403':
         description: Unauthorized – The request requires user authentication.
         content:
@@ -1456,7 +1542,7 @@ paths:
                   errors:
                     error:
                     - code: ACCESS_DENIED
-                      message: Unauthorized to perform this action.                          
+                      message: Unauthorized to perform this action.
     get:
       description: Retrieve all the sharing rules.
       responses:
@@ -1482,13 +1568,13 @@ paths:
                       role:
                         id: 6b5857d9-bc16-4706-acde-17be5d530631
                         roleName: STANDARD
-                      grantType: 'R'                        
+                      grantType: 'R'
                     - sharingRuleId: 79c9715a-1172-44e4-9000-f8a87d95edbd
                       toProjectGroup:
                         projectGroupCode: PG0001
                       project:
                         projectName: Project Name
-                      grantType: 'W'          
+                      grantType: 'W'
        '403':
         description: Unauthorized – The request requires user authentication.
         content:
@@ -1498,7 +1584,7 @@ paths:
                   errors:
                     error:
                     - code: ACCESS_DENIED
-                      message: Unauthorized to perform this action.                                         
+                      message: Unauthorized to perform this action.
   '/sharingrules/{sharingruleId}' :
     parameters:
     - name: sharingruleId
@@ -1539,7 +1625,7 @@ paths:
                errors:
                  error:
                  - code: REQUEST_RESOURCE_NOTFOUND
-                   message: role not found                    
+                   message: role not found
         '403':
          description: Unauthorized – The request requires user authentication.
          content:
@@ -1549,7 +1635,7 @@ paths:
                   errors:
                     error:
                     - code: ACCESS_DENIED
-                      message: Unauthorized to perform this action.                                      
+                      message: Unauthorized to perform this action.
     get:
       description: Retrieve a specific sharing rule.
       responses:
@@ -1575,7 +1661,7 @@ paths:
               errors:
                 error:
                 - code: REQUEST_RESOURCE_NOTFOUND
-                  message: Sharing rule not found       
+                  message: Sharing rule not found
         '403':
          description: Unauthorized – The request requires user authentication.
          content:
@@ -1585,7 +1671,7 @@ paths:
                   errors:
                     error:
                     - code: ACCESS_DENIED
-                      message: Unauthorized to perform this action.                                     
+                      message: Unauthorized to perform this action.
     delete:
       description: Delete a specific sharing rule
       responses:
@@ -1604,7 +1690,7 @@ paths:
               errors:
                 error:
                 - code: REQUEST_RESOURCE_NOTFOUND
-                  message: Sharing rule not found                                   
+                  message: Sharing rule not found
         '403':
          description: Unauthorized – The request requires user authentication.
          content:
@@ -1614,7 +1700,7 @@ paths:
                   errors:
                     error:
                     - code: ACCESS_DENIED
-                      message: Unauthorized to perform this action.                   
+                      message: Unauthorized to perform this action.
 
 components:
   schemas: {}
