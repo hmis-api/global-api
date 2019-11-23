@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Global Human Services
-  version: "1.4.3"
+  version: "1.4.4"
   description: |
        **Note :**
               Please note that the partial updates are supported via PUT APIs. However, Note that If "null" value is passed for any element, in the PUT request body, it will be ignored. An empty string value should be sent (instead of "null" value) for the elements that need to be updated with NULL values.
@@ -681,6 +681,12 @@ paths:
                     ssn: 123-45-6789
                     dob: 1459517834983
         required: true
+    parameters:
+      - name: clientId
+        in: path
+        required: true
+        schema:
+          type: string        
   /clients/{clientId}/dedup/unmerge:
     post:
       responses:
@@ -724,6 +730,12 @@ paths:
                     ssn: 123-45-6789
                     dob: 1459517834983
         required: true
+    parameters:
+      - name: clientId
+        in: path
+        required: true
+        schema:
+          type: string                
   /notifications:
     post:
       responses:
@@ -1494,37 +1506,119 @@ paths:
                 error:
                 - code: REQUEST_RESOURCE_NOTFOUND
                   message: Global Household not found
+  '/projectsubgroups' :
+    post:
+      description: Create a project Sub Group
+      operationId: POST_project_subgroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example: 
+          					projectSubGroup:
+          					  projectSubGroupName: Test Project SubGroup
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+          					project:
+          					  projectId: 5d9bec05-22bd-443d-b4c8-f75290088556
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                    projectSubGroups:
+                      pagination:
+                        from: 0
+                        maximum: 30
+                        sort: {}
+                      projectSubGroups:
+                      - projectSubGroupId: db66b3cd-f470-4978-b66b-4b953a29af2d
+                        projectSubGroupName: Updated Test Project SubGroup_1574489246253
+                        projects:
+                        - projectId: 5f9f2b94-df00-48cc-9bea-cf15941f8be3
+                          projectName: ProjectName_1574489245292
+                          projectCommonName: ProjectCommonName_1574489245292
+                          schemaYear: '2014'
 
-  '/sharingrules' :
+      description: Get all projects sub groups
+      operationId: GET_projectsubgroups
+  '/projectsubgroups/{projectSubGroupId}':
+
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  projectSubGroup:
+                    projectSubGroupId: db66b3cd-f470-4978-b66b-4b953a29af2d
+                    projectSubGroupName: Updated Test Project SubGroup_1574489246253
+                    projects:
+                    - projectId: 5f9f2b94-df00-48cc-9bea-cf15941f8be3
+                      projectName: ProjectName_1574489245292
+                      projectCommonName: ProjectCommonName_1574489245292
+                      schemaYear: '2014'
+      description: Get selected project sub group
+      operationId: GET_project_subgroup_id
+    parameters:
+      - name: projectSubGroupId
+        in: path
+        required: true
+        schema:
+          type: string
+  '/projectsubgroups/{projectSubGroupId}/projects/{projectId}':
+    put:
+      responses:
+        '200':
+          description: ''
+      description: Add projects to selected global project
+      operationId: PUT_project_to_sub_group
+    delete:
+      responses:
+        '200':
+          description: ''
+      description: Remove project from selected global project
+      operationId: DELETE_project_from_sub_group
+    parameters:
+      - name: projectSubGroupId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string                      
+  '/projectSharingRules' :
     post:
       description: |
-                    This API enables the Customer Admins / project Admins in a project group to be able grant access (read or write) to specific project(s) to role(s) in a different project group.  Grant via sharing rule can be given to multiple roles and / or multiple projects.
-
-                    **Note :** \
-                         * [API](https://api.hslynk.com/?urls.primaryName=User%20Service%20%20Api#/default/GET_projectgroups) to get project groups \
-                         * [API](https://api.hslynk.com/?urls.primaryName=User%20Service%20%20Api#/default/GET_roles) to get roles. \
-                         * grantType attribute supports R (for read permission) / W ( for read and write permission) only. Default grant type is **R**.
-
       requestBody:
          required: true
          content:
           application/json:
            schema:
-             example:
-                sharingRule:
-                  toProjectGroup:
-                    projectGroupCode: TT0015
-                  projects:
-                  - id: 0c294c16-051f-4f98-b4a5-c9b78697e059
-                  roles:
-                  - id: 6b5857d9-bc16-4706-acde-17be5d530631
-                  grantType: 'R'
-
+             example: |
+        		  			projectSharingRule:
+          					  project:
+            						 projectId: efa47063-bd03-4c5d-ad3f-d99ed57fa055
+          					  toProject:
+          	  					projectId: ec9fda9b-b962-42f6-b76c-9746b35e567a
       responses:
        '204':
          description: An empty response will send
        '404':
-        description: Global project not found
+        description: Project not found
         content:
          application/json:
             schema:
@@ -1532,7 +1626,7 @@ paths:
                   errors:
                     error:
                     - code: REQUEST_RESOURCE_NOTFOUND
-                      message: Global project not found
+                      message: project not found
        '403':
         description: Unauthorized – The request requires user authentication.
         content:
@@ -1552,29 +1646,19 @@ paths:
             application/json:
               schema:
                 example:
-                  sharingrules:
+                  projectSharingRules:
                     pagination:
                       from: 0
                       returned: 2
                       total: 54
                       maximum: 30
                       sort: {}
-                    sharingRule:
-                    - sharingRuleId: de4ff07f-69ac-458a-9116-d9500e09eca6
-                      toProjectGroup:
-                        projectGroupCode: PG0001
-                      project:
-                        projectName: Project Name
-                      role:
-                        id: 6b5857d9-bc16-4706-acde-17be5d530631
-                        roleName: STANDARD
-                      grantType: 'R'
-                    - sharingRuleId: 79c9715a-1172-44e4-9000-f8a87d95edbd
-                      toProjectGroup:
-                        projectGroupCode: PG0001
-                      project:
-                        projectName: Project Name
-                      grantType: 'W'
+        						projectSharingRules:
+                      projectSharingRuleId:  efa47063-bd03-4c5d-ad3f-d99ed57fa055
+              					  project:
+                						 projectId: efa47063-bd03-4c5d-ad3f-d99ed57fa055
+              					  toProject:
+              	  					projectId: ec9fda9b-b962-42f6-b76c-9746b35e567a
        '403':
         description: Unauthorized – The request requires user authentication.
         content:
@@ -1585,57 +1669,15 @@ paths:
                     error:
                     - code: ACCESS_DENIED
                       message: Unauthorized to perform this action.
-  '/sharingrules/{sharingruleId}' :
+  '/projectSharingRules/{projectSharingRuleId}' :
     parameters:
-    - name: sharingruleId
+    - name: projectSharingRuleId
       in: path
       required: true
       schema:
         type: string
         format: "UUID"
-    put:
-      description: Update a specific sharing rule.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              example:
-               sharingRule:
-                 toProjectGroup:
-                   projectGroupCode: TT0015
-                 project:
-                   id: 9ae9ee08-a0eb-4c24-a945-5cd35dcdba91
-                 role:
-                   id: 305bc184-547c-476f-aada-cd32f2c26034
-                 grantType: 'R'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                example: |
-        '404':
-          description: resource not found
-          content:
-           application/json:
-            schema:
-             example:
-               errors:
-                 error:
-                 - code: REQUEST_RESOURCE_NOTFOUND
-                   message: role not found
-        '403':
-         description: Unauthorized – The request requires user authentication.
-         content:
-          application/json:
-            schema:
-              example:
-                  errors:
-                    error:
-                    - code: ACCESS_DENIED
-                      message: Unauthorized to perform this action.
+
     get:
       description: Retrieve a specific sharing rule.
       responses:
@@ -1645,13 +1687,12 @@ paths:
             application/json:
               schema:
                 example:
-                    sharingRule:
-                      sharingRuleId: 79c9715a-1172-44e4-9000-f8a87d95edbd
-                      toProjectGroup:
-                        projectGroupCode: PG0001
-                      project:
-                        projectName: Project Name
-                      grantType: 'R'
+					projectSharingRule:
+					  projectSharingRuleId: efa47063-bd03-4c5d-ad3f-d99ed57eg066
+					  project:
+						projectId: efa47063-bd03-4c5d-ad3f-d99ed57fa055
+					  toProject:
+						projectId: ec9fda9b-b962-42f6-b76c-9746b35e567a
         '404':
          description: Resource not found
          content:
@@ -1700,8 +1741,7 @@ paths:
                   errors:
                     error:
                     - code: ACCESS_DENIED
-                      message: Unauthorized to perform this action.
-
+                      message: Unauthorized to perform this action.          
 components:
   schemas: {}
   responses: {}
