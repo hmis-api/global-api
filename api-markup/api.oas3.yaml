@@ -1508,24 +1508,25 @@ paths:
                   message: Global Household not found
   '/projectsubgroups' :
     post:
-      description: Create a project Sub Group
-      operationId: POST_project_subgroup
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example :
+                      projectSubGroup:
+                          projectSubGroupId: 2b5b3c9b-c649-483f-b5ff-bb1e7cfdb357
+      description: |
+        To create a new project sub group.
+      operationId: POST_projectsubgroups
       requestBody:
         content:
           application/json:
             schema:
-              example: 
-          					projectSubGroup:
-          					  projectSubGroupName: Test Project SubGroup
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                example:
-          					project:
-          					  projectId: 5d9bec05-22bd-443d-b4c8-f75290088556
+              example:
+                  projectSubGroup:
+                    projectSubGroupName: Test Project SubGroup
     get:
       responses:
         '200':
@@ -1551,7 +1552,6 @@ paths:
       description: Get all projects sub groups
       operationId: GET_projectsubgroups
   '/projectsubgroups/{projectSubGroupId}':
-
     get:
       responses:
         '200':
@@ -1608,12 +1608,12 @@ paths:
          content:
           application/json:
            schema:
-             example: |
-        		  			projectSharingRule:
-          					  project:
-            						 projectId: efa47063-bd03-4c5d-ad3f-d99ed57fa055
-          					  toProject:
-          	  					projectId: ec9fda9b-b962-42f6-b76c-9746b35e567a
+             example: 
+                      projectSharingRule:
+                        project:
+                          projectId: efa47063-bd03-4c5d-ad3f-d99ed57fa055
+                        toProject:
+                          projectId: ec9fda9b-b962-42f6-b76c-9746b35e567a
       responses:
        '204':
          description: An empty response will send
@@ -1646,19 +1646,19 @@ paths:
             application/json:
               schema:
                 example:
-                  projectSharingRules:
-                    pagination:
-                      from: 0
-                      returned: 2
-                      total: 54
-                      maximum: 30
-                      sort: {}
-        						projectSharingRules:
-                      projectSharingRuleId:  efa47063-bd03-4c5d-ad3f-d99ed57fa055
-              					  project:
-                						 projectId: efa47063-bd03-4c5d-ad3f-d99ed57fa055
-              					  toProject:
-              	  					projectId: ec9fda9b-b962-42f6-b76c-9746b35e567a
+                      projectSharingRules:
+                          pagination:
+                            from: 0
+                            returned: 2
+                            total: 54
+                            maximum: 30
+                            sort: {}
+                          projectSharingRules:
+                              projectSharingRuleId:  efa47063-bd03-4c5d-ad3f-d99ed57fa055
+                              project:
+                                 projectId: efa47063-bd03-4c5d-ad3f-d99ed57fa055
+                              toProject:
+                                 projectId: ec9fda9b-b962-42f6-b76c-9746b35e567a                
        '403':
         description: Unauthorized – The request requires user authentication.
         content:
@@ -1687,12 +1687,12 @@ paths:
             application/json:
               schema:
                 example:
-					projectSharingRule:
-					  projectSharingRuleId: efa47063-bd03-4c5d-ad3f-d99ed57eg066
-					  project:
-						projectId: efa47063-bd03-4c5d-ad3f-d99ed57fa055
-					  toProject:
-						projectId: ec9fda9b-b962-42f6-b76c-9746b35e567a
+                     projectSharingRule:
+                            projectSharingRuleId:  efa47063-bd03-4c5d-ad3f-d99ed57fa055
+                            project:
+                               projectId: efa47063-bd03-4c5d-ad3f-d99ed57fa055
+                            toProject:
+                               projectId: ec9fda9b-b962-42f6-b76c-9746b35e567a          
         '404':
          description: Resource not found
          content:
