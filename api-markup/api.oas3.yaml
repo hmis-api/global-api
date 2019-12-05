@@ -1,9 +1,12 @@
 openapi: 3.0.0
 info:
   title: Global Human Services
-  version: "1.3.1"
+  version: "1.4.4"
+  description: |
+       **Note :**
+              Please note that the partial updates are supported via PUT APIs. However, Note that If "null" value is passed for any element, in the PUT request body, it will be ignored. An empty string value should be sent (instead of "null" value) for the elements that need to be updated with NULL values.
 servers:
-  - url: 'https://www.hmislynk.com/hmis-globalapi/rest'
+  - url: 'https://www.hslynk.com/hmis-globalapi/rest'
 paths:
   '/search/{searchentity}':
     get:
@@ -13,88 +16,49 @@ paths:
           content:
             application/json:
               schema:
-                example: |
-                  example search response for client search:
+                example:
+                    searchResults:
+                      pagination:
+                        from: 0
+                        returned: 1
+                        total: 1
+                        maximum: 50
+                        sort:
+                          field: id
+                          order: asc
+                      items:
+                      - clientId: 0f23d93e-23c3-435e-baec-ec267f13f66c
+                        dedupClientId: ad9a9390-bcd7-11e9-a57b-02fe61f7863e
+                        firstName: Ryan_1565597013222
+                        middleName: ''
+                        lastName: Peterson_1565597013222
+                        nameSuffix: NS
+                        nameDataQuality: 1
+                        ssn: 123-45-6789
+                        ssnDataQuality: 1
+                        dob: 340009200000
+                        dobDataQuality: 1
+                        race: 1
+                        ethnicity: 1
+                        gender: 0
+                        phoneNumber: 123456779
+                        emailAddress: test@test.com
+                        link: "/hmis-clientapi/rest/v2017/clients/0f23d93e-23c3-435e-baec-ec267f13f66c"
+                        projectGroupCode: PG0001
+                        links:
+                          eligibleClients:
+                            data:
+                            - rel: 0f23d93e-23c3-435e-baec-ec267f13f66c
+                              href: https://www.hslynk.com/house-matching-api/rest/eligibleclients/0f23d93e-23c3-435e-baec-ec267f13f66c
+                          survey.submissions:
+                            data:
+                            - rel: 528faca1-ccb6-436a-bd97-8cd6e00c5105
+                              href: https://www.hslynk.com/survey-api/rest/clients/0f23d93e-23c3-435e-baec-ec267f13f66c/surveys/5d3f239c-fdf5-4806-80ec-54886fb58e2b/submissions/528faca1-ccb6-436a-bd97-8cd6e00c5105
+                          enrollments:
+                            data:
+                            - rel: d9845282-afd5-43e8-8935-1ae186a04dea
+                              href: https://www.hslynk.com/hmis-clientapi-v2017/rest/clients/0f23d93e-23c3-435e-baec-ec267f13f66c/enrollments/d9845282-afd5-43e8-8935-1ae186a04dea
 
-                    {
-                      "searchResults": {
-                        "pagination": {
-                          "total":"2"
-                          "from": "0",
-                          "maximum": "50",
-                          "returned":"2"
-                        },
-                        "items": [
-                          {
-                            "clientId": "65e3df62-dd22-4d07-83ef-6858a6322839",
-                            "firstName": "Eric",
-                            "middleName": "Eric",
-                            "lastName": "Eric",
-                            "nameSuffix": "NS ",
-                            "nameDataQuality": "1",
-                            "ssn": "ssn ",
-                            "ssnDataQuality": "1",
-                            "dob": "1459498034983",
-                            "dobDataQuality": "1",
-                            "race": "1",
-                            "ethnicity": "1",
-                            "gender": "1",
-                            "otherGender": "Test",
-                            "veteranStatus": "8",
-                            "link":"/hmis-clientapi/rest/v2015/clients/65e3df62-dd22-4d07-83ef-6858a6322839"
-                          },
-                          {
-                            "clientId": "cf98b9b2-9a77-4133-99a3-b60f05a12ad1",
-                            "firstName": "Eric",
-                            "middleName": "Eric",
-                            "lastName": "Eric",
-                            "nameSuffix": "NS ",
-                            "nameDataQuality": "1",
-                            "ssn": "ssn ",
-                            "ssnDataQuality": "1",
-                            "dob": "1459498034983",
-                            "dobDataQuality": "1",
-                            "race": "1",
-                            "ethnicity": "1",
-                            "gender": "1",
-                            "otherGender": "Test",
-                            "veteranStatus": "8",
-                            "link":"/hmis-clientapi/rest/v2014/clients/cf98b9b2-9a77-4133-99a3-b60f05a12ad1"
-                          }
-                        ]
-                      }
-                    }
-
-                  and example search response for projects search:
-
-                    {
-                     "searchResults":{
-                        "pagination":{
-                           "from":0,
-                           "returned":1,
-                           "total":1,
-                           "maximum":50,
-                           "sort":{
-                              "field":"id",
-                              "order":"asc"
-                           }
-                        },
-                        "items":[
-                           {
-                              "projectId":"066c95d3-c97c-40b9-b8c1-bf12cafdfca4",
-                              "projectName":"ProjectName_1459515376900",
-                              "projectCommonName":"ProjectCommonName_1459515376900",
-                              "continuumProject":0,
-                              "projectType":2,
-                              "targetPopulation":3,
-                              "trackingMethod":0,
-                              "schemaYear":2015,
-                              "link":"/hmis-clientapi/rest/v2015/projects/066c95d3-c97c-40b9-b8c1-bf12cafdfca4",
-                              "projectGroup":"HO0002"
-                           }
-                        ]
-                      }
-                    }
         '400':
           description: Bad Request – The request was invalid or cannot be served.
         '401':
@@ -113,10 +77,14 @@ paths:
         result you're looking for (or maybe the few results you're looking for).
         Currently hmislynk supporting search on 'clients' entity only. Just like
         searching on Google, you sometimes want to see a few pages of search
-        results so that you can find the item that best meets your needs. 
+        results so that you can find the item that best meets your needs.
         HMISLynk Search API provides up to 50 results for each search.  However,
-        the search results can be limited by the client.  Note: Current
-        supporting URI is /search/clients and /search/projects
+        the search results can be limited by the client. Current supporting URI is /search/clients and /search/projects.
+            API returns the following in the response.  \
+            * Latest (by effective date) FN, MI, LN, email, phone [email and phone will come from the generic client record], SSN, DOB, SSN, gender, veteran status.If any of these have not been collected, those elements will be simply omitted. \
+            * Links to enrollments for all HMIS enrollment records if there is anything to retrieve. Otherwise this link is not present.\
+            * Links to all client survey submissions,if there is anything to retrieve. Otherwise this link is not present\
+            * Links to all eligible client records (active list) for the client ,if there is anything to retrieve. Otherwise this link is not present.
       operationId: GET_search-searchentity
       parameters:
         - name: q
@@ -198,9 +166,9 @@ paths:
                       type: string
                     projectName:
                       type: string
-                    projectCommonName: 
+                    projectCommonName:
                       type: string
-                    description: 
+                    description:
                       type: string
                     sourceSystemId:
                       type: string
@@ -290,7 +258,6 @@ paths:
           description: ''
           content:
             application/json:
-              schema:
                 example:
                   globalProject:
                     projectId: 3d65a9bc-af57-4e3e-bc4d-29d661767ac9
@@ -307,8 +274,6 @@ paths:
                 projectName: Sample Project Name
                 projectCommonName: Sample Project Common Name
                 description: Sample Project description
-            schema:
-              type: string
         required: true
     get:
       responses:
@@ -351,15 +316,14 @@ paths:
       requestBody:
         content:
           application/json:
-            example:
-              projects:
-                projects:
-                  - projectId: 9d278142-978d-461e-8aea-07d629e462e8
-                    source: '2014'
-                  - projectId: a56fa6d8-b6c9-4838-b376-09af1306c063
-                    source: '2016'
             schema:
-              type: string
+              example:
+                projects:
+                  projects:
+                  -  projectId: f9748a7b-80ac-4ffd-86f7-c8e71416502f
+                     source: 2015
+                  -  projectId: 9a147cc3-7b78-4a82-abe4-f42f9ee59b61
+                     source: '2014'
         required: true
     parameters:
       - name: global-projectId
@@ -645,6 +609,133 @@ paths:
         required: true
         schema:
           type: string
+  /events:
+    post:
+      responses:
+        '200':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  errors:
+                    error:
+                      - message: event type is required
+      description: >-
+                API to create a Event. An event can be handled either via messaging system (pub/sub model) or by other handlers depending on the event type. Currently supported event type is client.merge, client.unmerge
+      operationId: POST_events
+      requestBody:
+        content:
+          application/json:
+              schema:
+               example:
+                    event:
+                      payload:
+                        projectGroupCode: PG0001
+                        currentDedupId: 46b89200-656a-11e8-985f-02fe61f7863e
+                        targetDedupId: eac0fc00-f727-11e6-bdda-06c37be0e663
+                      eventType: client.merge
+        required: true
+  /clients/{clientId}/dedup/merge:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  client:
+                    - clientId: b42e7c50-c72a-11e9-a57b-02fe61f7863e
+                      dedupClientId: 64834220-6727-11e9-9f34-02fe61f7863e
+                      oldDedupClientId: 1ba28d40-1dfd-11e9-985f-02fe61f7863e
+                      firstName: Przemyslaw1
+                      lastName: Gorecki
+                      ssn: 123-45-6789
+                      dob: 1459517834983
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  errors:
+                    error:
+                      - message: Client Id is requried.
+      description: >-
+                Client merge is a 2 step process and this API covers step# 1.
+                1) API to determine a correct dedupClientId for a client.
+                2) Use /events API to merge a client by providing the dedupClientId generated from the response.
+      operationId: POST_clients-clientId-dedup-merge
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                  client:
+                    clientId : b42e7c50-c72a-11e9-a57b-02fe61f7863e
+                    firstName: Przemyslaw1
+                    lastName: Gorecki
+                    ssn: 123-45-6789
+                    dob: 1459517834983
+        required: true
+    parameters:
+      - name: clientId
+        in: path
+        required: true
+        schema:
+          type: string        
+  /clients/{clientId}/dedup/unmerge:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  client:
+                    - clientId: b42e7c50-c72a-11e9-a57b-02fe61f7863e
+                      dedupClientId: 1ba28d40-1dfd-11e9-985f-02fe61f7863e
+                      oldDedupClientId: 64834220-6727-11e9-9f34-02fe61f7863e
+                      firstName: Przemyslaw1
+                      lastName: Gorecki
+                      ssn: 123-45-6789
+                      dob: 1459517834983
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  errors:
+                    error:
+                      - message: Client Id is requried.
+      description: >-
+                          Client unmerge is a 2 step process and this API covers step# 1.
+                          1) API to determine a correct dedupClientId for a client.
+                          2) Use /events API to unmerge a client by providing the dedupClientId generated from the response.
+      operationId: POST_clients-clientId-dedup-unmerge
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                  client:
+                    clientId : b42e7c50-c72a-11e9-a57b-02fe61f7863e
+                    firstName: Przemyslaw1
+                    lastName: Gorecki
+                    ssn: 123-45-6789
+                    dob: 1459517834983
+        required: true
+    parameters:
+      - name: clientId
+        in: path
+        required: true
+        schema:
+          type: string                
   /notifications:
     post:
       responses:
@@ -669,27 +760,26 @@ paths:
       requestBody:
         content:
           application/json:
-            example:
-              notification:
-                method: EMAIL
-                data:
-                  recipients:
-                    toRecipients:
-                      - surya.yadavalli@gmail.com
-                      - surya.yadavalli@hmislynk.com
-                    bccRecipients:
-                      - jceleldon@ctagroup.com
-                    ccRecipients:
-                      - admin@ctagroup.com
-                  body: Test message
-                  subject: Test subject
-                  priority: 1
-                additionalInfo:
-                  messageType: Cancellation Notice
-                  recipientType: clientID
-                  recipientId: 18a93ad8-cced-49c5-9185-9cb3da9de89b
             schema:
-              type: string
+              example:
+                notification:
+                  method: EMAIL
+                  data:
+                    recipients:
+                      toRecipients:
+                        - surya.yadavalli@gmail.com
+                        - surya.yadavalli@hmislynk.com
+                      bccRecipients:
+                        - jceleldon@ctagroup.com
+                      ccRecipients:
+                        - admin@ctagroup.com
+                    body: Test message
+                    subject: Test subject
+                    priority: 1
+                  additionalInfo:
+                    messageType: Cancellation Notice
+                    recipientType: clientID
+                    recipientId: 18a93ad8-cced-49c5-9185-9cb3da9de89b
         required: true
     get:
       responses:
@@ -749,38 +839,38 @@ paths:
                         createdTimeStamp: '01-21-2018 21:02'
                         lastStatusTimeStamp: '01-21-2018 21:02'
       description: >2-
-         GET the notification details along with their current status and timestamps. These details can be filtered using the following query parameters. Few examples below 
+         GET the notification details along with their current status and timestamps. These details can be filtered using the following query parameters. Few examples below
 
         * hmis-globalapi/rest/notifications?fromdate=1516546276760 - Returns all
-        the notifications sent from Sun Jan 21 2018 14:51:16 
+        the notifications sent from Sun Jan 21 2018 14:51:16
 
 
         *
         hmis-globalapi/rest/notifications?fromdate=1516521600000&todate=1516693923129
         - Returns all notifications sent between Sun Jan 21 2018 08:00:00 and
-        Tue Jan 23 2018 07:52:03 
+        Tue Jan 23 2018 07:52:03
 
 
         * hmis-globalapi/rest/notifications?status=CREATED,DELIVERED - Returns
-        all notifications that are with status CREATED and DELIVERED 
+        all notifications that are with status CREATED and DELIVERED
 
 
         *
         hmis-globalapi/rest/notifications?recipienttype=clientid&recipientid=cf98b9b2-9a77-4133-99a3-b60f05a12ad1
         - Returns all notifications associated with the client Id
-        cf98b9b2-9a77-4133-99a3-b60f05a12ad1 
+        cf98b9b2-9a77-4133-99a3-b60f05a12ad1
 
 
         *
         hmis-globalapi/rest/notifications?status=DELIVERED&recipienttype=clientid&recipientid=cf98b9b2-9a77-4133-99a3-b60f05a12ad1
         - Returns all notifications delivered to client Id
-        cf98b9b2-9a77-4133-99a3-b60f05a12ad1 
+        cf98b9b2-9a77-4133-99a3-b60f05a12ad1
 
 
         *
         hmis-globalapi/rest/notifications?fromdate=1516546276760&recipienttype=clientid&recipientid=cf98b9b2-9a77-4133-99a3-b60f05a12ad1
         - Returns all notifications associated with the client Id from Sun Jan
-        21 2018 14:51:16 
+        21 2018 14:51:16
       operationId: GET_notifications
       parameters:
         - name: fromdate
@@ -832,6 +922,79 @@ paths:
             - 200
           schema:
             type: number
+  '/clients/{dedupClientId}' :
+    get:
+      operationId: GET_clients-by-dedupClientId
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                   clients:
+                      pagination:
+                        from: 0
+                        total: 2
+                        maximum: 30
+                        returned: 2
+                        sort: {}
+                      clients:
+                      - clientId: 79181dff-2acb-45a9-b78f-380b13082af6
+                        dedupClientId: 1ba28d40-1dfd-11e9-985f-02fe61f7863e
+                        firstName: Przemyslaw1
+                        middleName: Piotr
+                        lastName: Gorecki
+                        nameSuffix: undefined
+                        nameDataQuality: 1
+                        ssn: 111-11-1234
+                        ssnDataQuality: 1
+                        dob: 315513000000
+                        dobDataQuality: 1
+                        race: 5
+                        ethnicity: 0
+                        gender: 1
+                        veteranStatus: 1
+                        sourceSystemId: FzFxvqMDjE8w2nAMP
+                        link: "/hmis-clientapi/rest/v2015/clients/79181dff-2acb-45a9-b78f-380b13082af6"
+                        projectGroupCode: PG0001
+                        phoneNumber: "+919440060881"
+                      - clientId: 8524af9d-e561-4417-b656-fc5a5c5bcf32
+                        dedupClientId: 1ba28d40-1dfd-11e9-985f-02fe61f7863e
+                        firstName: First Name
+                        middleName: Middle Name
+                        lastName: LAST NAME
+                        nameSuffix: NS
+                        nameDataQuality: 1
+                        ssn: 123-45-6789
+                        ssnDataQuality: 1
+                        dob: 1459498034983
+                        dobDataQuality: 1
+                        race: 1
+                        ethnicity: 1
+                        gender: 1
+                        otherGender: Test
+                        veteranStatus: 8
+                        sourceSystemId: FzFxvqMDjE8w2nAMP
+                        link: "/hmis-clientapi/rest/v2015/clients/8524af9d-e561-4417-b656-fc5a5c5bcf32"
+                        projectGroupCode: PG0001
+        '404':
+         description: DedupClientId not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: DedupClientId not found 2ba28d40-1dfd-11e9-985f-02fe61f7863e
+    parameters:
+      - name: dedupClientId
+        in: path
+        required: true
+        schema:
+          type: string
+
   '/clients/{clientId}/consents':
     post:
       responses:
@@ -1029,6 +1192,556 @@ paths:
         required: true
         schema:
           type: string
+  '/generic-enrollments' :
+    post:
+      description: Create a Generic Enrllment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                genericEnrollment:
+                  globalEnrollmentId: 11d0839d-07ca-43e2-add0-5c848a306085
+                  globalProjectId: 6c0f6f77-ba6c-4365-9ce5-3fe65ccdbe86
+                  active: true
+                  startTime: 08-09-2018 10:11
+                  endTime: 08-09-2019 10:11
+                  globalHouseholdId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                  genericEnrollment:
+                    id: 39f899ae-e21c-4c81-ab2f-d166ae0d79e7
+                    globalEnrollmentId: 11d0839d-07ca-43e2-add0-5c848a306085
+                    globalProjectId: 6c0f6f77-ba6c-4365-9ce5-3fe65ccdbe86
+                    active: true
+                    globalHouseholdId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
+                    startTime: 08-09-2018 10:11
+                    endTime: 08-09-2019 10:11
+        '404':
+         description: Global Project not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: Global Project not found
+    get:
+      description: Read all generic enrollment of a project group
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                  globalEnrollments:
+                    pagination:
+                      from: 0
+                      returned: 3
+                      total: 3
+                      maximum: 30
+                      sort: {}
+                    globalEnrollments:
+                    - id: b2ae7fd1-9782-46cf-89fd-9a730f3c0189
+                      globalEnrollmentId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
+                      globalProjectId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
+                      active: true
+                      globalHouseholdId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
+                      startTime: 08-09-2018 10:11
+                      endTime: 08-09-2019 10:11
+                    - id: 3586814f-9601-498a-98de-1adabf610936
+                      globalEnrollmentId: 158d2457-5fd7-49b4-82ff-2549cf0ea397
+                      globalProjectId: 158d2457-5fd7-49b4-82ff-2549cf0ea396
+                      active: true
+                      globalHouseholdId: 158d2457-5fd7-49b4-82ff-2549cf0ea398
+                      startTime: 08-09-2017 10:11
+                      endTime: 08-09-2020 10:11
+                    - id: 39f899ae-e21c-4c81-ab2f-d166ae0d79e7
+                      globalEnrollmentId: 11d0839d-07ca-43e2-add0-5c848a306085
+                      globalProjectId: 6c0f6f77-ba6c-4365-9ce5-3fe65ccdbe86
+                      active: true
+                      globalHouseholdId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
+                      startTime: 08-09-2018 10:11
+                      endTime: 08-09-2020 10:11
+  '/generic-enrollments/{generic-enrollmentId}':
+    parameters:
+      - name: generic-enrollmentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: "UUID"
+    put:
+      description: Update existing genric enrollment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                genericEnrollment:
+                  globalEnrollmentId: 11d0839d-07ca-43e2-add0-5c848a306085
+                  globalProjectId: 6c0f6f77-ba6c-4365-9ce5-3fe65ccdbe86
+                  active: true
+                  startTime: 08-09-2018 10:11
+                  endTime: 08-09-2019 10:11
+                  globalHouseholdId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
+      responses:
+        '200':
+          description: Success
+        '404':
+         description: Generic Enrollment not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: Generic enrollment not found
+    delete:
+      description: Delete existing generic enrollment
+      responses:
+        '200':
+         description: Success
+        '404':
+         description: Generic Enrollment not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: Generic enrollment not found
+    get:
+     description: Read existing generic enrollment
+     responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                  genericEnrollment:
+                    id: 39f899ae-e21c-4c81-ab2f-d166ae0d79e7
+                    globalEnrollmentId: 11d0839d-07ca-43e2-add0-5c848a306085
+                    globalProjectId: 6c0f6f77-ba6c-4365-9ce5-3fe65ccdbe86
+                    active: true
+                    globalHouseholdId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
+                    startTime: 08-09-2018 10:11
+                    endTime: 08-09-2019 10:11
+        '404':
+         description: Generic Enrollment not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: Generic Enrollment not found
+  '/global-Households' :
+    post:
+      description: Create a Global house hold
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                globalHousehold:
+                  globalHouseholdMappings:
+                    globalHouseholdMappings:
+                      - genericHouseholdId: 890ab7f2-f812-4268-b8e5-924766d2d9cc
+                        hmisHouseholdId: 890ab7f2-f812-4268-b8e5-924766d2d9cc
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                  globalHousehold:
+                    id: f150e147-eb46-439d-8bea-1e0453c9af31
+        '404':
+         description: Global Household not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: Global Household not found
+    get:
+      description: Read all global Households of a project group
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                  globalHouseholds:
+                    pagination:
+                      from: 0
+                      returned: 2
+                      total: 2
+                      maximum: 30
+                      sort: {}
+                    globalHouseholds:
+                      - id: f150e147-eb46-439d-8bea-1e0453c9af31
+                        dateUpdated: '2018-09-14'
+                        dateCreated: '2018-09-14 09:09'
+                        globalHouseholdMappings:
+                          globalHouseholdMappings:
+                            - id: 1d833013-1f36-4b50-97c1-245e1d7bc25b
+                              genericHouseholdId: 890ab7f2-f812-4268-b8e5-924766d2d9de
+                              dateUpdated: '2018-09-14'
+                              dateCreated: '2018-09-14 09:09'
+                      - id: f150e147-eb46-439d-8bea-1e0453c9af31
+                        dateUpdated: '2018-09-14'
+                        dateCreated: '2018-09-14 09:09'
+                        globalHouseholdMappings:
+                          globalHouseholdMappings:
+                            - id: 1d833013-1f36-4b50-97c1-245e1d7bc25b
+                              hmisHouseholdId: 890ab7f2-f812-4268-b8e5-924766d2d9ef
+                              dateUpdated: '2018-09-14'
+                              dateCreated: '2018-09-14 09:09'
+  '/global-Households/{global-Household-id}' :
+    parameters:
+    - name: global-Household-id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: "UUID"
+    put:
+      description: Update a Global house hold ( while updating existing mapping will remove and add new mappings )
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                globalHousehold:
+                  globalHouseholdMappings:
+                    globalHouseholdMappings:
+                      - genericHouseholdId: 890ab7f2-f812-4268-b8e5-924766d2d9cc
+                        hmisHouseholdId: 890ab7f2-f812-4268-b8e5-924766d2d9cc
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+        '404':
+         description: Global Household not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: Global Household not found
+    get:
+      description: Read selected global Household
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                  globalHousehold:
+                    id: f150e147-eb46-439d-8bea-1e0453c9af31
+                    dateUpdated: '2018-09-14'
+                    dateCreated: 2018-09-14 09:09
+                    globalHouseholdMappings:
+                      globalHouseholdMappings:
+                      - id: 1d833013-1f36-4b50-97c1-245e1d7bc25b
+                        genericHouseholdId: 890ab7f2-f812-4268-b8e5-924766d2d9de
+                        hmisHouseholdId: 890ab7f2-f812-4268-b8e5-924766d2d9ef
+                        dateUpdated: '2018-09-14'
+                        dateCreated: 2018-09-14 09:09
+        '404':
+         description: Global Household not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: Global Household not found
+    delete:
+      description: Delete an existing global house hold and mappings
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+        '404':
+         description: Global Household not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: Global Household not found
+  '/projectsubgroups' :
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example :
+                      projectSubGroup:
+                          projectSubGroupId: 2b5b3c9b-c649-483f-b5ff-bb1e7cfdb357
+      description: |
+        To create a new project sub group.
+      operationId: POST_projectsubgroups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                  projectSubGroup:
+                    projectSubGroupName: Test Project SubGroup
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                    projectSubGroups:
+                      pagination:
+                        from: 0
+                        maximum: 30
+                        sort: {}
+                      projectSubGroups:
+                      - projectSubGroupId: db66b3cd-f470-4978-b66b-4b953a29af2d
+                        projectSubGroupName: Updated Test Project SubGroup_1574489246253
+                        projects:
+                        - projectId: 5f9f2b94-df00-48cc-9bea-cf15941f8be3
+                          projectName: ProjectName_1574489245292
+                          projectCommonName: ProjectCommonName_1574489245292
+                          schemaYear: '2014'
+
+      description: Get all projects sub groups
+      operationId: GET_projectsubgroups
+  '/projectsubgroups/{projectSubGroupId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  projectSubGroup:
+                    projectSubGroupId: db66b3cd-f470-4978-b66b-4b953a29af2d
+                    projectSubGroupName: Updated Test Project SubGroup_1574489246253
+                    projects:
+                    - projectId: 5f9f2b94-df00-48cc-9bea-cf15941f8be3
+                      projectName: ProjectName_1574489245292
+                      projectCommonName: ProjectCommonName_1574489245292
+                      schemaYear: '2014'
+      description: Get selected project sub group
+      operationId: GET_project_subgroup_id
+    parameters:
+      - name: projectSubGroupId
+        in: path
+        required: true
+        schema:
+          type: string
+  '/projectsubgroups/{projectSubGroupId}/projects/{projectId}':
+    put:
+      responses:
+        '200':
+          description: ''
+      description: Add projects to selected global project
+      operationId: PUT_project_to_sub_group
+    delete:
+      responses:
+        '200':
+          description: ''
+      description: Remove project from selected global project
+      operationId: DELETE_project_from_sub_group
+    parameters:
+      - name: projectSubGroupId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string                      
+  '/projectSharingRules' :
+    post:
+      description: |
+      requestBody:
+         required: true
+         content:
+          application/json:
+           schema:
+             example: 
+                      projectSharingRule:
+                        project:
+                          projectId: efa47063-bd03-4c5d-ad3f-d99ed57fa055
+                        toProject:
+                          projectId: ec9fda9b-b962-42f6-b76c-9746b35e567a
+      responses:
+       '204':
+         description: An empty response will send
+       '404':
+        description: Project not found
+        content:
+         application/json:
+            schema:
+               example:
+                  errors:
+                    error:
+                    - code: REQUEST_RESOURCE_NOTFOUND
+                      message: project not found
+       '403':
+        description: Unauthorized – The request requires user authentication.
+        content:
+         application/json:
+            schema:
+               example:
+                  errors:
+                    error:
+                    - code: ACCESS_DENIED
+                      message: Unauthorized to perform this action.
+    get:
+      description: Retrieve all the sharing rules.
+      responses:
+       '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                      projectSharingRules:
+                          pagination:
+                            from: 0
+                            returned: 2
+                            total: 54
+                            maximum: 30
+                            sort: {}
+                          projectSharingRules:
+                              projectSharingRuleId:  efa47063-bd03-4c5d-ad3f-d99ed57fa055
+                              project:
+                                 projectId: efa47063-bd03-4c5d-ad3f-d99ed57fa055
+                              toProject:
+                                 projectId: ec9fda9b-b962-42f6-b76c-9746b35e567a                
+       '403':
+        description: Unauthorized – The request requires user authentication.
+        content:
+         application/json:
+            schema:
+               example:
+                  errors:
+                    error:
+                    - code: ACCESS_DENIED
+                      message: Unauthorized to perform this action.
+  '/projectSharingRules/{projectSharingRuleId}' :
+    parameters:
+    - name: projectSharingRuleId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: "UUID"
+
+    get:
+      description: Retrieve a specific sharing rule.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                     projectSharingRule:
+                            projectSharingRuleId:  efa47063-bd03-4c5d-ad3f-d99ed57fa055
+                            project:
+                               projectId: efa47063-bd03-4c5d-ad3f-d99ed57fa055
+                            toProject:
+                               projectId: ec9fda9b-b962-42f6-b76c-9746b35e567a          
+        '404':
+         description: Resource not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: Sharing rule not found
+        '403':
+         description: Unauthorized – The request requires user authentication.
+         content:
+          application/json:
+            schema:
+              example:
+                  errors:
+                    error:
+                    - code: ACCESS_DENIED
+                      message: Unauthorized to perform this action.
+    delete:
+      description: Delete a specific sharing rule
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+        '404':
+         description: Sharing rule not found
+         content:
+          application/json:
+           schema:
+            example:
+              errors:
+                error:
+                - code: REQUEST_RESOURCE_NOTFOUND
+                  message: Sharing rule not found
+        '403':
+         description: Unauthorized – The request requires user authentication.
+         content:
+          application/json:
+            schema:
+              example:
+                  errors:
+                    error:
+                    - code: ACCESS_DENIED
+                      message: Unauthorized to perform this action.          
 components:
   schemas: {}
   responses: {}
@@ -1043,7 +1756,7 @@ components:
       type: oauth2
       flows:
         password:
-          tokenUrl: 'https://hmislynk.com/hmis-authorization-service/rest/token'
+          tokenUrl: 'https://hslynk.com/hmis-authorization-service/rest/token'
           scopes:
             user: ''
             administrator: ''
