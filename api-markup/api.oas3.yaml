@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Global Human Services
-  version: "1.4.4"
+  version: "1.4.5"
   description: |
        **Note :**
               Please note that the partial updates are supported via PUT APIs. However, Note that If "null" value is passed for any element, in the PUT request body, it will be ignored. An empty string value should be sent (instead of "null" value) for the elements that need to be updated with NULL values.
@@ -251,7 +251,7 @@ paths:
                                 /hmis-clientapi/v2014/rest/projects/9a147cc3-7b78-4a82-abe4-f42f9ee59b61
       description: Get all global projects
       operationId: GET_global-projects
-  '/global-projects/{global-projectId}':
+  '/global-projects/{globalprojectid}':
     put:
       responses:
         '200':
@@ -265,7 +265,7 @@ paths:
                     projectCommonName: Sample Project Common Name
                     description: Sample Project description
       description: Update selected global project
-      operationId: PUT_global-projects-global-projectId
+      operationId: PUT_global-projects-globalprojectid
       requestBody:
         content:
           application/json:
@@ -299,20 +299,20 @@ paths:
                           link: >-
                             /hmis-clientapi/v2014/rest/projects/9a147cc3-7b78-4a82-abe4-f42f9ee59b61
       description: Get selected global project
-      operationId: GET_global-projects-global-projectId
+      operationId: GET_global-projects-globalprojectid
     parameters:
-      - name: global-projectId
+      - name: globalprojectid
         in: path
         required: true
         schema:
           type: string
-  '/global-projects/{global-projectId}/projects':
+  '/global-projects/{globalprojectid}/projects':
     put:
       responses:
         '200':
           description: ''
       description: Add projects to selected global project
-      operationId: PUT_global-projects-global-projectId-projects
+      operationId: PUT_global-projects-globalprojectid-projects
       requestBody:
         content:
           application/json:
@@ -326,30 +326,30 @@ paths:
                      source: '2014'
         required: true
     parameters:
-      - name: global-projectId
+      - name: globalprojectid
         in: path
         required: true
         schema:
           type: string
-  '/global-projects/{global-projectId}/projects/{projectId}':
+  '/global-projects/{globalprojectid}/projects/{projectid}':
     delete:
       responses:
         '200':
           description: ''
       description: Remove project from selected global project
-      operationId: DELETE_global-projects-global-projectId-projects-projectId
+      operationId: DELETE_global-projects-globalprojectid-projects-projectId
     parameters:
-      - name: global-projectId
+      - name: globalprojectid
         in: path
         required: true
         schema:
           type: string
-      - name: projectId
+      - name: projectid
         in: path
         required: true
         schema:
           type: string
-  '/global-projects/${globalProjectId}/users':
+  '/global-projects/{globalprojectid}/users':
     put:
       responses:
         default:
@@ -401,12 +401,12 @@ paths:
       description: Retrive a global project users
       operationId: GET_global-projects-$globalProjectId-users
     parameters:
-      - name: globalProjectId
+      - name: globalprojectid
         in: path
         required: true
         schema:
           type: string
-  '/global-projects/${globalProjectId}/users/{userId}':
+  '/global-projects/{globalprojectid}/users/{userid}':
     delete:
       responses:
         default:
@@ -414,17 +414,17 @@ paths:
       description: Remove users from a global project
       operationId: DELETE_global-projects-$globalProjectId-users-userId
     parameters:
-      - name: globalProjectId
+      - name: globalprojectid
         in: path
         required: true
         schema:
           type: string
-      - name: userId
+      - name: userid
         in: path
         required: true
         schema:
           type: string
-  '/clients/{clientDedupId}/global-enrollments':
+  '/clients/{clientdedupid}/global-enrollments':
     post:
       responses:
         '200':
@@ -501,12 +501,12 @@ paths:
       description: Get all global enrollment
       operationId: GET_clients-clientDedupId-global-enrollments
     parameters:
-      - name: clientDedupId
+      - name: clientdedupid
         in: path
         required: true
         schema:
           type: string
-  '/clients/{clientDedupId}/global-enrollments/{global-enrollmentId}':
+  '/clients/{clientdedupid}/global-enrollments/{globalenrollmentid}':
     get:
       responses:
         '200':
@@ -533,32 +533,32 @@ paths:
                           link: >-
                             hmis-clientapi/v2015/rest/clients/d4a9b184-21ea-4136-b9b8-0d59e8ee7b71/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085
       description: Get selected global enrollment
-      operationId: GET_clients-clientDedupId-global-enrollments-global-enrollmentId
+      operationId: GET_clients-clientDedupId-global-enrollments-globalenrollmentid
     delete:
       responses:
         default:
           description: ''
       description: Delete selected global enrollment
-      operationId: DELETE_clients-clientDedupId-global-enrollments-global-enrollmentId
+      operationId: DELETE_clients-clientDedupId-global-enrollments-globalenrollmentid
     parameters:
-      - name: clientDedupId
+      - name: clientdedupid
         in: path
         required: true
         schema:
           type: string
-      - name: global-enrollmentId
+      - name: globalenrollmentid
         in: path
         required: true
         schema:
           type: string
-  '/clients/{clientDedupId}/global-enrollments/{global-enrollmentId}/enrollments':
+  '/clients/{clientdedupid}/global-enrollments/{globalenrollmentid}/enrollments':
     put:
       responses:
         '200':
           description: ''
       description: Add enrollment to selected global enrollment
       operationId: >-
-        PUT_clients-clientDedupId-global-enrollments-global-enrollmentId-enrollments
+        PUT_clients-clientDedupId-global-enrollments-globalenrollmentid-enrollments
       requestBody:
         content:
           application/json:
@@ -575,36 +575,36 @@ paths:
               type: string
         required: true
     parameters:
-      - name: clientDedupId
+      - name: clientdedupid
         in: path
         required: true
         schema:
           type: string
-      - name: global-enrollmentId
+      - name: globalenrollmentid
         in: path
         required: true
         schema:
           type: string
-  '/clients/{clientDedupId}/global-enrollments/{global-enrollmentId}/enrollments/{enrollmentId}':
+  '/clients/{clientdedupid}/global-enrollments/{globalenrollmentid}/enrollments/{enrollmentid}':
     delete:
       responses:
         '200':
           description: ''
       description: Remove enrollment from selected global enrollment
       operationId: >-
-        DELETE_clients-clientDedupId-global-enrollments-global-enrollmentId-enrollments-enrollmentId
+        DELETE_clients-clientDedupId-global-enrollments-globalenrollmentid-enrollments-enrollmentId
     parameters:
-      - name: clientDedupId
+      - name: clientdedupid
         in: path
         required: true
         schema:
           type: string
-      - name: global-enrollmentId
+      - name: globalenrollmentid
         in: path
         required: true
         schema:
           type: string
-      - name: enrollmentId
+      - name: enrollmentid
         in: path
         required: true
         schema:
@@ -638,7 +638,7 @@ paths:
                         targetDedupId: eac0fc00-f727-11e6-bdda-06c37be0e663
                       eventType: client.merge
         required: true
-  /clients/{clientId}/dedup/merge:
+  /clients/{clientid}/dedup/merge:
     post:
       responses:
         '200':
@@ -682,12 +682,12 @@ paths:
                     dob: 1459517834983
         required: true
     parameters:
-      - name: clientId
+      - name: clientid
         in: path
         required: true
         schema:
           type: string        
-  /clients/{clientId}/dedup/unmerge:
+  /clients/{clientid}/dedup/unmerge:
     post:
       responses:
         '200':
@@ -731,7 +731,7 @@ paths:
                     dob: 1459517834983
         required: true
     parameters:
-      - name: clientId
+      - name: clientid
         in: path
         required: true
         schema:
@@ -922,7 +922,7 @@ paths:
             - 200
           schema:
             type: number
-  '/clients/{dedupClientId}' :
+  '/clients/{dedupclientid}' :
     get:
       operationId: GET_clients-by-dedupClientId
       responses:
@@ -989,13 +989,13 @@ paths:
                 - code: REQUEST_RESOURCE_NOTFOUND
                   message: DedupClientId not found 2ba28d40-1dfd-11e9-985f-02fe61f7863e
     parameters:
-      - name: dedupClientId
+      - name: dedupclientid
         in: path
         required: true
         schema:
           type: string
 
-  '/clients/{clientId}/consents':
+  '/clients/{clientid}/consents':
     post:
       responses:
         '200':
@@ -1065,12 +1065,12 @@ paths:
       description: Get consents of selected client
       operationId: GET_clients-clientId-consents
     parameters:
-      - name: clientId
+      - name: clientid
         in: path
         required: true
         schema:
           type: string
-  '/clients/{clientId}/consents/{consentId}':
+  '/clients/{clientid}/consents/{consentid}':
     put:
       responses:
         '200':
@@ -1123,17 +1123,17 @@ paths:
       description: Delete a client's consent
       operationId: DELETE_clients-clientId-consents-consentId
     parameters:
-      - name: clientId
+      - name: clientid
         in: path
         required: true
         schema:
           type: string
-      - name: consentId
+      - name: consentid
         in: path
         required: true
         schema:
           type: string
-  '/clients/{clientId}/consents/{consentId}/projects':
+  '/clients/{clientid}/consents/{consentid}/projects':
     put:
       responses:
         '200':
@@ -1155,17 +1155,17 @@ paths:
               type: string
         required: true
     parameters:
-      - name: clientId
+      - name: clientid
         in: path
         required: true
         schema:
           type: string
-      - name: consentId
+      - name: consentid
         in: path
         required: true
         schema:
           type: string
-  '/clients/{clientId}/consents/{consentId}/projects/{globalProjectId}':
+  '/clients/{clientid}/consents/{consentid}/projects/{globalprojectid}':
     delete:
       responses:
         '200':
@@ -1177,17 +1177,17 @@ paths:
       description: Remove global project from a client consent
       operationId: DELETE_clients-clientId-consents-consentId-projects-globalProjectId
     parameters:
-      - name: clientId
+      - name: clientid
         in: path
         required: true
         schema:
           type: string
-      - name: consentId
+      - name: consentid
         in: path
         required: true
         schema:
           type: string
-      - name: globalProjectId
+      - name: globalprojectid
         in: path
         required: true
         schema:
@@ -1271,9 +1271,9 @@ paths:
                       globalHouseholdId: 158d2457-5fd7-49b4-82ff-2549cf0ea395
                       startTime: 08-09-2018 10:11
                       endTime: 08-09-2020 10:11
-  '/generic-enrollments/{generic-enrollmentId}':
+  '/generic-enrollments/{genericenrollmentid}':
     parameters:
-      - name: generic-enrollmentId
+      - name: genericenrollmentid
         in: path
         required: true
         schema:
@@ -1418,9 +1418,9 @@ paths:
                               hmisHouseholdId: 890ab7f2-f812-4268-b8e5-924766d2d9ef
                               dateUpdated: '2018-09-14'
                               dateCreated: '2018-09-14 09:09'
-  '/global-Households/{global-Household-id}' :
+  '/global-Households/{globalhouseholdid}' :
     parameters:
-    - name: global-Household-id
+    - name: globalhouseholdid
       in: path
       required: true
       schema:
@@ -1551,7 +1551,7 @@ paths:
 
       description: Get all projects sub groups
       operationId: GET_projectsubgroups
-  '/projectsubgroups/{projectSubGroupId}':
+  '/projectsubgroups/{projectsubgroupid}':
     get:
       responses:
         '200':
@@ -1571,12 +1571,12 @@ paths:
       description: Get selected project sub group
       operationId: GET_project_subgroup_id
     parameters:
-      - name: projectSubGroupId
+      - name: projectsubgroupid
         in: path
         required: true
         schema:
           type: string
-  '/projectsubgroups/{projectSubGroupId}/projects/{projectId}':
+  '/projectsubgroups/{projectsubgroupid}/projects/{projectid}':
     put:
       responses:
         '200':
@@ -1590,12 +1590,12 @@ paths:
       description: Remove project from selected global project
       operationId: DELETE_project_from_sub_group
     parameters:
-      - name: projectSubGroupId
+      - name: projectsubgroupid
         in: path
         required: true
         schema:
           type: string
-      - name: projectId
+      - name: projectid
         in: path
         required: true
         schema:
@@ -1669,9 +1669,9 @@ paths:
                     error:
                     - code: ACCESS_DENIED
                       message: Unauthorized to perform this action.
-  '/projectSharingRules/{projectSharingRuleId}' :
+  '/projectSharingRules/{projectsharingruleid}' :
     parameters:
-    - name: projectSharingRuleId
+    - name: projectsharingruleid
       in: path
       required: true
       schema:
