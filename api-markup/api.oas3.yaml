@@ -1960,7 +1960,7 @@ paths:
                 - code: REQUEST_RESOURCE_NOTFOUND
                   message: Generic enrollment not found
     get:
-      deprecated: true    
+     deprecated: true    
      description: Read existing generic enrollment
      responses:
         '200':
