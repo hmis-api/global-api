@@ -1,12 +1,12 @@
 openapi: 3.0.0
 info:
   title: Global Human Services
-  version: "1.4.6"
+  version: "1.4.7"
   description: |
        **Note :**
               Please note that the partial updates are supported via PUT APIs. However, Note that If "null" value is passed for any element, in the PUT request body, it will be ignored. An empty string value should be sent (instead of "null" value) for the elements that need to be updated with NULL values.
 servers:
-  - url: 'https://www.hslynk.com/hmis-globalapi/rest'
+  - url: 'https://api.hslynk.com/hmis-globalapi/rest'
 paths:
   '/search/{searchentity}':
     get:
@@ -426,7 +426,7 @@ paths:
           type: string
   /global-projects:
     post:
-      deprecated: true    
+      deprecated: true
       description: Create a global project
       operationId: POST_dep_global-projects
       requestBody:
@@ -477,7 +477,7 @@ paths:
                         - projectId: 9a147cc3-7b78-4a82-abe4-f42f9ee59b61
                           source: 2014
     get:
-      deprecated: true    
+      deprecated: true
       responses:
         '200':
           description: Success
@@ -531,7 +531,7 @@ paths:
       operationId: GET_dep_global-projects
   '/global-projects/{globalprojectid}':
     put:
-      deprecated: true    
+      deprecated: true
       responses:
         '200':
           description: ''
@@ -555,7 +555,7 @@ paths:
                 description: Sample Project description
         required: true
     get:
-      deprecated: true    
+      deprecated: true
       responses:
         '200':
           description: ''
@@ -588,7 +588,7 @@ paths:
           type: string
   '/global-projects/{globalprojectid}/projects':
     put:
-      deprecated: true    
+      deprecated: true
       responses:
         '200':
           description: ''
@@ -614,7 +614,7 @@ paths:
           type: string
   '/global-projects/{globalprojectid}/projects/{projectid}':
     delete:
-      deprecated: true    
+      deprecated: true
       responses:
         '200':
           description: ''
@@ -633,7 +633,7 @@ paths:
           type: string
   '/global-projects/{globalprojectid}/users':
     put:
-      deprecated: true    
+      deprecated: true
       responses:
         default:
           description: ''
@@ -652,7 +652,7 @@ paths:
               type: string
         required: true
     get:
-      deprecated: true    
+      deprecated: true
       responses:
         '200':
           description: ''
@@ -692,7 +692,7 @@ paths:
           type: string
   '/global-projects/{globalprojectid}/users/{userid}':
     delete:
-      deprecated: true    
+      deprecated: true
       responses:
         default:
           description: ''
@@ -708,7 +708,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string          
+          type: string
   '/clients/{clientdedupid}/globalenrollments':
     post:
       responses:
@@ -896,7 +896,7 @@ paths:
           type: string
   '/clients/{clientdedupid}/global-enrollments':
     post:
-      deprecated: true    
+      deprecated: true
       responses:
         '200':
           description: ''
@@ -938,7 +938,7 @@ paths:
               type: string
         required: true
     get:
-      deprecated: true    
+      deprecated: true
       responses:
         '200':
           description: ''
@@ -980,7 +980,7 @@ paths:
           type: string
   '/clients/{clientdedupid}/global-enrollments/{globalenrollmentid}':
     get:
-      deprecated: true    
+      deprecated: true
       responses:
         '200':
           description: ''
@@ -1008,7 +1008,7 @@ paths:
       description: Get selected global enrollment
       operationId: GET_dep_clients-clientDedupId-global-enrollments-globalenrollmentid
     delete:
-      deprecated: true    
+      deprecated: true
       responses:
         default:
           description: ''
@@ -1027,7 +1027,7 @@ paths:
           type: string
   '/clients/{clientdedupid}/global-enrollments/{globalenrollmentid}/enrollments':
     put:
-      deprecated: true    
+      deprecated: true
       responses:
         '200':
           description: ''
@@ -1062,7 +1062,7 @@ paths:
           type: string
   '/clients/{clientdedupid}/global-enrollments/{globalenrollmentid}/enrollments/{enrollmentid}':
     delete:
-      deprecated: true    
+      deprecated: true
       responses:
         '200':
           description: ''
@@ -1084,7 +1084,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string          
+          type: string
   /events:
     post:
       responses:
@@ -1162,7 +1162,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string        
+          type: string
   /clients/{clientid}/dedup/unmerge:
     post:
       responses:
@@ -1211,7 +1211,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string                
+          type: string
   /notifications:
     post:
       responses:
@@ -1827,7 +1827,7 @@ paths:
                   message: Generic Enrollment not found
   '/generic-enrollments' :
     post:
-      deprecated: true    
+      deprecated: true
       description: Create a Generic Enrllment
       requestBody:
         required: true
@@ -1868,7 +1868,7 @@ paths:
                 - code: REQUEST_RESOURCE_NOTFOUND
                   message: Global Project not found
     get:
-      deprecated: true    
+      deprecated: true
       description: Read all generic enrollment of a project group
       responses:
         '200':
@@ -1915,7 +1915,7 @@ paths:
           type: string
           format: "UUID"
     put:
-      deprecated: true    
+      deprecated: true
       description: Update existing genric enrollment
       requestBody:
         required: true
@@ -1944,7 +1944,7 @@ paths:
                 - code: REQUEST_RESOURCE_NOTFOUND
                   message: Generic enrollment not found
     delete:
-      deprecated: true    
+      deprecated: true
       description: Delete existing generic enrollment
       responses:
         '200':
@@ -1960,7 +1960,7 @@ paths:
                 - code: REQUEST_RESOURCE_NOTFOUND
                   message: Generic enrollment not found
     get:
-     deprecated: true    
+     deprecated: true
      description: Read existing generic enrollment
      responses:
         '200':
@@ -1986,7 +1986,7 @@ paths:
               errors:
                 error:
                 - code: REQUEST_RESOURCE_NOTFOUND
-                  message: Generic Enrollment not found                  
+                  message: Generic Enrollment not found
   '/globalhouseholds' :
     post:
       description: Create a Global house hold
@@ -2146,7 +2146,7 @@ paths:
                   message: Global Household not found
   '/global-Households' :
     post:
-      deprecated: true    
+      deprecated: true
       description: Create a Global house hold
       requestBody:
         required: true
@@ -2180,7 +2180,7 @@ paths:
                 - code: REQUEST_RESOURCE_NOTFOUND
                   message: Global Household not found
     get:
-      deprecated: true    
+      deprecated: true
       description: Read all global Households of a project group
       responses:
         '200':
@@ -2224,7 +2224,7 @@ paths:
         type: string
         format: "UUID"
     put:
-      deprecated: true    
+      deprecated: true
       description: Update a Global house hold ( while updating existing mapping will remove and add new mappings )
       requestBody:
         required: true
@@ -2256,7 +2256,7 @@ paths:
                 - code: REQUEST_RESOURCE_NOTFOUND
                   message: Global Household not found
     get:
-      deprecated: true    
+      deprecated: true
       description: Read selected global Household
       responses:
         '200':
@@ -2287,7 +2287,7 @@ paths:
                 - code: REQUEST_RESOURCE_NOTFOUND
                   message: Global Household not found
     delete:
-      deprecated: true    
+      deprecated: true
       description: Delete an existing global house hold and mappings
       responses:
         '200':
@@ -2305,7 +2305,7 @@ paths:
               errors:
                 error:
                 - code: REQUEST_RESOURCE_NOTFOUND
-                  message: Global Household not found                  
+                  message: Global Household not found
   '/projectsubgroups' :
     post:
       responses:
@@ -2399,7 +2399,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string                      
+          type: string
   '/projectsharingrules' :
     post:
       description: |
@@ -2408,7 +2408,7 @@ paths:
          content:
           application/json:
            schema:
-             example: 
+             example:
                       projectSharingRule:
                         project:
                           projectId: efa47063-bd03-4c5d-ad3f-d99ed57fa055
@@ -2458,7 +2458,7 @@ paths:
                               project:
                                  projectId: efa47063-bd03-4c5d-ad3f-d99ed57fa055
                               toProject:
-                                 projectId: ec9fda9b-b962-42f6-b76c-9746b35e567a                
+                                 projectId: ec9fda9b-b962-42f6-b76c-9746b35e567a
        '403':
         description: Unauthorized – The request requires user authentication.
         content:
@@ -2492,7 +2492,7 @@ paths:
                             project:
                                projectId: efa47063-bd03-4c5d-ad3f-d99ed57fa055
                             toProject:
-                               projectId: ec9fda9b-b962-42f6-b76c-9746b35e567a          
+                               projectId: ec9fda9b-b962-42f6-b76c-9746b35e567a
         '404':
          description: Resource not found
          content:
@@ -2541,7 +2541,7 @@ paths:
                   errors:
                     error:
                     - code: ACCESS_DENIED
-                      message: Unauthorized to perform this action.          
+                      message: Unauthorized to perform this action.
 components:
   schemas: {}
   responses: {}
