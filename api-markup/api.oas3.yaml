@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Global Human Services
-  version: "1.5.0"
+  version: "1.5.2"
   description: |
        **Note :**
               Please note that the partial updates are supported via PUT APIs. However, Note that If "null" value is passed for any element, in the PUT request body, it will be ignored. An empty string value should be sent (instead of "null" value) for the elements that need to be updated with NULL values.
@@ -392,35 +392,42 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                globalProject:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    projectName:
-                      type: string
-                    projectCommonName:
-                      type: string
-                    description:
-                      type: string
-                    sourceSystemId:
-                      type: string
-                  required:
-                    - id
-                    - projectName
-                    - projectCommonName
-                    - description
-                    - sourceSystemId
-              required:
-                - globalProject
-            example: 
+                type: object
+                properties:
                   globalProject:
-                    projectName: Project Name
-                    projectCommonName: Project common name
-                    description: description
-                    sourceSystemId: source123
+                    type: object
+                    properties:
+                      projectName:
+                        type: string
+                      projectCommonName:
+                        type: string
+                      description:
+                        type: string
+                      projects:
+                        type: object
+                        properties:
+                          projects:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                projectId:
+                                  type: string
+                                  format: uuid
+                                source:
+                                  type: string
+
+            example: 
+                globalProject:
+                  projectName: Project Name
+                  projectCommonName: Project common name
+                  description: " description"
+                  projects:
+                    projects:
+                    - projectId: f9748a7b-80ac-4ffd-86f7-c8e71416502f
+                      source: '2015'
+                    - projectId: 9a147cc3-7b78-4a82-abe4-f42f9ee59b61
+                      source: '2014'
       responses:
         '200':
           description: Success
@@ -4470,14 +4477,6 @@ paths:
                   "properties": {
                     "genericEnrollment": {
                       "type": "object",
-                      "required": [
-                        "globalEnrollmentId",
-                        "globalProjectId",
-                        "active",
-                        "startTime",
-                        "endTime",
-                        "globalHouseholdId"
-                      ],
                       "properties": {
                         "globalEnrollmentId": {
                           "type": "string",
@@ -4526,15 +4525,6 @@ paths:
                     "properties": {
                       "genericEnrollment": {
                         "type": "object",
-                        "required": [
-                          "id",
-                          "globalEnrollmentId",
-                          "globalProjectId",
-                          "active",
-                          "globalHouseholdId",
-                          "startTime",
-                          "endTime"
-                        ],
                         "properties": {
                           "id": {
                             "type": "string",
@@ -4670,15 +4660,6 @@ paths:
                             "type": "array",
                             "items": {
                               "type": "object",
-                              "required": [
-                                "id",
-                                "globalEnrollmentId",
-                                "globalProjectId",
-                                "active",
-                                "globalHouseholdId",
-                                "startTime",
-                                "endTime"
-                              ],
                               "properties": {
                                 "id": {
                                   "type": "string",
@@ -4765,14 +4746,6 @@ paths:
                   "properties": {
                     "genericEnrollment": {
                       "type": "object",
-                      "required": [
-                        "globalEnrollmentId",
-                        "globalProjectId",
-                        "active",
-                        "startTime",
-                        "endTime",
-                        "globalHouseholdId"
-                      ],
                       "properties": {
                         "globalEnrollmentId": {
                           "type": "string",
@@ -4919,15 +4892,6 @@ paths:
                     "properties": {
                       "genericEnrollment": {
                         "type": "object",
-                        "required": [
-                          "id",
-                          "globalEnrollmentId",
-                          "globalProjectId",
-                          "active",
-                          "globalHouseholdId",
-                          "startTime",
-                          "endTime"
-                        ],
                         "properties": {
                           "id": {
                             "type": "string",
@@ -5028,14 +4992,6 @@ paths:
                   "properties": {
                     "genericEnrollment": {
                       "type": "object",
-                      "required": [
-                        "globalEnrollmentId",
-                        "globalProjectId",
-                        "active",
-                        "startTime",
-                        "endTime",
-                        "globalHouseholdId"
-                      ],
                       "properties": {
                         "globalEnrollmentId": {
                           "type": "string",
@@ -5084,15 +5040,6 @@ paths:
                     "properties": {
                       "genericEnrollment": {
                         "type": "object",
-                        "required": [
-                          "id",
-                          "globalEnrollmentId",
-                          "globalProjectId",
-                          "active",
-                          "globalHouseholdId",
-                          "startTime",
-                          "endTime"
-                        ],
                         "properties": {
                           "id": {
                             "type": "string",
