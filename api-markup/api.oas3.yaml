@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Global Human Services
-  version: "1.5.2"
+  version: "1.5.3"
   description: |
        **Note :**
               Please note that the partial updates are supported via PUT APIs. However, Note that If "null" value is passed for any element, in the PUT request body, it will be ignored. An empty string value should be sent (instead of "null" value) for the elements that need to be updated with NULL values.
@@ -1845,12 +1845,6 @@ paths:
                                 "type": "array",
                                 "items": {
                                   "type": "object",
-                                  "required": [
-                                    "enrollmentId",
-                                    "clientId",
-                                    "source",
-                                    "link"
-                                  ],
                                   "properties": {
                                     "enrollmentId": {
                                       "type": "string",
@@ -1865,6 +1859,10 @@ paths:
                                     },
                                     "link": {
                                       "type": "string"
+                                    },
+                                    "genericEnrollmentId":{
+                                      "type": "string",
+                                      "format": "uuid"
                                     }
                                   }
                                 }
@@ -1891,6 +1889,7 @@ paths:
                           source: '2015'
                           link: >-
                             hmis-clientapi/v2015/rest/clients/d4a9b184-21ea-4136-b9b8-0d59e8ee7b71/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085
+                        - genericEnrollmentId: 9ac8cba4-d9a0-43c3-ae3f-3b2633a91626    
       description: Create a global enrollment for a client
       operationId: POST_clients-clientDedupId-global-enrollments
       requestBody:
@@ -1906,6 +1905,7 @@ paths:
                     - enrollmentId: d12a5b43-9411-4fe3-8cd3-0778459d0085
                       source: '2015'
                       clientId: d4a9b184-21ea-4136-b9b8-0d59e8ee7b71
+                    - genericEnrollmentId: 9ac8cba4-d9a0-43c3-ae3f-3b2633a91626  
             schema:
               {
                 "type": "object",
@@ -1923,11 +1923,6 @@ paths:
                         "type": "array",
                         "items": {
                           "type": "object",
-                          "required": [
-                            "enrollmentId",
-                            "source",
-                            "clientId"
-                          ],
                           "properties": {
                             "enrollmentId": {
                               "type": "string",
@@ -1939,7 +1934,10 @@ paths:
                             "clientId": {
                               "type": "string",
                               "format": "uuid",
-                            }
+                            },                                    "genericEnrollmentId":{
+                                      "type": "string",
+                                      "format": "uuid"
+                                    }
                           }
                         }
                       }
@@ -2023,13 +2021,6 @@ paths:
                                       "type": "array",
                                       "items": {
                                         "type": "object",
-                                        "required": [
-                                          "id",
-                                          "enrollmentId",
-                                          "clientId",
-                                          "source",
-                                          "link"
-                                        ],
                                         "properties": {
                                           "id": {
                                             "type": "string",
@@ -2045,6 +2036,10 @@ paths:
                                           },
                                           "source": {
                                             "type": "string",
+                                          },
+                                          "genericEnrollmentId":{
+                                              "type": "string",
+                                              "format": "uuid"
                                           },
                                           "link": {
                                             "type": "string",
@@ -2087,6 +2082,7 @@ paths:
                               source: '2015'
                               link: >-
                                 hmis-clientapi/v2015/rest/clients/d4a9b184-21ea-4136-b9b8-0d59e8ee7b71/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085
+                            - genericEnrollmentId: 9ac8cba4-d9a0-43c3-ae3f-3b2633a91626    
       description: Get all global enrollment
       operationId: GET_clients-clientDedupId-global-enrollments
     parameters:
@@ -2135,13 +2131,7 @@ paths:
                                 "type": "array",
                                 "items": {
                                   "type": "object",
-                                  "required": [
-                                    "id",
-                                    "enrollmentId",
-                                    "clientId",
-                                    "source",
-                                    "link"
-                                  ],
+
                                   "properties": {
                                     "id": {
                                       "type": "string",
@@ -2157,6 +2147,9 @@ paths:
                                     },
                                     "source": {
                                       "type": "string",
+                                    },                                    "genericEnrollmentId":{
+                                      "type": "string",
+                                      "format": "uuid"
                                     },
                                     "link": {
                                       "type": "string"
@@ -2188,6 +2181,7 @@ paths:
                           source: '2015'
                           link: >-
                             hmis-clientapi/v2015/rest/clients/d4a9b184-21ea-4136-b9b8-0d59e8ee7b71/enrollments/d12a5b43-9411-4fe3-8cd3-0778459d0085
+                        - genericEnrollmentId: 9ac8cba4-d9a0-43c3-ae3f-3b2633a91626
       description: Get selected global enrollment
       operationId: GET_clients-clientDedupId-global-enrollments-globalenrollmentid
     delete:
@@ -2227,6 +2221,7 @@ paths:
                   - enrollmentId: d12a5b43-9411-4fe3-8cd3-0778459d0085
                     source: '2015'
                     clientId: d4a9b184-21ea-4136-b9b8-0d59e8ee7b71
+                  - genericEnrollmentId: 9ac8cba4-d9a0-43c3-ae3f-3b2633a91626                    
             schema:
               {
                 "type": "object",
@@ -2244,11 +2239,7 @@ paths:
                         "type": "array",
                         "items": {
                           "type": "object",
-                          "required": [
-                            "enrollmentId",
-                            "source",
-                            "clientId"
-                          ],
+
                           "properties": {
                             "enrollmentId": {
                               "type": "string",
@@ -2260,7 +2251,10 @@ paths:
                             "clientId": {
                               "type": "string",
                               "format": "uuid",
-                            }
+                            } ,                                   "genericEnrollmentId":{
+                                      "type": "string",
+                                      "format": "uuid"
+                                    }
                           }
                         }
                       }
