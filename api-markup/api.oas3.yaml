@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Global Human Services
-  version: "1.5.4"
+  version: "1.5.6"
   description: |
        **Note :**
               Please note that the partial updates are supported via PUT APIs. However, Note that If "null" value is passed for any element, in the PUT request body, it will be ignored. An empty string value should be sent (instead of "null" value) for the elements that need to be updated with NULL values.
@@ -3929,6 +3929,8 @@ paths:
           type: string
   '/clients/{clientid}/consents':
     post:
+      tags: 
+        - consents
       responses:
         '200':
           description: ''
@@ -4011,6 +4013,8 @@ paths:
               }
         required: true
     get:
+      tags: 
+        - consents    
       responses:
         '200':
           description: ''
@@ -4055,6 +4059,8 @@ paths:
           type: string
   '/clients/{clientid}/consents/{consentid}':
     put:
+      tags: 
+        - consents    
       responses:
         '200':
           description: ''
@@ -4119,6 +4125,8 @@ paths:
           type: string
   '/clients/{clientid}/consents/{consentid}/projects':
     put:
+      tags: 
+        - consents    
       responses:
         '200':
           description: ''
@@ -4181,6 +4189,8 @@ paths:
           type: string
   '/clients/{clientid}/consents/{consentid}/projects/{projectid}':
     delete:
+      tags: 
+        - consents    
       responses:
         '200':
           description: ''
@@ -4208,6 +4218,8 @@ paths:
           type: string
   '/clients/{clientid}/consents/{consentid}/documents':
     post:
+      tags: 
+        - consents    
       responses:
         '201':
           description: ''
@@ -4267,6 +4279,8 @@ paths:
                       contentType: text/plain       
         required: true
     get:
+      tags: 
+        - consents    
       responses:
         '200':
           description: ''
