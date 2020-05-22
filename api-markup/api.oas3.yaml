@@ -3934,78 +3934,24 @@ paths:
           description: ''
           content:
             application/json:
-                schema:
-                  {
-                    "type": "object",
-                    "required": [
-                      "consent"
-                    ],
-                    "properties": {
-                      "consent": {
-                        "type": "object",
-                        "required": [
-                          "clientId",
-                          "startTime",
-                          "endTime",
-                          "globalProjects",
-                          "consentId"
-                        ],
-                        "properties": {
-                          "clientId": {
-                            "type": "string",
-                            "format": "uuid",
-                          },
-                          "startTime": {
-                            "type": "integer"
-                          },
-                          "endTime": {
-                            "type": "integer"
-                          },
-                          "globalProjects": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "required": [
-                                "id",
-                                "projects"
-                              ],
-                              "properties": {
-                                "id": {
-                                  "type": "string",
-                                  "format": "uuid",
-                                },
-                                "projects": {
-                                  "type": "object",
-                                  "required": [
-                                    "projects"
-                                  ],
-                                  "properties": {
-                                    "projects": {
-                                      "type": "array"
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "consentId": {
-                            "type": "string",
-                            "format": "uuid",
-                          }
-                        }
-                      }
-                    }
-                  }
-                example:
-                  consent:
-                    clientId: dcdf2326-0d96-43eb-8368-501b29145c53
-                    startTime: 1519914315641
-                    endTime: 1543602600000
-                    globalProjects:
-                      - id: 4b84cb25-d27e-458e-ad5d-d817f30390d2
-                        projects:
-                          projects: []
-                    consentId: db51219d-f439-4250-bdf2-7a1a07816832
+                schema:                
+                    example:
+                        consent:
+                          clientId: dcdf2326-0d96-43eb-8368-501b29145c53
+                          startTime: 1519914315641
+                          endTime: 1543602600000
+                          globalProjects:
+                          - id: 4b84cb25-d27e-458e-ad5d-d817f30390d2
+                            projects:
+                              - projectId: f9748a7b-80ac-4ffd-86f7-c8e71416502f
+                                source: '2015'
+                                link: "/hmis-clientapi/v2015/rest/projects/f9748a7b-80ac-4ffd-86f7-c8e71416502f"
+                              - projectId: 9a147cc3-7b78-4a82-abe4-f42f9ee59b61
+                                source: '2014'
+                                link: "/hmis-clientapi/v2014/rest/projects/9a147cc3-7b78-4a82-abe4-f42f9ee59b61"
+                          consentId: db51219d-f439-4250-bdf2-7a1a07816832
+                          consnetDocument:
+                            link: "/hmis-globalapi/rest/clients/dcdf2326-0d96-43eb-8368-501b29145c53/consents/db51219d-f439-4250-bdf2-7a1a07816832/documents"
       description: Create client consents
       operationId: POST_clients-clientId-consents
       requestBody:
@@ -4071,149 +4017,34 @@ paths:
           content:
             application/json:
                 schema:
-                  {
-                    "type": "object",
-                    "required": [
-                      "consents"
-                    ],
-                    "properties": {
-                      "consents": {
-                        "type": "object",
-                        "required": [
-                          "pagination",
-                          "consents"
-                        ],
-                        "properties": {
-                          "pagination": {
-                            "type": "object",
-                            "required": [
-                              "from",
-                              "returned",
-                              "total",
-                              "maximum",
-                              "sort"
-                            ],
-                            "properties": {
-                              "from": {
-                                "type": "integer"
-                              },
-                              "returned": {
-                                "type": "integer"
-                              },
-                              "total": {
-                                "type": "integer"
-                              },
-                              "maximum": {
-                                "type": "integer"
-                              },
-                              "sort": {
-                                "type": "object"
-                              }
-                            }
-                          },
-                          "consents": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "required": [
-                                "clientId",
-                                "status",
-                                "startTime",
-                                "endTime",
-                                "globalProjects",
-                                "consentId"
-                              ],
-                              "properties": {
-                                "clientId": {
-                                  "type": "string",
-                                  "format": "uuid",
-                                },
-                                "status": {
-                                  "type": "string",
-                                },
-                                "startTime": {
-                                  "type": "integer"
-                                },
-                                "endTime": {
-                                  "type": "integer"
-                                },
-                                "globalProjects": {
-                                  "type": "array",
-                                  "items": {
-                                    "type": "object",
-                                    "required": [
-                                      "id",
-                                      "projectName",
-                                      "projectCommonName",
-                                      "description",
-                                      "projects"
-                                    ],
-                                    "properties": {
-                                      "id": {
-                                        "type": "string",
-                                        "format": "uuid",
-                                      },
-                                      "projectName": {
-                                        "type": "string",
-                                      },
-                                      "projectCommonName": {
-                                        "type": "string",
-                                      },
-                                      "description": {
-                                        "type": "string",
-                                      },
-                                      "projects": {
-                                        "type": "object",
-                                        "required": [
-                                          "projects"
-                                        ],
-                                        "properties": {
-                                          "projects": {
-                                            "type": "array"
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                },
-                                "consentId": {
-                                  "type": "string",
-                                  "format": "uuid",
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                example:
-                  consents:
-                    pagination:
-                      from: 0
-                      returned: 1
-                      total: 1
-                      maximum: 30
-                      sort: {}
+                  example:
                     consents:
+                      pagination:
+                        from: 0
+                        returned: 1
+                        total: 1
+                        maximum: 30
+                        sort: {}
+                      consents:
                       - clientId: dcdf2326-0d96-43eb-8368-501b29145c53
-                        status: APPROVED
                         startTime: 1519914315641
                         endTime: 1543602600000
                         globalProjects:
-                          - id: 4b84cb25-d27e-458e-ad5d-d817f30390d2
-                            projectName: Project Name
-                            projectCommonName: Project common name
-                            description: ' description'
-                            projects:
-                              projects: []
-                          - id: 6c0f6f77-ba6c-4365-9ce5-3fe65ccdbe86
-                            projectName: Project Name
-                            projectCommonName: Project common name
-                            description: ' description'
-                            projects:
-                              projects: []
+                        - id: 4b84cb25-d27e-458e-ad5d-d817f30390d2
+                          projectName: Project Name
+                          projectCommonName: Project common name
+                          description: " description"
+                          projects:
+                            - projectId: f9748a7b-80ac-4ffd-86f7-c8e71416502f
+                              source: '2015'
+                              link: "/hmis-clientapi/v2015/rest/projects/f9748a7b-80ac-4ffd-86f7-c8e71416502f"
+                            - projectId: 9a147cc3-7b78-4a82-abe4-f42f9ee59b61
+                              source: '2014'
+                              link: "/hmis-clientapi/v2014/rest/projects/9a147cc3-7b78-4a82-abe4-f42f9ee59b61"
                         consentId: db51219d-f439-4250-bdf2-7a1a07816832
+                        consnetDocument:
+                            link: "/hmis-globalapi/rest/clients/dcdf2326-0d96-43eb-8368-501b29145c53/consents/db51219d-f439-4250-bdf2-7a1a07816832/documents"
+
       description: Get consents of selected client
       operationId: GET_clients-clientId-consents
     parameters:
@@ -4265,86 +4096,6 @@ paths:
                 }
               }
         required: true
-    get:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-                schema:
-                  {
-                    "type": "object",
-                    "required": [
-                      "consent"
-                    ],
-                    "properties": {
-                      "consent": {
-                        "type": "object",
-                        "required": [
-                          "clientId",
-                          "startTime",
-                          "endTime",
-                          "globalProjects",
-                          "consentId"
-                        ],
-                        "properties": {
-                          "clientId": {
-                            "type": "string",
-                            "format": "uuid",
-                          },
-                          "startTime": {
-                            "type": "integer"
-                          },
-                          "endTime": {
-                            "type": "integer"
-                          },
-                          "globalProjects": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "required": [
-                                "id",
-                                "projects"
-                              ],
-                              "properties": {
-                                "id": {
-                                  "type": "string",
-                                  "format": "uuid",
-                                },
-                                "projects": {
-                                  "type": "object",
-                                  "required": [
-                                    "projects"
-                                  ],
-                                  "properties": {
-                                    "projects": {
-                                      "type": "array"
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "consentId": {
-                            "type": "string",
-                            "format": "uuid",
-                          }
-                        }
-                      }
-                    }
-                  }
-                example:
-                  consent:
-                    clientId: dcdf2326-0d96-43eb-8368-501b29145c53
-                    startTime: 1519914315641
-                    endTime: 1543602600000
-                    globalProjects:
-                      - id: 4b84cb25-d27e-458e-ad5d-d817f30390d2
-                        projects:
-                          projects: []
-                    consentId: db51219d-f439-4250-bdf2-7a1a07816832
-      description: Retrive a client's consent
-      operationId: GET_clients-clientId-consents-consentId
     delete:
       responses:
         '200':
@@ -4428,7 +4179,7 @@ paths:
         required: true
         schema:
           type: string
-  '/clients/{clientid}/consents/{consentid}/projects/{globalprojectid}':
+  '/clients/{clientid}/consents/{consentid}/projects/{projectid}':
     delete:
       responses:
         '200':
@@ -4450,7 +4201,7 @@ paths:
         required: true
         schema:
           type: string
-      - name: globalprojectid
+      - name: projectid
         in: path
         required: true
         schema:
@@ -4557,7 +4308,7 @@ paths:
                   }
                 }
       description: |
-        Downloads all the consent documents associated with a specific consent.
+        Download the consent document associated with a specific consent.
       operationId: GET_clients-clientid-consents-consentid-documents
     parameters:
       - name: consentid
