@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Global Human Services
-  version: "1.5.3"
+  version: "1.5.4"
   description: |
        **Note :**
               Please note that the partial updates are supported via PUT APIs. However, Note that If "null" value is passed for any element, in the PUT request body, it will be ignored. An empty string value should be sent (instead of "null" value) for the elements that need to be updated with NULL values.
@@ -4455,6 +4455,121 @@ paths:
         required: true
         schema:
           type: string
+  '/clients/{clientid}/consents/{consentid}/documents':
+    post:
+      responses:
+        '201':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              example:
+                errors:
+                  - code: CLIENT_CONSENT_NOT_FOUND
+                    message: >-
+                      Client consent not found :
+                      e9a4a447-833f-4c29-a3b6-f966a0a753aa
+              schema:
+                {
+                  "type": "object",
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                          },
+                          "message": {
+                            "type": "string",
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+      description: >
+        Uploads the consent document (Verbal / signed document) for the client
+        for a specific consent.  The content type should be multipart/form-data
+        ( Content-Type: multipart/form-data).
+      operationId: POST_clients-clientid-consents-consentid-documents
+      requestBody:
+        content:
+          multipart/form-data:
+              schema:           
+                type: object
+                properties:     
+                  file: 
+                    type: string
+                    format: binary
+              encoding:
+                    file:
+                      contentType: text/plain       
+        required: true
+    get:
+      responses:
+        '200':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              example:
+                errors:
+                  - code: CLIENT_CONSENT_NOT_FOUND
+                    message: >-
+                      Client consent not found :
+                      e9a4a447-833f-4c29-a3b6-f966a0a753aa
+              schema:
+                {
+                  "type": "object",
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                          },
+                          "message": {
+                            "type": "string",
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+      description: |
+        Downloads all the consent documents associated with a specific consent.
+      operationId: GET_clients-clientid-consents-consentid-documents
+    parameters:
+      - name: consentid
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: clientid
+        in: path
+        required: true
+        schema:
+          type: string          
   '/genericenrollments':
     post:
       description: Create a Generic Enrllment
