@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Global Human Services
-  version: "1.5.6"
+  version: "1.5.7"
   description: |
        **Note :**
               Please note that the partial updates are supported via PUT APIs. However, Note that If "null" value is passed for any element, in the PUT request body, it will be ignored. An empty string value should be sent (instead of "null" value) for the elements that need to be updated with NULL values.
@@ -241,6 +241,34 @@ paths:
                                           }
                                         }
                                       }
+                                    },
+                                    "globalHouseHolds": {
+                                      "type": "object",
+                                      "required": [
+                                        "data"
+                                      ],
+                                      "properties": {
+                                        "data": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "object",
+                                            "required": [
+                                              "rel",
+                                              "href"
+                                            ],
+                                            "properties": {
+                                              "rel": {
+                                                "type": "string",
+                                                "format": "uuid",
+                                              },
+                                              "href": {
+                                                "type": "string",
+                                                "format": "uuid",
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
                                     }
                                   }
                                 }
@@ -284,15 +312,19 @@ paths:
                           eligibleClients:
                             data:
                             - rel: 0f23d93e-23c3-435e-baec-ec267f13f66c
-                              href: https://www.hslynk.com/house-matching-api/rest/eligibleclients/0f23d93e-23c3-435e-baec-ec267f13f66c
+                              href: https://api.hslynk.com/house-matching-api/rest/eligibleclients/0f23d93e-23c3-435e-baec-ec267f13f66c
                           survey.submissions:
                             data:
                             - rel: 528faca1-ccb6-436a-bd97-8cd6e00c5105
-                              href: https://www.hslynk.com/survey-api/rest/clients/0f23d93e-23c3-435e-baec-ec267f13f66c/surveys/5d3f239c-fdf5-4806-80ec-54886fb58e2b/submissions/528faca1-ccb6-436a-bd97-8cd6e00c5105
+                              href: https://api.hslynk.com/survey-api/rest/clients/0f23d93e-23c3-435e-baec-ec267f13f66c/surveys/5d3f239c-fdf5-4806-80ec-54886fb58e2b/submissions/528faca1-ccb6-436a-bd97-8cd6e00c5105
                           enrollments:
                             data:
                             - rel: d9845282-afd5-43e8-8935-1ae186a04dea
-                              href: https://www.hslynk.com/hmis-clientapi-v2017/rest/clients/0f23d93e-23c3-435e-baec-ec267f13f66c/enrollments/d9845282-afd5-43e8-8935-1ae186a04dea
+                              href: https://api.hslynk.com/hmis-clientapi-v2017/rest/clients/0f23d93e-23c3-435e-baec-ec267f13f66c/enrollments/d9845282-afd5-43e8-8935-1ae186a04dea
+                          globalHouseHolds:
+                               data:
+                               - rel: ad19a8b1-337e-4b1b-bd3d-d69681862200
+                                 href: https://api.hslynk.com/hmis-globalapi/rest/globalhouseholds/ad19a8b1-337e-4b1b-bd3d-d69681862200                               
 
         '400':
           description: Bad Request – The request was invalid or cannot be served.
@@ -315,11 +347,51 @@ paths:
         results so that you can find the item that best meets your needs.
         HMISLynk Search API provides up to 50 results for each search.  However,
         the search results can be limited by the client. Current supporting URI is /search/clients and /search/projects.
-            API returns the following in the response.  \
+            API for client search returns the following in the response.  \
+            \
             * Latest (by effective date) FN, MI, LN, email, phone [email and phone will come from the generic client record], SSN, DOB, SSN, gender, veteran status.If any of these have not been collected, those elements will be simply omitted. \
             * Links to enrollments for all HMIS enrollment records if there is anything to retrieve. Otherwise this link is not present.\
             * Links to all client survey submissions,if there is anything to retrieve. Otherwise this link is not present\
-            * Links to all eligible client records (active list) for the client ,if there is anything to retrieve. Otherwise this link is not present.
+            * Links to all eligible client records (active list) for the client ,if there is anything to retrieve. Otherwise this link is not present \
+            * Links to all global holds records for the client ,if there is anything to retrieve. Otherwise this link is not present \            
+            \
+                 For the client search, the value for the request parameter "q" can be first name , last name , middle name, date of birth ,source system Id or SSN\
+                 \
+                  Here are different examples to perform a search using the API.  \
+                  \
+                  Search for clients with first name "Jim"  \
+                  https://api.hslynk.com/hmis-clientapi/rest/search/clients?q=123-45-6789 \
+                  \
+                  Search for a client with SSN "123-45-6789"  \
+                  https://api.hslynk.com/hmis-clientapi/rest/search/clients?q=123-45-6789  \
+                  \
+                  Search for a client with client Id "c06ff484-42bb-4946-82f7-0d4118013cd6" \
+                  https://api.hslynk.com/hmis-clientapi/rest/search/clients?q=c06ff484-42bb-4946-82f7-0d4118013cd6 \
+                  \
+                  Search for a client with  dedup Id "c06ff484-42bb-4946-82f7-0d4118013cd6"  \
+                  https://api.hslynk.com/hmis-clientapi/rest/search/clients?q=bda3179b-c49f-449d-95b9-1ca014ae0345 \
+                  \
+                  Search for clients with first name or last name or full name "Jim"   \
+                  https://api.hslynk.com/hmis-clientapi/rest/search/clients?q=Jim  \
+                  \
+                  Search for clients with with date of birth (allowed DOB format MM-dd-YYYY)\
+                  https://api.hslynk.com/hmis-clientapi/rest/search/clients?q=05-28-1980 \
+                  \
+                  Optionally, the results can be sorted by passing "sort" and "order" paramters for the search request. \
+                  To search for clients with search string "Jim" sorder by Last name in descending order you can use the following \
+                  https://api.hslynk.com/hmis-clientapi/rest/search/clients?q=Jim&sort=lastName
+                  \
+                  \
+                  Sorting is allowed on the following parameters. The value for the "sort" field should match one of the following. By default results are sorted by first name.
+                   "firstName", \
+                   "lastName", \
+                   "middleName", \
+                   "sourceSystemId", \
+                   "ssn" \
+                   \
+                  The maximum results that can be obtained in a search API call is 50. "startIndex" and "maxItems" can be passed to the search request to limit the number of rows. These parameters are used for pagination purposes. 
+                  
+              
       operationId: GET_search-searchentity
       parameters:
         - name: q
@@ -331,29 +403,29 @@ paths:
             name,dob,source system id and ssn. For search on "date of birth"
             field the format MM-dd-YYYY should be used for the search keyword.
 
-            The seach keywords for projects, as well as any qualifiers. Currenly
+            The search keywords for projects, as well as any qualifiers. Currently
             supported search fields are projectName, projectCommonName,
             projectId.
           schema:
             type: string
         - name: sort
           in: query
-          required: true
-          description: The sort field. Default- results are sorted by "created date".
+          required: false
+          description: The sort field.Supported sort values are firstName,lastName,middleName,sourceSystemId,ssn.  Default- results are sorted by "firstName".
           schema:
             type: string
         - name: order
           in: query
-          required: true
+          required: false
           description: >-
             The sort order if sort parameter is provided. One of asc or desc.
-            Default- desc.
+            Default- asc.
           schema:
             default: desc
             type: string
         - name: startIndex
           in: query
-          required: true
+          required: false
           description: >-
             The start Index from where the search results should be returned.
             Default - 0
@@ -362,7 +434,7 @@ paths:
             type: integer
         - name: maxItems
           in: query
-          required: true
+          required: false
           description: >-
             the number or Items that should be included in the results . Default
             - 50
@@ -371,7 +443,7 @@ paths:
             type: integer
         - name: exclude
           in: query
-          required: true
+          required: false
           description: >
             Excludes flieds from the search.Currently it suppoted value is "ssi"
             (to exclude source system id) only.
