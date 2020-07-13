@@ -345,8 +345,7 @@ paths:
         Currently hmislynk supporting search on 'clients' entity only. Just like
         searching on Google, you sometimes want to see a few pages of search
         results so that you can find the item that best meets your needs.
-        HMISLynk Search API provides up to 50 results for each search.  However,
-        the search results can be limited by the client. Current supporting URI is /search/clients and /search/projects.
+        HMISLynk Search API provides up to 50 results for each search. 
             API for client search returns the following in the response.  \
             \
             * Latest (by effective date) FN, MI, LN, email, phone [email and phone will come from the generic client record], SSN, DOB, SSN, gender, veteran status.If any of these have not been collected, those elements will be simply omitted. \
@@ -403,9 +402,6 @@ paths:
             name,dob,source system id and ssn. For search on "date of birth"
             field the format MM-dd-YYYY should be used for the search keyword.
 
-            The search keywords for projects, as well as any qualifiers. Currently
-            supported search fields are projectName, projectCommonName,
-            projectId.
           schema:
             type: string
         - name: sort
