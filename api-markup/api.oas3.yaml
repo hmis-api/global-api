@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Global Human Services
-  version: "1.5.8"
+  version: "1.5.9"
   description: |
        **Note :**
               Please note that the partial updates are supported via PUT APIs. However, Note that If "null" value is passed for any element, in the PUT request body, it will be ignored. An empty string value should be sent (instead of "null" value) for the elements that need to be updated with NULL values.
@@ -242,7 +242,35 @@ paths:
                                         }
                                       }
                                     },
-                                    "globalHouseHolds": {
+                                    "globalHouseHolds.genericHouseHolds": {
+                                      "type": "object",
+                                      "required": [
+                                        "data"
+                                      ],
+                                      "properties": {
+                                        "data": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "object",
+                                            "required": [
+                                              "rel",
+                                              "href"
+                                            ],
+                                            "properties": {
+                                              "rel": {
+                                                "type": "string",
+                                                "format": "uuid",
+                                              },
+                                              "href": {
+                                                "type": "string",
+                                                "format": "uuid",
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "globalHouseHolds.hmisHouseHolds": {
                                       "type": "object",
                                       "required": [
                                         "data"
@@ -321,10 +349,14 @@ paths:
                             data:
                             - rel: d9845282-afd5-43e8-8935-1ae186a04dea
                               href: https://api.hslynk.com/hmis-clientapi-v2017/rest/clients/0f23d93e-23c3-435e-baec-ec267f13f66c/enrollments/d9845282-afd5-43e8-8935-1ae186a04dea
-                          globalHouseHolds:
+                          globalHouseHolds.genericHouseHold:
                                data:
                                - rel: ad19a8b1-337e-4b1b-bd3d-d69681862200
-                                 href: https://api.hslynk.com/hmis-globalapi/rest/globalhouseholds/ad19a8b1-337e-4b1b-bd3d-d69681862200                               
+                                 href: https://api.hslynk.com/hmis-globalapi/rest/globalhouseholds/ad19a8b1-337e-4b1b-bd3d-d69681862200 
+                          globalHouseHolds.hmisHouseHolds:
+                               data:
+                               - rel: 59b372a0-3811-42ea-90d3-536fc7c84958
+                                 href: https://api.hslynk.com/hmis-globalapi/rest/globalhouseholds/59b372a0-3811-42ea-90d3-536fc7c84958                                   
 
         '400':
           description: Bad Request – The request was invalid or cannot be served.
