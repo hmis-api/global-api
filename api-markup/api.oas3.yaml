@@ -349,7 +349,7 @@ paths:
                             data:
                             - rel: d9845282-afd5-43e8-8935-1ae186a04dea
                               href: https://api.hslynk.com/hmis-clientapi-v2017/rest/clients/0f23d93e-23c3-435e-baec-ec267f13f66c/enrollments/d9845282-afd5-43e8-8935-1ae186a04dea
-                          globalHouseHolds.genericHouseHold:
+                          globalHouseHolds.genericHouseHolds:
                                data:
                                - rel: ad19a8b1-337e-4b1b-bd3d-d69681862200
                                  href: https://api.hslynk.com/hmis-globalapi/rest/globalhouseholds/ad19a8b1-337e-4b1b-bd3d-d69681862200 
