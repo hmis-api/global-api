@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Global Human Services
-  version: "1.5.10  "
+  version: "1.5.11"
   contact:
     name: API Source
     email: support@hslynk.com
@@ -24,297 +24,303 @@ paths:
           content:
             application/json:
                 schema:
-                  {
-                    "type": "object",
-                    "required": [
-                      "searchResults"
-                    ],
-                    "properties": {
-                      "searchResults": {
-                        "type": "object",
-                        "required": [
-                          "pagination",
-                          "items"
-                        ],
-                        "properties": {
-                          "pagination": {
-                            "type": "object",
-                            "required": [
-                              "from",
-                              "returned",
-                              "total",
-                              "maximum",
-                              "sort"
-                            ],
-                            "properties": {
-                              "from": {
-                                "type": "integer"
-                              },
-                              "returned": {
-                                "type": "integer"
-                              },
-                              "total": {
-                                "type": "integer"
-                              },
-                              "maximum": {
-                                "type": "integer"
-                              },
-                              "sort": {
-                                "type": "object",
-                                "required": [
-                                  "field",
-                                  "order"
-                                ],
-                                "properties": {
-                                  "field": {
-                                    "type": "string",
-                                  },
-                                  "order": {
-                                    "type": "string",
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "items": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "required": [
-                                "clientId",
-                                "dedupClientId",
-                                "firstName",
-                                "middleName",
-                                "lastName",
-                                "nameSuffix",
-                                "nameDataQuality",
-                                "ssn",
-                                "ssnDataQuality",
-                                "dob",
-                                "dobDataQuality",
-                                "race",
-                                "ethnicity",
-                                "gender",
-                                "phoneNumber",
-                                "emailAddress",
-                                "link",
-                                "projectGroupCode",
-                                "links"
-                              ],
-                              "properties": {
-                                "clientId": {
-                                  "type": "string",
-                                  "format": "uuid",
-                                },
-                                "dedupClientId": {
-                                  "type": "string",
-                                  "format": "uuid",
-                                },
-                                "firstName": {
-                                  "type": "string",
-                                },
-                                "middleName": {
-                                  "type": "string",
-                                },
-                                "lastName": {
-                                  "type": "string",
-                                },
-                                "nameSuffix": {
-                                  "type": "string",
-                                },
-                                "nameDataQuality": {
-                                  "type": "integer"
-                                },
-                                "ssn": {
-                                  "type": "string",
-                                },
-                                "ssnDataQuality": {
-                                  "type": "integer"
-                                },
-                                "dob": {
-                                  "type": "integer"
-                                },
-                                "dobDataQuality": {
-                                  "type": "integer"
-                                },
-                                "race": {
-                                  "type": "integer"
-                                },
-                                "ethnicity": {
-                                  "type": "integer"
-                                },
-                                "gender": {
-                                  "type": "integer"
-                                },
-                                "phoneNumber": {
-                                  "type": "integer"
-                                },
-                                "emailAddress": {
-                                  "type": "string",
-                                },
-                                "link": {
-                                  "type": "string"
-                                },
-                                "projectGroupCode": {
-                                  "type": "string",
-                                },
-                                "links": {
-                                  "type": "object",
-                                  "required": [
-                                    "eligibleClients",
-                                    "survey.submissions",
-                                    "enrollments"
-                                  ],
-                                  "properties": {
-                                    "eligibleClients": {
-                                      "type": "object",
-                                      "required": [
-                                        "data"
-                                      ],
-                                      "properties": {
-                                        "data": {
-                                          "type": "array",
-                                          "items": {
-                                            "type": "object",
-                                            "required": [
-                                              "rel",
-                                              "href"
-                                            ],
-                                            "properties": {
-                                              "rel": {
-                                                "type": "string",
-                                                "format": "uuid",
-                                              },
-                                              "href": {
-                                                "type": "string",
-                                                "format": "uuid",
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    },
-                                    "survey.submissions": {
-                                      "type": "object",
-                                      "required": [
-                                        "data"
-                                      ],
-                                      "properties": {
-                                        "data": {
-                                          "type": "array",
-                                          "items": {
-                                            "type": "object",
-                                            "required": [
-                                              "rel",
-                                              "href"
-                                            ],
-                                            "properties": {
-                                              "rel": {
-                                                "type": "string",
-                                                "format": "uuid",
-                                              },
-                                              "href": {
-                                                "type": "string",
-                                                "format": "uuid",
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    },
-                                    "enrollments": {
-                                      "type": "object",
-                                      "required": [
-                                        "data"
-                                      ],
-                                      "properties": {
-                                        "data": {
-                                          "type": "array",
-                                          "items": {
-                                            "type": "object",
-                                            "required": [
-                                              "rel",
-                                              "href"
-                                            ],
-                                            "properties": {
-                                              "rel": {
-                                                "type": "string",
-                                                "format": "uuid",
-                                              },
-                                              "href": {
-                                                "type": "string",
-                                                "format": "uuid",
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    },
-                                    "globalHouseHolds.genericHouseHolds": {
-                                      "type": "object",
-                                      "required": [
-                                        "data"
-                                      ],
-                                      "properties": {
-                                        "data": {
-                                          "type": "array",
-                                          "items": {
-                                            "type": "object",
-                                            "required": [
-                                              "rel",
-                                              "href"
-                                            ],
-                                            "properties": {
-                                              "rel": {
-                                                "type": "string",
-                                                "format": "uuid",
-                                              },
-                                              "href": {
-                                                "type": "string",
-                                                "format": "uuid",
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    },
-                                    "globalHouseHolds.hmisHouseHolds": {
-                                      "type": "object",
-                                      "required": [
-                                        "data"
-                                      ],
-                                      "properties": {
-                                        "data": {
-                                          "type": "array",
-                                          "items": {
-                                            "type": "object",
-                                            "required": [
-                                              "rel",
-                                              "href"
-                                            ],
-                                            "properties": {
-                                              "rel": {
-                                                "type": "string",
-                                                "format": "uuid",
-                                              },
-                                              "href": {
-                                                "type": "string",
-                                                "format": "uuid",
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
+                        type: object
+                        required:
+                        - searchResults
+                        properties:
+                          searchResults:
+                            type: object
+                            required:
+                            - pagination
+                            - items
+                            properties:
+                              pagination:
+                                type: object
+                                required:
+                                - from
+                                - returned
+                                - total
+                                - maximum
+                                - sort
+                                properties:
+                                  from:
+                                    type: integer
+                                  returned:
+                                    type: integer
+                                  total:
+                                    type: integer
+                                  maximum:
+                                    type: integer
+                                  sort:
+                                    type: object
+                                    required:
+                                    - field
+                                    - order
+                                    properties:
+                                      field:
+                                        type: string
+                                      order:
+                                        type: string
+                              items:
+                                type: array
+                                items:
+                                  type: object
+                                  required:
+                                  - clientId
+                                  - dedupClientId
+                                  - firstName
+                                  - middleName
+                                  - lastName
+                                  - nameSuffix
+                                  - nameDataQuality
+                                  - ssn
+                                  - ssnDataQuality
+                                  - dob
+                                  - dobDataQuality
+                                  - race
+                                  - ethnicity
+                                  - gender
+                                  - phoneNumber
+                                  - emailAddress
+                                  - link
+                                  - projectGroupCode
+                                  - links
+                                  properties:
+                                    clientId:
+                                      type: string
+                                      format: uuid
+                                    dedupClientId:
+                                      type: string
+                                      format: uuid
+                                    firstName:
+                                      type: string
+                                    middleName:
+                                      type: string
+                                    lastName:
+                                      type: string
+                                    nameSuffix:
+                                      type: string
+                                    nameDataQuality:
+                                      type: integer
+                                    ssn:
+                                      type: string
+                                    ssnDataQuality:
+                                      type: integer
+                                    dob:
+                                      type: integer
+                                    dobDataQuality:
+                                      type: integer
+                                    race:
+                                      type: integer
+                                    ethnicity:
+                                      type: integer
+                                    gender:
+                                      type: integer
+                                    phoneNumber:
+                                      type: integer
+                                    emailAddress:
+                                      type: string
+                                    link:
+                                      type: string
+                                    projectGroupCode:
+                                      type: string
+                                    links:
+                                      type: object
+                                      required:
+                                      - eligibleClients
+                                      - survey.submissions
+                                      - enrollments
+                                      properties:
+                                        eligibleClients:
+                                          type: object
+                                          required:
+                                          - data
+                                          properties:
+                                            data:
+                                              type: array
+                                              items:
+                                                type: object
+                                                required:
+                                                - rel
+                                                - href
+                                                properties:
+                                                  rel:
+                                                    type: string
+                                                    format: uuid
+                                                  href:
+                                                    type: string
+                                                    format: uuid
+                                        survey.submissions:
+                                          type: object
+                                          required:
+                                          - data
+                                          properties:
+                                            data:
+                                              type: array
+                                              items:
+                                                type: object
+                                                required:
+                                                - rel
+                                                - href
+                                                properties:
+                                                  rel:
+                                                    type: string
+                                                    format: uuid
+                                                  href:
+                                                    type: string
+                                                    format: uuid
+                                        enrollments:
+                                          type: object
+                                          required:
+                                          - data
+                                          properties:
+                                            data:
+                                              type: array
+                                              items:
+                                                type: object
+                                                required:
+                                                - rel
+                                                - href
+                                                properties:
+                                                  rel:
+                                                    type: string
+                                                    format: uuid
+                                                  href:
+                                                    type: string
+                                                    format: uuid
+                                        globalHouseHolds.genericHouseHolds:
+                                          type: object
+                                          required:
+                                          - data
+                                          properties:
+                                            data:
+                                              type: array
+                                              items:
+                                                type: object
+                                                required:
+                                                - rel
+                                                - href
+                                                properties:
+                                                  rel:
+                                                    type: string
+                                                    format: uuid
+                                                  href:
+                                                    type: string
+                                                    format: uuid
+                                        globalHouseHolds.hmisHouseHolds:
+                                          type: object
+                                          required:
+                                          - data
+                                          properties:
+                                            data:
+                                              type: array
+                                              items:
+                                                type: object
+                                                required:
+                                                - rel
+                                                - href
+                                                properties:
+                                                  rel:
+                                                    type: string
+                                                    format: uuid
+                                                  href:
+                                                    type: string
+                                                    format: uuid
+                                        bedunit.occupant:
+                                          type: object
+                                          required:
+                                          - data
+                                          properties:
+                                            data:
+                                              type: array
+                                              items:
+                                                type: object
+                                                required:
+                                                - rel
+                                                - href
+                                                properties:
+                                                  rel:
+                                                    type: string
+                                                    format: uuid
+                                                  href:
+                                                    type: string
+                                                    format: uuid
+                                        bedunit.reservation:
+                                          type: object
+                                          required:
+                                          - data
+                                          properties:
+                                            data:
+                                              type: array
+                                              items:
+                                                type: object
+                                                required:
+                                                - rel
+                                                - href
+                                                properties:
+                                                  rel:
+                                                    type: string
+                                                    format: uuid
+                                                  href:
+                                                    type: string
+                                                    format: uuid
+                                        room.reservation:
+                                          type: object
+                                          required:
+                                          - data
+                                          properties:
+                                            data:
+                                              type: array
+                                              items:
+                                                type: object
+                                                required:
+                                                - rel
+                                                - href
+                                                properties:
+                                                  rel:
+                                                    type: string
+                                                    format: uuid
+                                                  href:
+                                                    type: string
+                                                    format: uuid
+                                        housingunit.occupant:
+                                          type: object
+                                          required:
+                                          - data
+                                          properties:
+                                            data:
+                                              type: array
+                                              items:
+                                                type: object
+                                                required:
+                                                - rel
+                                                - href
+                                                properties:
+                                                  rel:
+                                                    type: string
+                                                    format: uuid
+                                                  href:
+                                                    type: string
+                                                    format: uuid
+                                        housingunit.reservation:
+                                          type: object
+                                          required:
+                                          - data
+                                          properties:
+                                            data:
+                                              type: array
+                                              items:
+                                                type: object
+                                                required:
+                                                - rel
+                                                - href
+                                                properties:
+                                                  rel:
+                                                    type: string
+                                                    format: uuid
+                                                  href:
+                                                    type: string
+                                                    format: uuid                                                    
                 example:
                     searchResults:
                       pagination:
@@ -364,7 +370,27 @@ paths:
                           globalHouseHolds.hmisHouseHolds:
                                data:
                                - rel: 59b372a0-3811-42ea-90d3-536fc7c84958
-                                 href: https://api.hslynk.com/hmis-globalapi/rest/globalhouseholds/59b372a0-3811-42ea-90d3-536fc7c84958                                   
+                                 href: https://api.hslynk.com/hmis-globalapi/rest/globalhouseholds/59b372a0-3811-42ea-90d3-536fc7c84958  
+                          room.reservation:
+                                  data:
+                                  - rel: 35f4fe3d-bfd6-40db-819b-821446efd165
+                                    href: https://api.hslynk.com/bed-inventory-api/rest/clients/ad9a9390-bcd7-11e9-a57b-02fe61f7863e/rooms/reservations?future=true
+                          bedunit.occupant:
+                            data:
+                            - rel: 35f4fe3d-bfd6-40db-819b-821446efd165
+                              href: https://api.hslynk.com/bed-inventory-api/rest/clients/ad9a9390-bcd7-11e9-a57b-02fe61f7863e/bedunits/occupants?future=true
+                          bedunit.reservation:
+                            data:
+                            - rel: 35f4fe3d-bfd6-40db-819b-821446efd165
+                              href: https://api.hslynk.com/bed-inventory-api/rest/clients/ad9a9390-bcd7-11e9-a57b-02fe61f7863e/bedunits/reservations?future=true
+                          housingunit.reservation:
+                            data:
+                            - rel: 35f4fe3d-bfd6-40db-819b-821446efd165
+                              href: https://api.hslynk.com/bed-inventory-api/rest/clients/ad9a9390-bcd7-11e9-a57b-02fe61f7863e/housingunits/reservations?future=true          
+                          housingunit.occupant:
+                            data:
+                            - rel: 35f4fe3d-bfd6-40db-819b-821446efd165
+                              href: https://api.hslynk.com/bed-inventory-api/rest/clients/ad9a9390-bcd7-11e9-a57b-02fe61f7863e/housingunits/occupants?future=true            
 
         '400':
           description: Bad Request – The request was invalid or cannot be served.
@@ -3621,7 +3647,9 @@ paths:
                                       ],
                                       "properties": {
                                         "parameter": {
-                                          "type": "array"
+                                          "type": "array", "items": {
+                                            "type": "string",
+                                          }
                                         }
                                       }
                                     }
